@@ -1,8 +1,8 @@
 # Visual Identity And Design
 
-This phase translates `prompt-design.md` into the official visual direction for NossaMentoria.
+This phase defines the official visual direction for NossaMentoria.
 
-The source prompt describes a cinematic, black, liquid-glass interface with expressive serif typography, Barlow body text, full-bleed video, and Framer Motion entrance animations. NossaMentoria should use that direction, adapted to a mentorship platform that is mostly operational and dashboard-first.
+The earlier raw prompt described a cinematic black liquid-glass interface. That direction is no longer the product target. NossaMentoria should feel like a place that encourages learning: warm, bright, focused, clear, and human, with enough polish to feel premium.
 
 ## Specs
 
@@ -14,13 +14,13 @@ The source prompt describes a cinematic, black, liquid-glass interface with expr
 
 ## Design Position
 
-NossaMentoria should feel premium, focused, cinematic, and calm. It should not feel like a generic SaaS dashboard, a school portal, or a colorful gamified LMS.
+NossaMentoria should feel optimistic, educational, precise, and calm. It should not feel like a generic SaaS dashboard, a dark command center, a school portal, or a colorful gamified LMS.
 
-Use the space-travel prompt as inspiration for atmosphere and craft, not as literal product content. The platform is about mentorship, plans, classes, and progress.
+Use warmth, spaciousness, readable typography, learning-oriented visual metaphors, and restrained depth. The platform is about mentorship, plans, classes, materials, and progress.
 
 ## Acceptance Criteria
 
-- Public/onboarding surfaces can use cinematic full-bleed media.
+- Public/onboarding surfaces must communicate learning and trust before asking for authentication.
 - Core app screens remain usable, dense, and dashboard-first.
 - Typography and glass surfaces follow this folder's specs.
 - No UI-facing implementation should ignore this phase.

@@ -2,34 +2,42 @@
 
 ## Layout Principle
 
-The authenticated platform is dashboard-first. It should use the cinematic design language from `prompt-design.md`, but it must prioritize repeated mentor workflows: reviewing mentees, plans, lessons, sessions, content, and progress.
+The public product is landing-first and auth-first. The authenticated platform is dashboard-first after login. The design must prioritize learning confidence, clear invitation flow, and repeated mentor workflows: reviewing mentees, plans, lessons, sessions, content, and progress.
 
 ## Public And Onboarding Screens
 
-These screens may use the strongest cinematic treatment:
+These screens must be implemented before the private workspace becomes the default experience:
 
+- Public landing page.
 - Invitation acceptance.
 - Login.
 - First setup.
-- Optional public landing page if added later.
 
 Allowed elements:
 
-- Full-bleed video or atmospheric media.
-- Centered glass panels.
-- Serif italic hero headings.
-- Framer Motion blur-in entrance.
+- Warm illustrated, photographic, or abstract learning media.
+- Clear auth cards.
+- Confident sans-serif hero headings.
+- Short motion that creates momentum.
+
+Landing page must include:
+
+- Value proposition.
+- Invite-only explanation.
+- Sign-in action for invited users.
+- Learning workflow preview.
+- Trust-building copy for mentors and mentees.
 
 ## Authenticated App Shell
 
 Use:
 
-- Dark background.
-- Glass sidebar or top navigation.
+- Warm light background.
+- Sidebar or top navigation with clear role context.
 - Role switcher for mixed users.
 - Compact dashboard panels.
-- Clear page title in italic serif.
-- Operational content in Barlow.
+- Clear page title in sans-serif.
+- Operational content in Inter.
 
 Primary mentor dashboard should surface:
 
@@ -70,6 +78,8 @@ Calendar:
 
 ## Acceptance Criteria
 
+- `/` shows the landing page to unauthenticated visitors.
+- Auth pages are reachable before any private dashboard screen.
 - The app does not become a marketing page after login.
 - Every major screen uses the visual identity without sacrificing scanability.
 - Empty states guide the next operational action.

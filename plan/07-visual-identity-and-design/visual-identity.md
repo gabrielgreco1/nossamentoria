@@ -2,37 +2,41 @@
 
 ## Source Reference
 
-The visual identity is derived from `prompt-design.md`. That prompt defines a cinematic black interface using liquid glass, white typography, expressive italic serif headings, Barlow body text, full-bleed video, and soft motion.
+The visual identity was originally derived from `prompt-design.md`, but the product direction has changed. The black cinematic interface, giant italic serif headings, and gray-heavy command-center mood are not the target for NossaMentoria.
 
-For NossaMentoria, this becomes a mentorship-focused identity: guided, premium, precise, and immersive.
+For NossaMentoria, the identity is mentorship-focused: guided, optimistic, precise, warm, and modern.
 
 ## Brand Attributes
 
-- Cinematic.
+- Learning-oriented.
 - Calm.
 - Technical.
-- Premium.
+- Warm.
 - Focused.
-- Human, but not playful.
+- Human.
 - Ambitious, but not corporate.
+- Premium through clarity, not darkness.
 
 ## Mood
 
-The product should feel like a serious command center for personal growth in technology. It should make mentorship feel organized and important without becoming visually heavy or decorative.
+The product should feel like a well-lit study space for serious technology growth: organized, encouraging, and intelligent. It should make mentorship feel structured and valuable without becoming visually heavy, depressive, or childish.
 
 ## Visual Translation
 
 Use:
 
-- Black and near-black backgrounds as the base.
-- White and translucent white typography.
-- Liquid-glass panels for navigation, cards, actions, and overlays.
-- Italic serif headings for emotional or high-level moments.
-- Clean sans-serif typography for operational data.
+- Warm light backgrounds as the default base.
+- Deep readable ink colors for text.
+- Teal, blue, amber, and coral accents that suggest learning, focus, energy, and progress.
+- Soft translucent panels only where they improve hierarchy.
+- Confident sans-serif typography for both brand and operational UI.
+- Occasional editorial serif or handwritten warmth only for small accents, never as the default page-title style.
 - Subtle motion on page entry and state changes.
 
 Avoid:
 
+- Black or gray as the dominant product mood.
+- Giant italic serif headlines as the primary voice.
 - Bright green status-heavy styling.
 - Multicolor gradients.
 - Generic blue SaaS dashboards.
@@ -41,10 +45,11 @@ Avoid:
 
 ## Product Interpretation
 
-The landing and invitation experience may be more cinematic. The authenticated app should use the same materials in a quieter way: dark shell, glass panels, clean tables, timeline views, lesson cards, progress states, and focused empty states.
+The landing and invitation experience should be warm, aspirational, and clear. The authenticated app should become more operational after login: light workspace surfaces, clean tables, timeline views, lesson cards, progress states, and focused empty states.
 
 ## Acceptance Criteria
 
 - Screens look related to `prompt-design.md` without copying its space-travel content.
 - The platform feels intentionally designed, not assembled from default components.
 - Operational screens remain easy to scan for mentors and mentees.
+- The overall mood encourages learning instead of feeling heavy, cold, or depressive.

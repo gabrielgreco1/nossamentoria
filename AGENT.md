@@ -57,15 +57,15 @@ Core product areas:
 
 ## Visual Direction
 
-`prompt-design.md` is the raw design prompt. `plan/07-visual-identity-and-design/` is the adapted source of truth for NossaMentoria.
+`prompt-design.md` is only historical raw inspiration. `plan/07-visual-identity-and-design/` is the adapted source of truth for NossaMentoria.
 
 For UI work:
 
-- Use cinematic dark surfaces and liquid-glass components.
-- Use Instrument Serif for expressive italic headings and Barlow for operational UI text.
-- Keep public/onboarding screens more cinematic and authenticated screens more dashboard-focused.
+- Use warm light surfaces, learning-oriented accents, and clear hierarchy.
+- Use Sora for headings and Inter for operational UI text.
+- Build public landing and authentication before private workspace screens.
 - Use restrained motion and respect reduced-motion preferences.
-- Do not introduce bright green branding, multicolor gradients, or generic SaaS styling unless a later spec explicitly changes the identity.
+- Do not introduce black/gray-dominant branding, giant italic serif headlines, bright green branding, multicolor gradients, or generic SaaS styling unless a later spec explicitly changes the identity.
 
 ## Kanban Editing Protocol
 

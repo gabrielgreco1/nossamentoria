@@ -2,11 +2,11 @@
 
 ## Motion Source
 
-`prompt-design.md` specifies Framer Motion entrance animations, blur-in text, and custom JavaScript video crossfades. Use these as the reference for the platform's motion language.
+`prompt-design.md` specified Framer Motion entrance animations, blur-in text, and custom JavaScript video crossfades. Use only the motion principles that support the updated learning-oriented identity.
 
 ## Motion Principles
 
-- Motion should feel smooth, premium, and calm.
+- Motion should feel smooth, optimistic, premium, and calm.
 - Use animation to orient the user, not to entertain.
 - Avoid constant motion in dense dashboard areas.
 - Respect reduced-motion preferences.
@@ -15,7 +15,8 @@
 
 Use Framer Motion-style entrances for:
 
-- Public/onboarding hero copy.
+- Public landing hero copy.
+- Auth panels and invitation acceptance.
 - Auth panels.
 - Dashboard sections on first load.
 - Empty states.
@@ -29,13 +30,13 @@ Default animation:
 
 ## Blur Text
 
-The word-by-word blur-in pattern from the prompt can be used only for:
+Word-by-word or line-by-line entrance patterns can be used only for:
 
 - Landing hero headline.
 - Invitation welcome headline.
 - Major onboarding moments.
 
-Do not use word-by-word animation for dashboard headings, tables, forms, or repeated UI.
+Do not use giant italic animated serif copy. Do not use word-by-word animation for dashboard headings, tables, forms, or repeated UI.
 
 ## Video Usage
 
@@ -46,7 +47,7 @@ Full-bleed video is allowed for:
 - Invitation acceptance.
 - First-run onboarding.
 
-Avoid full-bleed video behind operational dashboards. If media appears in the app, keep it contained and non-distracting.
+Avoid dark atmospheric media that makes the product feel heavy. Prefer learning-oriented visuals: study environments, collaborative sessions, diagrams, code, notes, or abstract progress. Avoid full-bleed video behind operational dashboards. If media appears in the app, keep it contained and non-distracting.
 
 ## Video Crossfade
 
