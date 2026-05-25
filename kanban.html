@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NossaMentoria Kanban</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --ink: #172033;
+      --muted: #657084;
+      --line: #d9e0ea;
+      --panel: #ffffff;
+      --todo: #64748b;
+      --dev: #2563eb;
+      --test: #b7791f;
+      --done: #16803c;
+      --radius: 8px;
+      --shadow: 0 12px 28px rgba(20, 32, 51, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    header {
+      padding: 24px 28px 12px;
+    }
+
+    h1, h2, h3, p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-top: 10px;
+      max-width: 920px;
+      line-height: 1.5;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(260px, 1fr));
+      gap: 16px;
+      padding: 16px 28px 28px;
+      align-items: start;
+      overflow-x: auto;
+    }
+
+    .column {
+      background: #eef2f7;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      min-height: calc(100vh - 150px);
+      padding: 12px;
+    }
+
+    .column h2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+
+    .status {
+      border-radius: 999px;
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 4px 8px;
+      text-transform: uppercase;
+    }
+
+    .todo { background: var(--todo); }
+    .dev { background: var(--dev); }
+    .test { background: var(--test); }
+    .done { background: var(--done); }
+
+    .cards {
+      display: grid;
+      gap: 10px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+
+    .card h3 {
+      font-size: 0.98rem;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.45;
+      margin-bottom: 10px;
+    }
+
+    .path {
+      display: block;
+      color: #1f5fbf;
+      font-size: 0.76rem;
+      overflow-wrap: anywhere;
+      margin-bottom: 8px;
+    }
+
+    .phase {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 8px;
+    }
+
+    @media (max-width: 1100px) {
+      .board {
+        grid-template-columns: repeat(4, 280px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>NossaMentoria Kanban</h1>
+    <p class="subtitle">Static project control board. Each card maps to a Markdown spec under <strong>plan/</strong>. Agents must move cards by editing this HTML after reading <strong>AGENT.md</strong>.</p>
+  </header>
+
+  <main class="board" aria-label="NossaMentoria development board">
+    <section class="column" data-status="to-do">
+      <h2>To Do <span class="status todo">Backlog</span></h2>
+      <div class="cards">
+        <article class="card" data-file="plan/00-product-foundation/README.md"><h3>Product Foundation Overview</h3><a class="path" href="plan/00-product-foundation/README.md">plan/00-product-foundation/README.md</a><p>Defines the purpose and reading order for the product foundation specs.</p><span class="phase">00 Foundation</span></article>
+        <article class="card" data-file="plan/00-product-foundation/product-vision.md"><h3>Product Vision</h3><a class="path" href="plan/00-product-foundation/product-vision.md">plan/00-product-foundation/product-vision.md</a><p>Clarifies why NossaMentoria exists and what the free MVP must achieve.</p><span class="phase">00 Foundation</span></article>
+        <article class="card" data-file="plan/00-product-foundation/user-personas.md"><h3>User Personas</h3><a class="path" href="plan/00-product-foundation/user-personas.md">plan/00-product-foundation/user-personas.md</a><p>Describes mentors, mentees, admins, and mixed users.</p><span class="phase">00 Foundation</span></article>
+        <article class="card" data-file="plan/00-product-foundation/success-metrics.md"><h3>Success Metrics</h3><a class="path" href="plan/00-product-foundation/success-metrics.md">plan/00-product-foundation/success-metrics.md</a><p>Defines MVP success signals without monetization.</p><span class="phase">00 Foundation</span></article>
+        <article class="card" data-file="plan/00-product-foundation/glossary.md"><h3>Glossary</h3><a class="path" href="plan/00-product-foundation/glossary.md">plan/00-product-foundation/glossary.md</a><p>Standardizes product terms for future specs and code.</p><span class="phase">00 Foundation</span></article>
+
+        <article class="card" data-file="plan/01-domain-and-permissions/README.md"><h3>Domain And Permissions Overview</h3><a class="path" href="plan/01-domain-and-permissions/README.md">plan/01-domain-and-permissions/README.md</a><p>Introduces role, access, invitation, and relationship specs.</p><span class="phase">01 Domain</span></article>
+        <article class="card" data-file="plan/01-domain-and-permissions/roles-and-access.md"><h3>Roles And Access</h3><a class="path" href="plan/01-domain-and-permissions/roles-and-access.md">plan/01-domain-and-permissions/roles-and-access.md</a><p>Specifies admin, mentor, mentee, and mixed role behavior.</p><span class="phase">01 Domain</span></article>
+        <article class="card" data-file="plan/01-domain-and-permissions/invitation-flow.md"><h3>Invitation Flow</h3><a class="path" href="plan/01-domain-and-permissions/invitation-flow.md">plan/01-domain-and-permissions/invitation-flow.md</a><p>Defines invite-only onboarding and acceptance states.</p><span class="phase">01 Domain</span></article>
+        <article class="card" data-file="plan/01-domain-and-permissions/mentor-mentee-relationship.md"><h3>Mentor Mentee Relationship</h3><a class="path" href="plan/01-domain-and-permissions/mentor-mentee-relationship.md">plan/01-domain-and-permissions/mentor-mentee-relationship.md</a><p>Defines how mentors and mentees connect and operate.</p><span class="phase">01 Domain</span></article>
+        <article class="card" data-file="plan/01-domain-and-permissions/domain-model.md"><h3>Domain Model</h3><a class="path" href="plan/01-domain-and-permissions/domain-model.md">plan/01-domain-and-permissions/domain-model.md</a><p>Lists core entities and relationships for implementation.</p><span class="phase">01 Domain</span></article>
+
+        <article class="card" data-file="plan/02-mentorship-lifecycle/README.md"><h3>Mentorship Lifecycle Overview</h3><a class="path" href="plan/02-mentorship-lifecycle/README.md">plan/02-mentorship-lifecycle/README.md</a><p>Introduces the end-to-end mentorship setup and tracking flow.</p><span class="phase">02 Lifecycle</span></article>
+        <article class="card" data-file="plan/02-mentorship-lifecycle/picking-and-inviting-students.md"><h3>Picking And Inviting Students</h3><a class="path" href="plan/02-mentorship-lifecycle/picking-and-inviting-students.md">plan/02-mentorship-lifecycle/picking-and-inviting-students.md</a><p>Specifies mentor actions to pick, invite, or accept mentees.</p><span class="phase">02 Lifecycle</span></article>
+        <article class="card" data-file="plan/02-mentorship-lifecycle/mentorship-plan-spec.md"><h3>Mentorship Plan Spec</h3><a class="path" href="plan/02-mentorship-lifecycle/mentorship-plan-spec.md">plan/02-mentorship-lifecycle/mentorship-plan-spec.md</a><p>Defines plan duration, goals, topics, content, and outcomes.</p><span class="phase">02 Lifecycle</span></article>
+        <article class="card" data-file="plan/02-mentorship-lifecycle/lesson-template-spec.md"><h3>Lesson Template Spec</h3><a class="path" href="plan/02-mentorship-lifecycle/lesson-template-spec.md">plan/02-mentorship-lifecycle/lesson-template-spec.md</a><p>Defines reusable mock lessons and plan seeding.</p><span class="phase">02 Lifecycle</span></article>
+        <article class="card" data-file="plan/02-mentorship-lifecycle/progress-tracking-spec.md"><h3>Progress Tracking Spec</h3><a class="path" href="plan/02-mentorship-lifecycle/progress-tracking-spec.md">plan/02-mentorship-lifecycle/progress-tracking-spec.md</a><p>Defines completed lessons, applied content, notes, and progress.</p><span class="phase">02 Lifecycle</span></article>
+
+        <article class="card" data-file="plan/03-content-and-classes/README.md"><h3>Content And Classes Overview</h3><a class="path" href="plan/03-content-and-classes/README.md">plan/03-content-and-classes/README.md</a><p>Introduces specs for content uploads and class organization.</p><span class="phase">03 Content</span></article>
+        <article class="card" data-file="plan/03-content-and-classes/content-library-spec.md"><h3>Content Library Spec</h3><a class="path" href="plan/03-content-and-classes/content-library-spec.md">plan/03-content-and-classes/content-library-spec.md</a><p>Defines the mentor content library and reusable materials.</p><span class="phase">03 Content</span></article>
+        <article class="card" data-file="plan/03-content-and-classes/upload-materials-spec.md"><h3>Upload Materials Spec</h3><a class="path" href="plan/03-content-and-classes/upload-materials-spec.md">plan/03-content-and-classes/upload-materials-spec.md</a><p>Defines uploading slides, HTML files, links, and documents.</p><span class="phase">03 Content</span></article>
+        <article class="card" data-file="plan/03-content-and-classes/lesson-organization-spec.md"><h3>Lesson Organization Spec</h3><a class="path" href="plan/03-content-and-classes/lesson-organization-spec.md">plan/03-content-and-classes/lesson-organization-spec.md</a><p>Defines lesson ordering, grouping, and plan attachment.</p><span class="phase">03 Content</span></article>
+        <article class="card" data-file="plan/03-content-and-classes/class-session-records.md"><h3>Class Session Records</h3><a class="path" href="plan/03-content-and-classes/class-session-records.md">plan/03-content-and-classes/class-session-records.md</a><p>Defines session logs, applied topics, and follow-up actions.</p><span class="phase">03 Content</span></article>
+
+        <article class="card" data-file="plan/04-calendar-and-communication/README.md"><h3>Calendar And Communication Overview</h3><a class="path" href="plan/04-calendar-and-communication/README.md">plan/04-calendar-and-communication/README.md</a><p>Introduces scheduling, notifications, and communication specs.</p><span class="phase">04 Calendar</span></article>
+        <article class="card" data-file="plan/04-calendar-and-communication/calendar-spec.md"><h3>Calendar Spec</h3><a class="path" href="plan/04-calendar-and-communication/calendar-spec.md">plan/04-calendar-and-communication/calendar-spec.md</a><p>Defines platform calendar behavior for mentorship sessions.</p><span class="phase">04 Calendar</span></article>
+        <article class="card" data-file="plan/04-calendar-and-communication/scheduling-flow.md"><h3>Scheduling Flow</h3><a class="path" href="plan/04-calendar-and-communication/scheduling-flow.md">plan/04-calendar-and-communication/scheduling-flow.md</a><p>Defines proposal, confirmation, reschedule, and cancellation flows.</p><span class="phase">04 Calendar</span></article>
+        <article class="card" data-file="plan/04-calendar-and-communication/notifications-spec.md"><h3>Notifications Spec</h3><a class="path" href="plan/04-calendar-and-communication/notifications-spec.md">plan/04-calendar-and-communication/notifications-spec.md</a><p>Defines simple MVP notifications without complex messaging infra.</p><span class="phase">04 Calendar</span></article>
+        <article class="card" data-file="plan/04-calendar-and-communication/communication-notes-spec.md"><h3>Communication Notes Spec</h3><a class="path" href="plan/04-calendar-and-communication/communication-notes-spec.md">plan/04-calendar-and-communication/communication-notes-spec.md</a><p>Defines notes and communication history for mentorship context.</p><span class="phase">04 Calendar</span></article>
+
+        <article class="card" data-file="plan/05-mvp-implementation-roadmap/README.md"><h3>MVP Roadmap Overview</h3><a class="path" href="plan/05-mvp-implementation-roadmap/README.md">plan/05-mvp-implementation-roadmap/README.md</a><p>Introduces implementation sequencing and technical assumptions.</p><span class="phase">05 Roadmap</span></article>
+        <article class="card" data-file="plan/05-mvp-implementation-roadmap/technical-stack.md"><h3>Technical Stack</h3><a class="path" href="plan/05-mvp-implementation-roadmap/technical-stack.md">plan/05-mvp-implementation-roadmap/technical-stack.md</a><p>Defines Next.js and Supabase as the expected baseline.</p><span class="phase">05 Roadmap</span></article>
+        <article class="card" data-file="plan/05-mvp-implementation-roadmap/database-and-storage-plan.md"><h3>Database And Storage Plan</h3><a class="path" href="plan/05-mvp-implementation-roadmap/database-and-storage-plan.md">plan/05-mvp-implementation-roadmap/database-and-storage-plan.md</a><p>Defines initial tables, relationships, and storage buckets.</p><span class="phase">05 Roadmap</span></article>
+        <article class="card" data-file="plan/05-mvp-implementation-roadmap/frontend-app-structure.md"><h3>Frontend App Structure</h3><a class="path" href="plan/05-mvp-implementation-roadmap/frontend-app-structure.md">plan/05-mvp-implementation-roadmap/frontend-app-structure.md</a><p>Defines dashboard-first navigation and major screens.</p><span class="phase">05 Roadmap</span></article>
+        <article class="card" data-file="plan/05-mvp-implementation-roadmap/development-phases.md"><h3>Development Phases</h3><a class="path" href="plan/05-mvp-implementation-roadmap/development-phases.md">plan/05-mvp-implementation-roadmap/development-phases.md</a><p>Defines implementation order from foundation to usable MVP.</p><span class="phase">05 Roadmap</span></article>
+
+        <article class="card" data-file="plan/06-deploy-and-operations/README.md"><h3>Deploy And Operations Overview</h3><a class="path" href="plan/06-deploy-and-operations/README.md">plan/06-deploy-and-operations/README.md</a><p>Introduces deployment, QA, and post-launch operations specs.</p><span class="phase">06 Deploy</span></article>
+        <article class="card" data-file="plan/06-deploy-and-operations/deployment-plan.md"><h3>Deployment Plan</h3><a class="path" href="plan/06-deploy-and-operations/deployment-plan.md">plan/06-deploy-and-operations/deployment-plan.md</a><p>Defines the expected deployment path for the MVP.</p><span class="phase">06 Deploy</span></article>
+        <article class="card" data-file="plan/06-deploy-and-operations/environment-variables.md"><h3>Environment Variables</h3><a class="path" href="plan/06-deploy-and-operations/environment-variables.md">plan/06-deploy-and-operations/environment-variables.md</a><p>Defines required configuration for local and production setups.</p><span class="phase">06 Deploy</span></article>
+        <article class="card" data-file="plan/06-deploy-and-operations/qa-checklist.md"><h3>QA Checklist</h3><a class="path" href="plan/06-deploy-and-operations/qa-checklist.md">plan/06-deploy-and-operations/qa-checklist.md</a><p>Defines manual and automated acceptance checks.</p><span class="phase">06 Deploy</span></article>
+        <article class="card" data-file="plan/06-deploy-and-operations/post-launch-operations.md"><h3>Post Launch Operations</h3><a class="path" href="plan/06-deploy-and-operations/post-launch-operations.md">plan/06-deploy-and-operations/post-launch-operations.md</a><p>Defines how to operate the free private community after launch.</p><span class="phase">06 Deploy</span></article>
+      </div>
+    </section>
+
+    <section class="column" data-status="in-development">
+      <h2>In Development <span class="status dev">Active</span></h2>
+      <div class="cards"></div>
+    </section>
+
+    <section class="column" data-status="in-tests">
+      <h2>In Tests <span class="status test">Verify</span></h2>
+      <div class="cards"></div>
+    </section>
+
+    <section class="column" data-status="done">
+      <h2>Done <span class="status done">Complete</span></h2>
+      <div class="cards"></div>
+    </section>
+  </main>
+</body>
+</html>
