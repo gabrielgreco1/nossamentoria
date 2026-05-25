@@ -1,0 +1,27 @@
+.chip {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  padding: 0 10px;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.default {
+  background: rgba(15, 118, 110, 0.08);
+  color: var(--brand-teal-dark);
+}
+
+.warning {
+  border-color: rgba(245, 184, 75, 0.48);
+  background: rgba(245, 184, 75, 0.18);
+  color: #735116;
+}
+
+.muted {
+  color: var(--text-muted);
+}

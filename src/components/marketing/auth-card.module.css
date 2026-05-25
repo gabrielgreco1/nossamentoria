@@ -1,0 +1,44 @@
+.wrap {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 32px 20px;
+}
+
+.brand {
+  position: fixed;
+  top: 22px;
+  left: 24px;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+}
+
+.card {
+  display: grid;
+  width: min(100%, 480px);
+  gap: 16px;
+  padding: 30px;
+}
+
+.eyebrow {
+  color: var(--brand-teal);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.card h1 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2rem, 7vw, 3.4rem);
+  line-height: 1.02;
+}
+
+.card p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}

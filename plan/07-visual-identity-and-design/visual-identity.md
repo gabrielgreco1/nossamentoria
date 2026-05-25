@@ -2,7 +2,9 @@
 
 ## Source Reference
 
-The visual identity was originally derived from `prompt-design.md`, but the product direction has changed. The black cinematic interface, giant italic serif headings, and gray-heavy command-center mood are not the target for NossaMentoria.
+The visual identity was originally derived from `prompt-design.md`, but the product direction has changed. The black cinematic interface, giant italic serif headings, space-travel content, and gray-heavy command-center mood are not the target for NossaMentoria.
+
+Keep the prompt's interaction quality: large intentional sections, entrance choreography, blur-in hero text, layered foreground panels, and optional video crossfade engineering. Translate those mechanics into a warm learning product.
 
 For NossaMentoria, the identity is mentorship-focused: guided, optimistic, precise, warm, and modern.
 
@@ -31,7 +33,7 @@ Use:
 - Soft translucent panels only where they improve hierarchy.
 - Confident sans-serif typography for both brand and operational UI.
 - Occasional editorial serif or handwritten warmth only for small accents, never as the default page-title style.
-- Subtle motion on page entry and state changes.
+- Motion inspired by `prompt-design.md`, adapted to learning: blur-in hero text, staged entrances, and soft background movement.
 
 Avoid:
 
@@ -42,10 +44,11 @@ Avoid:
 - Generic blue SaaS dashboards.
 - Decorative space copy or literal astronaut/planet language.
 - Marketing-first layouts inside the authenticated app.
+- English user-facing copy in product-owned UI.
 
 ## Product Interpretation
 
-The landing and invitation experience should be warm, aspirational, and clear. The authenticated app should become more operational after login: light workspace surfaces, clean tables, timeline views, lesson cards, progress states, and focused empty states.
+The landing and invitation experience should be warm, aspirational, clear, and motion-forward. The authenticated app should become more operational after login: light workspace surfaces, clean tables, timeline views, lesson cards, progress states, and focused empty states.
 
 ## Acceptance Criteria
 
@@ -53,3 +56,4 @@ The landing and invitation experience should be warm, aspirational, and clear. T
 - The platform feels intentionally designed, not assembled from default components.
 - Operational screens remain easy to scan for mentors and mentees.
 - The overall mood encourages learning instead of feeling heavy, cold, or depressive.
+- User-facing screens are written in Portuguese.

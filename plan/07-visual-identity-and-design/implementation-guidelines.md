@@ -2,9 +2,9 @@
 
 ## Source Of Truth
 
-Use this folder as the design source of truth. `prompt-design.md` remains the raw inspiration prompt, but implementation decisions should follow these adapted specs.
+Use this folder as the design source of truth. `prompt-design.md` remains the motion and interaction reference, but implementation decisions should follow these adapted specs.
 
-The current adapted direction supersedes the original dark cinematic prompt. Do not implement black/gray-dominant UI or giant italic serif headings unless a later spec explicitly reintroduces them for a narrow use case.
+The current adapted direction supersedes the original dark cinematic prompt for visual styling. Do not implement black/gray-dominant UI, space-travel content, or giant italic serif headings unless a later spec explicitly reintroduces them for a narrow use case.
 
 ## Stack Adaptation
 
@@ -17,6 +17,7 @@ For the real platform:
 - Implement design tokens in the app's CSS/Tailwind setup.
 - Use package-managed Framer Motion if motion is implemented.
 - Use reusable React components for surfaces, buttons, cards, forms, auth panels, landing sections, and app shell.
+- Keep user-facing copy in Portuguese.
 
 ## Required Components
 
@@ -53,6 +54,7 @@ Create shared components before duplicating design code:
 - Keep operational pages fast and scannable.
 - Reuse the same typography, spacing, and radius tokens across app areas.
 - Implement landing and auth before treating the dashboard as the root experience.
+- Preserve the motion spirit of `prompt-design.md` on public/onboarding screens without copying its colors, videos, fonts, or space theme.
 
 ## Acceptance Criteria
 

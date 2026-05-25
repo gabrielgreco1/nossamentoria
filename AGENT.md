@@ -57,14 +57,15 @@ Core product areas:
 
 ## Visual Direction
 
-`prompt-design.md` is only historical raw inspiration. `plan/07-visual-identity-and-design/` is the adapted source of truth for NossaMentoria.
+`prompt-design.md` remains the motion and interaction reference. `plan/07-visual-identity-and-design/` is the adapted source of truth for NossaMentoria's colors, typography, content tone, layout rules, and product-specific visual decisions.
 
 For UI work:
 
+- Write user-facing UI copy in Portuguese by default.
 - Use warm light surfaces, learning-oriented accents, and clear hierarchy.
 - Use Sora for headings and Inter for operational UI text.
 - Build public landing and authentication before private workspace screens.
-- Use restrained motion and respect reduced-motion preferences.
+- Use the motion language from `prompt-design.md` where appropriate: Framer Motion entrances, blur-in hero text, full-height public sections, and requestAnimationFrame video crossfades if video is added.
 - Do not introduce black/gray-dominant branding, giant italic serif headlines, bright green branding, multicolor gradients, or generic SaaS styling unless a later spec explicitly changes the identity.
 
 ## Kanban Editing Protocol

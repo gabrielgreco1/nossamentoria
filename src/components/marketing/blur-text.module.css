@@ -1,0 +1,25 @@
+.text {
+  display: flex;
+  max-width: 720px;
+  flex-wrap: wrap;
+  row-gap: 0.16em;
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2.9rem, 6.4vw, 5.25rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.04;
+}
+
+.word {
+  display: inline-block;
+  margin-right: 0.27em;
+}
+
+@media (max-width: 640px) {
+  .text {
+    font-size: clamp(2.65rem, 15vw, 4.25rem);
+    line-height: 1.02;
+  }
+}

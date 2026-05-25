@@ -1,0 +1,52 @@
+.summary,
+.state {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.62);
+  padding: 14px;
+}
+
+.summary svg {
+  color: var(--brand-teal);
+}
+
+.state svg {
+  color: var(--accent-coral);
+}
+
+.summary p,
+.state p {
+  margin-top: 8px;
+  font-size: 0.92rem;
+}
+
+.state strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+
+.form {
+  display: grid;
+  gap: 14px;
+}
+
+.form label {
+  display: grid;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 750;
+}
+
+.form input {
+  min-height: 48px;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--text-primary);
+  padding: 0 14px;
+}

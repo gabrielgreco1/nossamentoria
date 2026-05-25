@@ -18,7 +18,7 @@ Allowed elements:
 - Warm illustrated, photographic, or abstract learning media.
 - Clear auth cards.
 - Confident sans-serif hero headings.
-- Short motion that creates momentum.
+- Motion patterns from `prompt-design.md`: blur-in hero text, staged section entrances, layered foreground cards, and full-height public sections.
 
 Landing page must include:
 
@@ -27,6 +27,8 @@ Landing page must include:
 - Sign-in action for invited users.
 - Learning workflow preview.
 - Trust-building copy for mentors and mentees.
+
+Landing page copy must be in Portuguese.
 
 ## Authenticated App Shell
 
@@ -38,6 +40,7 @@ Use:
 - Compact dashboard panels.
 - Clear page title in sans-serif.
 - Operational content in Inter.
+- Portuguese UI labels and empty states.
 
 Primary mentor dashboard should surface:
 
@@ -83,3 +86,4 @@ Calendar:
 - The app does not become a marketing page after login.
 - Every major screen uses the visual identity without sacrificing scanability.
 - Empty states guide the next operational action.
+- User-facing UI copy is Portuguese-first.
