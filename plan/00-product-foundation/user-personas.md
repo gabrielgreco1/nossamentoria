@@ -52,3 +52,7 @@ Primary needs:
 ## Design Implication
 
 The product should always make the current context visible: admin, mentor, mentee, or mixed role. Dashboard cards should be role-aware.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

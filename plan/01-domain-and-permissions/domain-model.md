@@ -36,3 +36,7 @@ Keep identifiers stable and use explicit foreign keys. Do not encode important r
 - Each domain object has clear ownership.
 - Query scoping can be implemented with these relationships.
 - Uploaded content can be traced to owner and usage context.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

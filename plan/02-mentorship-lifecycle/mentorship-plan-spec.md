@@ -43,3 +43,7 @@ A mentorship plan is the main structure for a mentee's learning path.
 - A mentee can clearly see their active plan.
 - A mentor can see which plans are draft, active, paused, or completed.
 - A plan cannot be active without a mentor, mentee, relationship, and goal.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

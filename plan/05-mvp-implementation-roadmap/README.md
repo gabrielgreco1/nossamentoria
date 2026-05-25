@@ -18,3 +18,7 @@ Use Next.js for the application and Supabase for authentication, database, and s
 - The MVP can be built incrementally.
 - Each development phase produces usable product behavior.
 - Technical decisions support invite-only, multi-mentor operation.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

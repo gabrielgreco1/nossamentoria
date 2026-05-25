@@ -34,3 +34,7 @@ The MVP is successful if it makes real mentorship easier to run, not if it gener
 - Conversion to paid plans.
 - Public marketplace growth.
 - Advertising performance.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

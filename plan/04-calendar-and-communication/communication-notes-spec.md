@@ -30,3 +30,7 @@ Notes may belong to:
 - Notes are attached to meaningful context.
 - Mentors can record decisions and follow-ups.
 - Mentees can see shared next actions.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

@@ -36,3 +36,8 @@ Mentees should be able to see their plan, lessons, materials, calendar, progress
 - Prefer structured plans over loose notes.
 - Preserve history so every class has context.
 - Support growth to more mentors without overbuilding social features.
+- Express the product through the cinematic, liquid-glass visual identity defined in `plan/07-visual-identity-and-design/`, while keeping authenticated screens practical and dashboard-first.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

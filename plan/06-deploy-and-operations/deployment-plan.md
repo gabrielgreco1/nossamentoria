@@ -28,3 +28,7 @@ The first launch should include:
 - Production users cannot bypass invitation flow.
 - Uploaded files work in production.
 - Mentor and mentee accounts see only their allowed data.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

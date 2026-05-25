@@ -10,10 +10,11 @@ This file is the mandatory operating manual for any development agent working on
 4. Pick one card from `To Do`, unless the user explicitly names another card.
 5. Move the selected card to `In Development` by editing `kanban.html`.
 6. Open the Markdown spec linked by the card.
-7. Implement only the behavior described in that spec.
-8. Move the card to `In Tests` while validating.
-9. Run the relevant checks for the touched area.
-10. Move the card to `Done` only after implementation and verification are complete.
+7. If the task changes UI, also read `plan/07-visual-identity-and-design/` before implementing.
+8. Implement only the behavior described in that spec and the shared design direction.
+9. Move the card to `In Tests` while validating.
+10. Run the relevant checks for the touched area.
+11. Move the card to `Done` only after implementation and verification are complete.
 
 ## Status Rules
 
@@ -40,7 +41,7 @@ The planned stack is:
 
 - Next.js for the web application.
 - Supabase for authentication, database, and file storage.
-- A responsive dashboard-first interface, not a marketing landing page.
+- A responsive dashboard-first interface using the visual identity in `plan/07-visual-identity-and-design/`.
 
 Core product areas:
 
@@ -53,6 +54,18 @@ Core product areas:
 - Calendar scheduling.
 - Session completion tracking.
 - Progress notes and next actions.
+
+## Visual Direction
+
+`prompt-design.md` is the raw design prompt. `plan/07-visual-identity-and-design/` is the adapted source of truth for NossaMentoria.
+
+For UI work:
+
+- Use cinematic dark surfaces and liquid-glass components.
+- Use Instrument Serif for expressive italic headings and Barlow for operational UI text.
+- Keep public/onboarding screens more cinematic and authenticated screens more dashboard-focused.
+- Use restrained motion and respect reduced-motion preferences.
+- Do not introduce bright green branding, multicolor gradients, or generic SaaS styling unless a later spec explicitly changes the identity.
 
 ## Kanban Editing Protocol
 

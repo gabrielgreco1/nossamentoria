@@ -37,3 +37,7 @@ After the mentee accepts:
 - Mentors can start mentorship without admin manually creating every relationship.
 - Admin retains visibility into invitations and active relationships.
 - The next suggested action after connecting is plan creation.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

@@ -31,3 +31,7 @@ Run this checklist before marking launch or major feature cards as done.
 
 - Critical flows pass with at least one mentor and one mentee account.
 - Any skipped test is documented before release.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

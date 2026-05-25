@@ -33,3 +33,7 @@ Slides exported as HTML are a core use case.
 - Upload success and failure states are clear.
 - Uploaded materials can be reused.
 - Mentees can access only materials shared with their plan or lesson.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

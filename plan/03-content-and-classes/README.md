@@ -18,3 +18,7 @@ The platform must support Gabriel uploading slides and `.html` files and attachi
 - Mentors can organize content before a class.
 - Mentors can attach content to a lesson.
 - After a class, mentors can record what was actually applied.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

@@ -33,3 +33,7 @@ Use RLS policies so:
 - Tables support the MVP workflows without storing core relationships only as JSON.
 - Files are connected to database records.
 - Access policies can be tested with mentor and mentee accounts.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

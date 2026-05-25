@@ -36,3 +36,7 @@ Collect feedback manually at first:
 - The platform can be operated manually without paid features.
 - Admin can keep the private community controlled.
 - Product improvements come from real mentor and mentee usage.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

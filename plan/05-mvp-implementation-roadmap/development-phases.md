@@ -29,3 +29,7 @@ Implement QA fixes, responsive checks, RLS tests, seed data, deployment configur
 - Each phase leaves the app in a runnable state.
 - Later phases do not require rewriting core domain relationships.
 - Deployment happens only after auth, access, and core flows are verified.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.

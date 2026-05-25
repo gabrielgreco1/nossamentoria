@@ -35,3 +35,7 @@ The mentee should see:
 - One mentor may have many mentees.
 - One mentee may eventually have multiple mentors, but the MVP interface can focus on one active mentor relationship at a time.
 - Plans must belong to a specific mentor/mentee relationship.
+
+## Global Design Direction
+
+All UI-facing implementation from this spec must follow `plan/07-visual-identity-and-design/`. That folder adapts `prompt-design.md` into the official NossaMentoria visual identity: cinematic dark surfaces, liquid-glass components, Instrument Serif headings, Barlow operational text, restrained motion, and dashboard-first usability.
