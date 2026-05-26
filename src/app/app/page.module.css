@@ -8,6 +8,117 @@
   margin-top: 14px;
 }
 
+.visionGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(420px, 1.18fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.visionPanel {
+  display: grid;
+  align-content: start;
+  gap: 20px;
+  padding: 22px;
+}
+
+.panelTitle {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.panelTitle svg {
+  flex: 0 0 auto;
+  color: var(--brand-blue);
+  margin-top: 4px;
+}
+
+.panelTitle span {
+  color: var(--brand-teal);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.panelTitle h2 {
+  margin: 4px 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.45rem;
+  line-height: 1.18;
+}
+
+.visionPanel ul {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.visionPanel li {
+  border-left: 3px solid rgba(15, 118, 110, 0.42);
+  color: var(--text-secondary);
+  line-height: 1.45;
+  padding-left: 12px;
+}
+
+.roleGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.roleCard {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 270px;
+  padding: 18px;
+}
+
+.icon {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(15, 118, 110, 0.09);
+  color: var(--brand-teal);
+}
+
+.roleCard h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.15rem;
+}
+
+.roleCard p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.roleCard ul {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  margin: 4px 0 0;
+  list-style: none;
+}
+
+.roleCard li {
+  border-radius: var(--radius-pill);
+  background: rgba(15, 118, 110, 0.07);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 650;
+  padding: 7px 10px;
+}
+
 .setup {
   display: grid;
   gap: 12px;
@@ -35,7 +146,18 @@
 }
 
 @media (max-width: 960px) {
-  .grid {
+  .grid,
+  .visionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .roleGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .roleGrid {
     grid-template-columns: 1fr;
   }
 }

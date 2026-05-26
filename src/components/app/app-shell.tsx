@@ -1,4 +1,4 @@
-import { BookOpen, CalendarDays, Files, LayoutDashboard, UsersRound } from "lucide-react";
+import { BookOpen, CalendarDays, Files, LayoutDashboard, ShieldCheck, UsersRound } from "lucide-react";
 import type { ReactNode } from "react";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { PillChip } from "@/components/ui/pill-chip";
@@ -6,6 +6,7 @@ import styles from "./app-shell.module.css";
 
 const navigation = [
   { label: "Painel", icon: LayoutDashboard },
+  { label: "Acessos", icon: ShieldCheck },
   { label: "Mentorados", icon: UsersRound },
   { label: "Planos", icon: BookOpen },
   { label: "Materiais", icon: Files },
@@ -34,8 +35,13 @@ export function AppShell({ children }: { children: ReactNode }) {
         </nav>
 
         <div className={styles.context}>
-          <PillChip>Contexto mentor</PillChip>
-          <span>A navegação por papel está pronta para receber o estado real de autenticação.</span>
+          <span className={styles.contextLabel}>Contexto atual</span>
+          <div className={styles.roleChips}>
+            <PillChip>Mentor</PillChip>
+            <PillChip tone="muted">Mentorado</PillChip>
+            <PillChip tone="muted">Admin</PillChip>
+          </div>
+          <span>Usuários mistos terão papéis separados para evitar confusão entre mentorias, notas e materiais.</span>
         </div>
       </GlassPanel>
 

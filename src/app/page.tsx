@@ -78,13 +78,14 @@ export default async function Home() {
 
         <div className={styles.heroCopy}>
           <Reveal delay={0.15}>
-            <PillChip>Plataforma de mentoria por convite</PillChip>
+            <PillChip>MVP gratuito e privado por convite</PillChip>
           </Reveal>
           <BlurText text="Mentoria em tecnologia com trilha, contexto e progresso." />
           <Reveal delay={0.75}>
             <p>
               A NossaMentoria ajuda mentores e mentorados a transformar links, chamadas, notas e
-              aulas soltas em uma jornada organizada de aprendizado.
+              aulas soltas em uma jornada organizada de aprendizado, com planos, materiais,
+              encontros e progresso no mesmo lugar.
             </p>
           </Reveal>
           <Reveal delay={1}>
@@ -152,9 +153,9 @@ export default async function Home() {
               <LockKeyhole size={24} />
               <h3>Acesso privado desde o começo</h3>
               <p>
-                Não existe cadastro público aberto. Novas contas só nascem de convites válidos,
-                e convites expirados, revogados ou já usados são bloqueados antes da criação da
-                conta.
+                Não existe cadastro público aberto, plano pago ou marketplace no MVP. Novas contas
+                só nascem de convites válidos, e convites expirados, revogados ou já usados são
+                bloqueados antes da criação da conta.
               </p>
               <GlassButton href="/login" variant="secondary">
                 Entrar com email
