@@ -8,6 +8,27 @@
   margin-top: 14px;
 }
 
+.sectionHeading {
+  display: grid;
+  gap: 8px;
+}
+
+.sectionHeading span {
+  color: var(--brand-teal);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.sectionHeading h2 {
+  max-width: 820px;
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.16;
+}
+
 .visionGrid {
   display: grid;
   grid-template-columns: minmax(0, 0.82fr) minmax(420px, 1.18fr);
@@ -119,6 +140,136 @@
   padding: 7px 10px;
 }
 
+.metricsSection {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.metricCard {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  min-height: 315px;
+  padding: 18px;
+}
+
+.metricHeader {
+  display: grid;
+  gap: 12px;
+}
+
+.metricHeader h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.12rem;
+}
+
+.metricHeader p {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.metricCard ul {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.metricCard li {
+  position: relative;
+  color: var(--text-secondary);
+  line-height: 1.42;
+  padding-left: 18px;
+}
+
+.metricCard li::before {
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-amber);
+  content: "";
+}
+
+.scopePanel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 18px;
+}
+
+.scopePanel > span {
+  color: var(--text-secondary);
+  font-weight: 750;
+}
+
+.scopePanel div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.glossarySection {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.glossaryIntro {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding: 22px;
+}
+
+.glossaryIntro p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.termGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.termCard {
+  display: grid;
+  gap: 8px;
+  min-height: 132px;
+  padding: 18px;
+}
+
+.termCard h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+}
+
+.termCard p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.48;
+}
+
 .setup {
   display: grid;
   gap: 12px;
@@ -154,10 +305,32 @@
   .roleGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .metricsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .glossarySection {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 620px) {
-  .roleGrid {
+  .roleGrid,
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .scopePanel {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .scopePanel div {
+    justify-content: flex-start;
+  }
+
+  .termGrid {
     grid-template-columns: 1fr;
   }
 }
