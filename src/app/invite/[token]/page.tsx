@@ -1,14 +1,15 @@
 import { Mail, ShieldAlert, ShieldCheck } from "lucide-react";
 import { redirect } from "next/navigation";
+import { requestLogin } from "@/app/login/actions";
 import { AuthCard } from "@/components/marketing/auth-card";
 import { GlassButton } from "@/components/ui/glass-button";
 import { PillChip } from "@/components/ui/pill-chip";
+import { acceptInvitationToken, getCurrentUser, validateInvitationToken } from "@/lib/auth";
 import {
-  acceptInvitationToken,
-  getCurrentUser,
-  validateInvitationToken
-} from "@/lib/auth";
-import { requestLogin } from "@/app/login/actions";
+  getInvitationBlockedReason,
+  getInvitationStatusLabel,
+  invitationFlowSteps
+} from "@/lib/invitations";
 import styles from "./page.module.css";
 
 type InvitePageProps = {
@@ -21,6 +22,7 @@ export default async function InvitePage({ params }: InvitePageProps) {
   const { token } = await params;
   const invitation = await validateInvitationToken(token);
   const user = await getCurrentUser();
+  const blockedReason = getInvitationBlockedReason(invitation.status);
 
   if (user && invitation.status === "valid") {
     const accepted = await acceptInvitationToken(token, user.id);
@@ -53,10 +55,8 @@ export default async function InvitePage({ params }: InvitePageProps) {
           <ShieldAlert size={22} />
           <div>
             <strong>{invitation.status === "setup" ? "Configuração necessária" : "Convite bloqueado"}</strong>
-            <p>
-              Peça um novo convite ao mentor ou administrador se este link expirou, foi revogado ou
-              já foi usado.
-            </p>
+            <PillChip tone="warning">{getInvitationStatusLabel(invitation.status)}</PillChip>
+            <p>{blockedReason ?? "Peça um novo convite ao mentor ou administrador."}</p>
           </div>
         </div>
         <GlassButton href="/login" variant="secondary">
@@ -82,6 +82,21 @@ export default async function InvitePage({ params }: InvitePageProps) {
           {invitation.role ? <p>Papel: {invitation.role}</p> : null}
         </div>
       </div>
+
+      <div className={styles.details} aria-label="Campos do convite">
+        <span>Status: {getInvitationStatusLabel(invitation.status)}</span>
+        <span>Email: {invitation.email ?? "definido no convite"}</span>
+        <span>Papel pretendido: {invitation.role ?? "definido pelo convite"}</span>
+        <span>Convidado por: {invitation.invitedByUserId ?? "mentor ou admin"}</span>
+        <span>Relação alvo: {invitation.mentorRelationshipTargetId ?? "nenhuma relação pré-definida"}</span>
+        <span>Expiração: {invitation.expiresAt ?? "definida pelo convite"}</span>
+      </div>
+
+      <ol className={styles.steps} aria-label="Fluxo de aceite do convite">
+        {invitationFlowSteps.map((step) => (
+          <li key={step}>{step}</li>
+        ))}
+      </ol>
 
       <form action={requestLogin} className={styles.form}>
         <input type="hidden" name="next" value={`/invite/${token}`} />

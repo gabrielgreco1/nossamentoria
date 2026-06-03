@@ -96,6 +96,11 @@
   gap: 8px;
 }
 
+.previewNote {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
 .main {
   min-width: 0;
 }

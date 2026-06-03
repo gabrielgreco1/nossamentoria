@@ -2,6 +2,7 @@ import { BookOpen, CalendarDays, Files, LayoutDashboard, ShieldCheck, UsersRound
 import type { ReactNode } from "react";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { PillChip } from "@/components/ui/pill-chip";
+import { getRoleLabel, isMixedUser, type UserRole } from "@/lib/access";
 import styles from "./app-shell.module.css";
 
 const navigation = [
@@ -13,7 +14,17 @@ const navigation = [
   { label: "Agenda", icon: CalendarDays }
 ];
 
-export function AppShell({ children }: { children: ReactNode }) {
+type AppShellProps = {
+  children: ReactNode;
+  roles?: UserRole[];
+  preview?: boolean;
+};
+
+const FALLBACK_ROLES: UserRole[] = ["mentor"];
+
+export function AppShell({ children, roles = FALLBACK_ROLES, preview = false }: AppShellProps) {
+  const activeRoles: UserRole[] = roles.length > 0 ? roles : FALLBACK_ROLES;
+
   return (
     <div className={styles.shell}>
       <GlassPanel as="aside" className={styles.sidebar}>
@@ -37,11 +48,18 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className={styles.context}>
           <span className={styles.contextLabel}>Contexto atual</span>
           <div className={styles.roleChips}>
-            <PillChip>Mentor</PillChip>
-            <PillChip tone="muted">Mentorado</PillChip>
-            <PillChip tone="muted">Admin</PillChip>
+            {activeRoles.map((role, index) => (
+              <PillChip tone={index === 0 ? "default" : "muted"} key={role}>
+                {getRoleLabel(role)}
+              </PillChip>
+            ))}
           </div>
-          <span>Usuários mistos terão papéis separados para evitar confusão entre mentorias, notas e materiais.</span>
+          <span>
+            {isMixedUser(activeRoles)
+              ? "Usuários mistos mantêm mentorias, notas e materiais separados por contexto."
+              : "O contexto ativo define quais ações e dados ficam disponíveis."}
+          </span>
+          {preview ? <span className={styles.previewNote}>Prévia até papéis reais virem do banco.</span> : null}
         </div>
       </GlassPanel>
 

@@ -130,6 +130,196 @@
   padding-left: 12px;
 }
 
+.rolesAccessSection {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.roleAccessGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.roleAccessCard {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  min-height: 345px;
+  padding: 18px;
+}
+
+.roleAccessHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.roleAccessHeader > span {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.roleAccessCard p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.roleAccessCard ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.roleAccessCard li {
+  border-radius: var(--radius-pill);
+  background: rgba(15, 118, 110, 0.07);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 650;
+  padding: 7px 10px;
+}
+
+.roleAccessCard strong {
+  align-self: end;
+  border-top: 1px solid var(--line);
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  padding-top: 12px;
+}
+
+.blockedPanel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  border-color: rgba(245, 184, 75, 0.42);
+  padding: 18px;
+}
+
+.blockedPanel span {
+  color: #735116;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.blockedPanel h3 {
+  margin: 6px 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.15rem;
+}
+
+.blockedPanel p {
+  max-width: 760px;
+  margin: 8px 0 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.relationshipSection {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.relationshipIntro {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.relationshipIntro p {
+  max-width: 920px;
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.relationshipStateGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.relationshipStateCard {
+  display: grid;
+  gap: 12px;
+  min-height: 130px;
+  padding: 16px;
+}
+
+.relationshipStateCard p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.relationshipFlowGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.relationshipCard {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  min-height: 330px;
+  padding: 18px;
+}
+
+.relationshipCard h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.1rem;
+}
+
+.relationshipCard p {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.relationshipCard ul {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.relationshipCard li,
+.relationshipCheck {
+  display: grid;
+  gap: 5px;
+  border-left: 3px solid rgba(15, 118, 110, 0.36);
+  padding-left: 12px;
+}
+
+.relationshipCard strong {
+  color: var(--text-primary);
+  font-size: 0.92rem;
+}
+
+.relationshipCard span,
+.relationshipCheck p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
 .visionPanel {
   display: grid;
   align-content: start;
@@ -399,11 +589,17 @@
 
   .domainGrid,
   .accessPanel ul,
+  .roleAccessGrid,
   .roleGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .metricsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .relationshipStateGrid,
+  .relationshipFlowGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -415,9 +611,16 @@
 @media (max-width: 620px) {
   .domainGrid,
   .accessPanel ul,
+  .roleAccessGrid,
   .roleGrid,
-  .metricsGrid {
+  .metricsGrid,
+  .relationshipStateGrid,
+  .relationshipFlowGrid {
     grid-template-columns: 1fr;
+  }
+
+  .blockedPanel {
+    flex-direction: column;
   }
 
   .scopePanel {

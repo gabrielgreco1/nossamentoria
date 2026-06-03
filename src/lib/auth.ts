@@ -10,6 +10,9 @@ export type InvitationValidation = {
   message: string;
   email?: string;
   role?: string;
+  invitedByUserId?: string;
+  mentorRelationshipTargetId?: string;
+  expiresAt?: string;
 };
 
 type InvitationRecord = {
@@ -18,6 +21,12 @@ type InvitationRecord = {
   email?: string;
   intended_role?: string;
   role?: string;
+  invited_by_user_id?: string;
+  invited_by?: string;
+  mentor_relationship_target_id?: string;
+  mentor_id?: string;
+  expires_at?: string;
+  expiration_date?: string;
 };
 
 const VALID_STATUSES = new Set<InvitationStatus>([
@@ -86,7 +95,10 @@ export async function validateInvitationToken(token: string): Promise<Invitation
       status,
       message: status === "valid" ? "Convite pronto." : `Convite com status ${status}.`,
       email: record?.email,
-      role: record?.intended_role ?? record?.role
+      role: record?.intended_role ?? record?.role,
+      invitedByUserId: record?.invited_by_user_id ?? record?.invited_by,
+      mentorRelationshipTargetId: record?.mentor_relationship_target_id ?? record?.mentor_id,
+      expiresAt: record?.expires_at ?? record?.expiration_date
     };
   } catch {
     return {
