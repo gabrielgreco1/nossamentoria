@@ -1,18 +1,30 @@
-import { BookOpen, CalendarDays, Files, LayoutDashboard, UsersRound } from "lucide-react";
+import { BookOpen, CalendarDays, Files, LayoutDashboard, ShieldCheck, UsersRound } from "lucide-react";
 import type { ReactNode } from "react";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { PillChip } from "@/components/ui/pill-chip";
+import { getRoleLabel, isMixedUser, type UserRole } from "@/lib/access";
 import styles from "./app-shell.module.css";
 
 const navigation = [
-  { label: "Painel", icon: LayoutDashboard },
-  { label: "Mentorados", icon: UsersRound },
-  { label: "Planos", icon: BookOpen },
-  { label: "Materiais", icon: Files },
-  { label: "Agenda", icon: CalendarDays }
+  { label: "Painel", href: "/app", icon: LayoutDashboard },
+  { label: "Acessos", href: "/app", icon: ShieldCheck },
+  { label: "Usuários", href: "/app/users", icon: UsersRound },
+  { label: "Planos", href: "/app", icon: BookOpen },
+  { label: "Materiais", href: "/app", icon: Files },
+  { label: "Agenda", href: "/app", icon: CalendarDays }
 ];
 
-export function AppShell({ children }: { children: ReactNode }) {
+type AppShellProps = {
+  children: ReactNode;
+  roles?: UserRole[];
+  preview?: boolean;
+};
+
+const FALLBACK_ROLES: UserRole[] = ["mentor"];
+
+export function AppShell({ children, roles = FALLBACK_ROLES, preview = false }: AppShellProps) {
+  const activeRoles: UserRole[] = roles.length > 0 ? roles : FALLBACK_ROLES;
+
   return (
     <div className={styles.shell}>
       <GlassPanel as="aside" className={styles.sidebar}>
@@ -26,7 +38,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
         <nav className={styles.nav} aria-label="Navegação principal">
           {navigation.map((item) => (
-            <a className={styles.navItem} href="#" key={item.label}>
+            <a className={styles.navItem} href={item.href} key={item.label}>
               <item.icon size={17} strokeWidth={1.8} />
               <span>{item.label}</span>
             </a>
@@ -34,8 +46,20 @@ export function AppShell({ children }: { children: ReactNode }) {
         </nav>
 
         <div className={styles.context}>
-          <PillChip>Contexto mentor</PillChip>
-          <span>A navegação por papel está pronta para receber o estado real de autenticação.</span>
+          <span className={styles.contextLabel}>Contexto atual</span>
+          <div className={styles.roleChips}>
+            {activeRoles.map((role, index) => (
+              <PillChip tone={index === 0 ? "default" : "muted"} key={role}>
+                {getRoleLabel(role)}
+              </PillChip>
+            ))}
+          </div>
+          <span>
+            {isMixedUser(activeRoles)
+              ? "Usuários mistos mantêm mentorias, notas e materiais separados por contexto."
+              : "O contexto ativo define quais ações e dados ficam disponíveis."}
+          </span>
+          {preview ? <span className={styles.previewNote}>Prévia até papéis reais virem do banco.</span> : null}
         </div>
       </GlassPanel>
 

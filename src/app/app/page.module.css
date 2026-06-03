@@ -8,6 +8,671 @@
   margin-top: 14px;
 }
 
+.sectionHeading {
+  display: grid;
+  gap: 8px;
+}
+
+.sectionHeading span {
+  color: var(--brand-teal);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.sectionHeading h2 {
+  max-width: 820px;
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.16;
+}
+
+.visionGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(420px, 1.18fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.domainSection {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1.3fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.domainIntro {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding: 22px;
+}
+
+.domainIntro p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.domainGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.domainCard {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  min-height: 285px;
+  padding: 18px;
+}
+
+.domainCard h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.1rem;
+}
+
+.domainCard p {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.domainCard ul {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.domainCard li {
+  border-radius: var(--radius-pill);
+  background: rgba(37, 99, 235, 0.07);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 650;
+  padding: 7px 10px;
+}
+
+.accessPanel {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+}
+
+.accessPanel > span {
+  color: var(--brand-teal);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.accessPanel ul {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.accessPanel li {
+  border-left: 3px solid rgba(37, 99, 235, 0.42);
+  color: var(--text-secondary);
+  line-height: 1.45;
+  padding-left: 12px;
+}
+
+.rolesAccessSection {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.roleAccessGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.roleAccessCard {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  min-height: 345px;
+  padding: 18px;
+}
+
+.roleAccessHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.roleAccessHeader > span {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.roleAccessCard p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.roleAccessCard ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.roleAccessCard li {
+  border-radius: var(--radius-pill);
+  background: rgba(15, 118, 110, 0.07);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 650;
+  padding: 7px 10px;
+}
+
+.roleAccessCard strong {
+  align-self: end;
+  border-top: 1px solid var(--line);
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  padding-top: 12px;
+}
+
+.blockedPanel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  border-color: rgba(245, 184, 75, 0.42);
+  padding: 18px;
+}
+
+.blockedPanel span {
+  color: #735116;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.blockedPanel h3 {
+  margin: 6px 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.15rem;
+}
+
+.blockedPanel p {
+  max-width: 760px;
+  margin: 8px 0 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.relationshipSection {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.relationshipIntro {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.relationshipIntro p {
+  max-width: 920px;
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.relationshipStateGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.relationshipStateCard {
+  display: grid;
+  gap: 12px;
+  min-height: 130px;
+  padding: 16px;
+}
+
+.relationshipStateCard p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.relationshipFlowGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.relationshipCard {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  min-height: 330px;
+  padding: 18px;
+}
+
+.relationshipCard h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.1rem;
+}
+
+.relationshipCard p {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.relationshipCard ul {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.relationshipCard li,
+.relationshipCheck {
+  display: grid;
+  gap: 5px;
+  border-left: 3px solid rgba(15, 118, 110, 0.36);
+  padding-left: 12px;
+}
+
+.relationshipCard strong {
+  color: var(--text-primary);
+  font-size: 0.92rem;
+}
+
+.relationshipCard span,
+.relationshipCheck p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.modelSection {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.modelIntro {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.modelIntro p {
+  max-width: 920px;
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.entityGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.entityCard {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-height: 210px;
+  padding: 18px;
+}
+
+.entityCard h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+}
+
+.entityCard p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.entityCard span {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.42;
+}
+
+.entityCard code {
+  align-self: end;
+  width: fit-content;
+  border-radius: var(--radius-pill);
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--brand-blue);
+  font-size: 0.78rem;
+  padding: 7px 10px;
+}
+
+.modelSplit {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+  gap: 14px;
+}
+
+.relationshipMapCard,
+.modelRulesCard {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  padding: 18px;
+}
+
+.relationshipMapCard h3,
+.modelRulesCard h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.1rem;
+}
+
+.relationshipMapCard p,
+.modelRulesCard p {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.relationshipMapCard ul,
+.modelRulesCard ul {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.relationshipMapCard li,
+.modelRulesCard li {
+  display: grid;
+  gap: 5px;
+  border-left: 3px solid rgba(37, 99, 235, 0.36);
+  color: var(--text-secondary);
+  line-height: 1.45;
+  padding-left: 12px;
+}
+
+.relationshipMapCard strong {
+  color: var(--text-primary);
+  font-size: 0.92rem;
+}
+
+.relationshipMapCard span {
+  color: var(--text-secondary);
+}
+
+.visionPanel {
+  display: grid;
+  align-content: start;
+  gap: 20px;
+  padding: 22px;
+}
+
+.panelTitle {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.panelTitle svg {
+  flex: 0 0 auto;
+  color: var(--brand-blue);
+  margin-top: 4px;
+}
+
+.panelTitle span {
+  color: var(--brand-teal);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.panelTitle h2 {
+  margin: 4px 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.45rem;
+  line-height: 1.18;
+}
+
+.visionPanel ul {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.visionPanel li {
+  border-left: 3px solid rgba(15, 118, 110, 0.42);
+  color: var(--text-secondary);
+  line-height: 1.45;
+  padding-left: 12px;
+}
+
+.roleGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.roleCard {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 270px;
+  padding: 18px;
+}
+
+.icon {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(15, 118, 110, 0.09);
+  color: var(--brand-teal);
+}
+
+.roleCard h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.15rem;
+}
+
+.roleCard p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.roleCard ul {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  margin: 4px 0 0;
+  list-style: none;
+}
+
+.roleCard li {
+  border-radius: var(--radius-pill);
+  background: rgba(15, 118, 110, 0.07);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 650;
+  padding: 7px 10px;
+}
+
+.metricsSection {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.metricCard {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  min-height: 315px;
+  padding: 18px;
+}
+
+.metricHeader {
+  display: grid;
+  gap: 12px;
+}
+
+.metricHeader h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.12rem;
+}
+
+.metricHeader p {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.metricCard ul {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.metricCard li {
+  position: relative;
+  color: var(--text-secondary);
+  line-height: 1.42;
+  padding-left: 18px;
+}
+
+.metricCard li::before {
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-amber);
+  content: "";
+}
+
+.scopePanel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 18px;
+}
+
+.scopePanel > span {
+  color: var(--text-secondary);
+  font-weight: 750;
+}
+
+.scopePanel div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.glossarySection {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.glossaryIntro {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding: 22px;
+}
+
+.glossaryIntro p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.termGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.termCard {
+  display: grid;
+  gap: 8px;
+  min-height: 132px;
+  padding: 18px;
+}
+
+.termCard h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+}
+
+.termCard p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.48;
+}
+
 .setup {
   display: grid;
   gap: 12px;
@@ -35,7 +700,62 @@
 }
 
 @media (max-width: 960px) {
-  .grid {
+  .grid,
+  .domainSection,
+  .visionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .domainGrid,
+  .accessPanel ul,
+  .roleAccessGrid,
+  .roleGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metricsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .relationshipStateGrid,
+  .relationshipFlowGrid,
+  .entityGrid,
+  .modelSplit {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .glossarySection {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .domainGrid,
+  .accessPanel ul,
+  .roleAccessGrid,
+  .roleGrid,
+  .metricsGrid,
+  .relationshipStateGrid,
+  .relationshipFlowGrid,
+  .entityGrid,
+  .modelSplit {
+    grid-template-columns: 1fr;
+  }
+
+  .blockedPanel {
+    flex-direction: column;
+  }
+
+  .scopePanel {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .scopePanel div {
+    justify-content: flex-start;
+  }
+
+  .termGrid {
     grid-template-columns: 1fr;
   }
 }

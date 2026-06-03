@@ -83,6 +83,24 @@
   line-height: 1.45;
 }
 
+.contextLabel {
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.roleChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.previewNote {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
 .main {
   min-width: 0;
 }
@@ -99,7 +117,7 @@
   }
 
   .nav {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     overflow-x: auto;
   }
 
