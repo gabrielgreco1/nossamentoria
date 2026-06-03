@@ -33,10 +33,9 @@ import {
   canAccess,
   getRoleLabel,
   getRolePermissions,
-  normalizeRoles,
   type UserRole
 } from "@/lib/access";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUserAccess } from "@/lib/auth";
 import {
   domainEntityDefinitions,
   domainModelRules,
@@ -266,35 +265,34 @@ const activeRelationshipPreview: RelationshipSummary = {
   sharedContextCount: 3
 };
 
-function getUserRolesFromMetadata(user: Awaited<ReturnType<typeof getCurrentUser>>) {
-  const metadataRoles = user?.app_metadata?.roles;
-  const metadataRole = user?.app_metadata?.role;
-  const roles = Array.isArray(metadataRoles) ? metadataRoles : [metadataRole];
-
-  return normalizeRoles(roles.map((role) => (typeof role === "string" ? role : null)));
-}
-
 export const dynamic = "force-dynamic";
 
 export default async function WorkspacePage() {
   const envStatus = getEnvStatus();
-  const user = await getCurrentUser();
-  const metadataRoles = getUserRolesFromMetadata(user);
-  const activeRoles = metadataRoles.length > 0 ? metadataRoles : (["mentor", "mentee"] satisfies UserRole[]);
-  const rolePreview = !user || metadataRoles.length === 0;
+  const access = await getCurrentUserAccess();
+  const user = access.user;
+  const activeRoles = access.roles.length > 0 ? access.roles : (["mentor", "mentee"] satisfies UserRole[]);
+  const rolePreview = !user || access.roles.length === 0;
   const blockedAccess = canAccess(activeRoles, "manage_platform");
 
-  if (envStatus.configured && !user) {
+  if (envStatus.configured && !access.user) {
     redirect("/login?next=/app");
   }
+
+  const roleLabel = access.roles.length > 0 ? access.roles.join(" + ") : "Sem papel atribuído";
+  const displayName = access.profile?.display_name ?? access.profile?.email ?? access.user?.email;
 
   return (
     <AppShell roles={activeRoles} preview={rolePreview}>
       <PageHeader
         eyebrow="Workspace privado"
         title="Painel de mentoria"
-        description="Esta área privada já está atrás da fronteira de autenticação e nasce para transformar aulas, links, notas e tarefas em uma trilha acompanhável."
-        action={<PillChip>{user ? "Autenticado" : "Prévia de setup"}</PillChip>}
+        description={
+          displayName
+            ? `Sessão de ${displayName}. Papéis ativos: ${roleLabel}.`
+            : "Esta área privada já está atrás da fronteira de autenticação e nasce para transformar aulas, links, notas e tarefas em uma trilha acompanhável."
+        }
+        action={<PillChip>{access.user ? "Autenticado" : "Prévia de setup"}</PillChip>}
       />
 
       {!envStatus.configured ? (

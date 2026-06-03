@@ -32,3 +32,6 @@ Required environment variables:
 ## Project Control
 
 Development status is tracked in `kanban.html`. Specs live under `plan/`.
+
+
+The intention of this project is providing mentoring for my friends.

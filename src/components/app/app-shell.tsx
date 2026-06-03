@@ -6,12 +6,12 @@ import { getRoleLabel, isMixedUser, type UserRole } from "@/lib/access";
 import styles from "./app-shell.module.css";
 
 const navigation = [
-  { label: "Painel", icon: LayoutDashboard },
-  { label: "Acessos", icon: ShieldCheck },
-  { label: "Mentorados", icon: UsersRound },
-  { label: "Planos", icon: BookOpen },
-  { label: "Materiais", icon: Files },
-  { label: "Agenda", icon: CalendarDays }
+  { label: "Painel", href: "/app", icon: LayoutDashboard },
+  { label: "Acessos", href: "/app", icon: ShieldCheck },
+  { label: "Usuários", href: "/app/users", icon: UsersRound },
+  { label: "Planos", href: "/app", icon: BookOpen },
+  { label: "Materiais", href: "/app", icon: Files },
+  { label: "Agenda", href: "/app", icon: CalendarDays }
 ];
 
 type AppShellProps = {
@@ -38,7 +38,7 @@ export function AppShell({ children, roles = FALLBACK_ROLES, preview = false }: 
 
         <nav className={styles.nav} aria-label="Navegação principal">
           {navigation.map((item) => (
-            <a className={styles.navItem} href="#" key={item.label}>
+            <a className={styles.navItem} href={item.href} key={item.label}>
               <item.icon size={17} strokeWidth={1.8} />
               <span>{item.label}</span>
             </a>
