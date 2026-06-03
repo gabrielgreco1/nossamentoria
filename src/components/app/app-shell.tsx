@@ -5,11 +5,11 @@ import { PillChip } from "@/components/ui/pill-chip";
 import styles from "./app-shell.module.css";
 
 const navigation = [
-  { label: "Painel", icon: LayoutDashboard },
-  { label: "Mentorados", icon: UsersRound },
-  { label: "Planos", icon: BookOpen },
-  { label: "Materiais", icon: Files },
-  { label: "Agenda", icon: CalendarDays }
+  { label: "Painel", href: "/app", icon: LayoutDashboard },
+  { label: "Usuários", href: "/app/users", icon: UsersRound },
+  { label: "Planos", href: "/app", icon: BookOpen },
+  { label: "Materiais", href: "/app", icon: Files },
+  { label: "Agenda", href: "/app", icon: CalendarDays }
 ];
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -26,7 +26,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
         <nav className={styles.nav} aria-label="Navegação principal">
           {navigation.map((item) => (
-            <a className={styles.navItem} href="#" key={item.label}>
+            <a className={styles.navItem} href={item.href} key={item.label}>
               <item.icon size={17} strokeWidth={1.8} />
               <span>{item.label}</span>
             </a>

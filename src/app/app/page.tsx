@@ -7,7 +7,7 @@ import { StatCard } from "@/components/app/stat-card";
 import { GlassButton } from "@/components/ui/glass-button";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { PillChip } from "@/components/ui/pill-chip";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUserAccess } from "@/lib/auth";
 import { getEnvStatus } from "@/lib/env";
 import styles from "./page.module.css";
 
@@ -36,19 +36,22 @@ export const dynamic = "force-dynamic";
 
 export default async function WorkspacePage() {
   const envStatus = getEnvStatus();
-  const user = await getCurrentUser();
+  const access = await getCurrentUserAccess();
 
-  if (envStatus.configured && !user) {
+  if (envStatus.configured && !access.user) {
     redirect("/login?next=/app");
   }
+
+  const roleLabel = access.roles.length > 0 ? access.roles.join(" + ") : "Sem papel atribuído";
+  const displayName = access.profile?.display_name ?? access.profile?.email ?? access.user?.email;
 
   return (
     <AppShell>
       <PageHeader
         eyebrow="Workspace privado"
         title="Painel de mentoria"
-        description="Esta área privada já está atrás da fronteira de autenticação. Os próximos cards conectam papéis reais, convites, relações, planos e dados de progresso."
-        action={<PillChip>{user ? "Autenticado" : "Prévia de setup"}</PillChip>}
+        description={displayName ? `Sessão de ${displayName}. Papéis ativos: ${roleLabel}.` : "Esta área privada já está atrás da fronteira de autenticação."}
+        action={<PillChip>{access.user ? "Autenticado" : "Prévia de setup"}</PillChip>}
       />
 
       {!envStatus.configured ? (
