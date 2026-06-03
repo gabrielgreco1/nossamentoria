@@ -5,6 +5,7 @@ import {
   CheckCircle2,
   ClipboardList,
   Database,
+  DatabaseZap,
   FileText,
   KeyRound,
   LibraryBig,
@@ -36,6 +37,11 @@ import {
   type UserRole
 } from "@/lib/access";
 import { getCurrentUser } from "@/lib/auth";
+import {
+  domainEntityDefinitions,
+  domainModelRules,
+  domainRelationships
+} from "@/lib/domain-model";
 import { getEnvStatus } from "@/lib/env";
 import {
   canTrackRegularProgress,
@@ -477,6 +483,68 @@ export default async function WorkspacePage() {
                   <strong>{item}</strong>
                   <span>Visível quando pertence à relação mentor-mentorado correta.</span>
                 </li>
+              ))}
+            </ul>
+          </GlassPanel>
+        </div>
+      </section>
+
+      <section className={styles.modelSection} aria-label="Modelo de domínio">
+        <GlassPanel strong className={styles.modelIntro}>
+          <div className={styles.panelTitle}>
+            <DatabaseZap size={20} strokeWidth={1.8} />
+            <div>
+              <span>Modelo de domínio</span>
+              <h2>Entidades com ownership e chaves explícitas para o MVP</h2>
+            </div>
+          </div>
+          <p>
+            Este modelo fecha a fase Domain: cada objeto precisa ter dono, relação rastreável e
+            foreign keys suficientes para políticas de acesso no Supabase.
+          </p>
+        </GlassPanel>
+
+        <div className={styles.entityGrid}>
+          {domainEntityDefinitions.map((item) => (
+            <GlassPanel className={styles.entityCard} key={item.entity}>
+              <h3>{item.entity}</h3>
+              <p>{item.purpose}</p>
+              <span>{item.ownership}</span>
+              <code>{item.stableKey}</code>
+            </GlassPanel>
+          ))}
+        </div>
+
+        <div className={styles.modelSplit}>
+          <GlassPanel className={styles.relationshipMapCard}>
+            <div className={styles.metricHeader}>
+              <div className={styles.icon}><Link2 size={20} strokeWidth={1.8} /></div>
+              <div>
+                <h3>Relações explícitas</h3>
+                <p>O banco precisa permitir escopo por papel, relação e ownership.</p>
+              </div>
+            </div>
+            <ul>
+              {domainRelationships.map((item) => (
+                <li key={`${item.from}-${item.relation}-${item.to}`}>
+                  <strong>{item.from} {item.relation} {item.to}</strong>
+                  <span>{item.scopeRule}</span>
+                </li>
+              ))}
+            </ul>
+          </GlassPanel>
+
+          <GlassPanel className={styles.modelRulesCard}>
+            <div className={styles.metricHeader}>
+              <div className={styles.icon}><ShieldCheck size={20} strokeWidth={1.8} /></div>
+              <div>
+                <h3>Regras para implementação</h3>
+                <p>Essas regras guiam schema, RLS e queries das próximas fases.</p>
+              </div>
+            </div>
+            <ul>
+              {domainModelRules.map((rule) => (
+                <li key={rule}>{rule}</li>
               ))}
             </ul>
           </GlassPanel>
