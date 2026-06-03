@@ -4,14 +4,18 @@ import {
   CalendarDays,
   CheckCircle2,
   ClipboardList,
+  Database,
   FileText,
+  KeyRound,
   LibraryBig,
+  Link2,
   LockKeyhole,
   Radar,
   Repeat2,
   Route,
   ShieldCheck,
   Sparkles,
+  UserCog,
   UsersRound
 } from "lucide-react";
 import { redirect } from "next/navigation";
@@ -159,6 +163,40 @@ const glossaryTerms = [
   }
 ];
 
+const domainPillars = [
+  {
+    title: "Papéis",
+    description: "Usuários recebem permissões por convite ou ação administrativa, nunca por autoatribuição.",
+    icon: <UserCog size={20} strokeWidth={1.8} />,
+    checks: ["Admin gerencia papéis", "Mentor vê seu contexto", "Mentorado permanece restrito"]
+  },
+  {
+    title: "Convites",
+    description: "A entrada na plataforma continua privada e cada convite controla quem pode criar conta.",
+    icon: <KeyRound size={20} strokeWidth={1.8} />,
+    checks: ["Token válido", "Estado de uso", "Papel pretendido"]
+  },
+  {
+    title: "Relações",
+    description: "Planos, materiais, aulas e progresso dependem da relação mentor-mentorado correta.",
+    icon: <Link2 size={20} strokeWidth={1.8} />,
+    checks: ["Mentor conectado", "Mentorado próprio", "Contexto separado"]
+  },
+  {
+    title: "Políticas",
+    description: "Consultas de usuário precisam ser filtradas por papel e relação também no banco.",
+    icon: <Database size={20} strokeWidth={1.8} />,
+    checks: ["Supabase Auth", "RLS por relação", "Sem esconder só na UI"]
+  }
+];
+
+const accessRules = [
+  "Usuários não podem elevar o próprio papel.",
+  "Mentorados veem apenas os próprios planos e materiais compartilhados.",
+  "Mentores veem apenas mentorados conectados a eles.",
+  "Admins gerenciam convites, papéis e setup da plataforma."
+];
+
 export const dynamic = "force-dynamic";
 
 export default async function WorkspacePage() {
@@ -193,6 +231,51 @@ export default async function WorkspacePage() {
         {workspaceStats.map((item) => (
           <StatCard key={item.label} {...item} />
         ))}
+      </section>
+
+      <section className={styles.domainSection} aria-label="Domínio e permissões">
+        <GlassPanel strong className={styles.domainIntro}>
+          <div className={styles.panelTitle}>
+            <ShieldCheck size={20} strokeWidth={1.8} />
+            <div>
+              <span>01 Domain</span>
+              <h2>Limites de acesso antes de qualquer dado privado</h2>
+            </div>
+          </div>
+          <p>
+            A fase de domínio define quem pode acessar convites, papéis, relações, planos,
+            materiais, aulas e progresso. A interface mostra o estado, mas a proteção real precisa
+            viver nas políticas do Supabase.
+          </p>
+        </GlassPanel>
+
+        <div className={styles.domainGrid}>
+          {domainPillars.map((pillar) => (
+            <GlassPanel className={styles.domainCard} key={pillar.title}>
+              <div className={styles.metricHeader}>
+                <div className={styles.icon}>{pillar.icon}</div>
+                <div>
+                  <h3>{pillar.title}</h3>
+                  <p>{pillar.description}</p>
+                </div>
+              </div>
+              <ul>
+                {pillar.checks.map((check) => (
+                  <li key={check}>{check}</li>
+                ))}
+              </ul>
+            </GlassPanel>
+          ))}
+        </div>
+
+        <GlassPanel className={styles.accessPanel}>
+          <span>Critérios de acesso</span>
+          <ul>
+            {accessRules.map((rule) => (
+              <li key={rule}>{rule}</li>
+            ))}
+          </ul>
+        </GlassPanel>
       </section>
 
       <section className={styles.visionGrid} aria-label="Visão do MVP e personas">
@@ -289,8 +372,8 @@ export default async function WorkspacePage() {
 
       <section className={styles.content}>
         <EmptyState
-          title="Foundation concluído"
-          description="A superfície inicial já comunica visão, papéis, sinais de sucesso e vocabulário comum. O próximo passo é conectar domínio, permissões, convites reais e relações mentor-mentorado."
+          title="Pronto para detalhar papéis e acesso"
+          description="A fase Domain já tem seus limites principais visíveis. O próximo passo é transformar papéis, convites, relações e políticas em regras concretas de acesso."
           action={<GlassButton href="/invite/demo-token" variant="secondary" icon={<FileText size={16} />}>Prévia de convite</GlassButton>}
         />
       </section>
