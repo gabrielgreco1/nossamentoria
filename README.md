@@ -1,6 +1,6 @@
 # NossaMentoria
 
-Private mentorship platform built with Next.js App Router and Supabase.
+Private mentorship platform built with Next.js App Router and.
 
 ## Local Development
 
