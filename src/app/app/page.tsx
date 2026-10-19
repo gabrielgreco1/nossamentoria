@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { redirect } from "next/navigation";
 import { AppShell } from "@/components/app/app-shell";
+import { ContentAndClasses } from "@/components/app/content-and-classes";
 import { EmptyState } from "@/components/app/empty-state";
 import { MentorshipLifecycle } from "@/components/app/mentorship-lifecycle";
 import { PageHeader } from "@/components/app/page-header";
@@ -316,6 +317,8 @@ export default async function WorkspacePage() {
       </section>
 
       <MentorshipLifecycle />
+
+      <ContentAndClasses />
 
       <section className={styles.domainSection} aria-label="Domínio e permissões">
         <GlassPanel strong className={styles.domainIntro}>
