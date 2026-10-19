@@ -31,6 +31,14 @@ A integração base com Supabase já existe para autenticação, validação de 
 - Visões específicas de materiais e aulas compartilhados com o mentorado.
 - Registro de sessões com conteúdo aplicado, notas e próximas ações.
 - Atualização automática da aula vinculada ao concluir uma sessão.
+- Agenda semanal com próximas sessões, histórico e visibilidade por papel.
+- Agendamento rápido com sessão confirmada ou proposta ao mentorado.
+- Confirmação, reagendamento, conclusão, cancelamento e registro de falta.
+- Preservação da criação, das notas e da aula vinculada ao reagendar.
+- Central de notificações internas com contagem de não lidas e vínculos navegáveis.
+- Notificações automáticas de agendamento, reagendamento, conclusão e notas compartilhadas.
+- Notas de comunicação ligadas à relação, ao plano, à aula ou à sessão.
+- Separação entre notas privadas do mentor, notas compartilhadas, notas do mentorado, próximas ações e resumos.
 
 ### Ainda não implementado
 
@@ -39,7 +47,7 @@ A integração base com Supabase já existe para autenticação, validação de 
 - Políticas RLS.
 - RPCs reais para criação e aceite de convites.
 - Upload real de arquivos para o Supabase Storage.
-- Calendário e comunicação da etapa 04.
+- Envio de notificações por e-mail.
 - Operações administrativas completas.
 - Deploy e observabilidade de produção.
 
@@ -62,7 +70,7 @@ A integração base com Supabase já existe para autenticação, validação de 
 | `/invite/[token]` | Validação e aceite de convite. |
 | `/invite/demo-token` | Prévia local da experiência de convite. |
 | `/auth/callback` | Callback de autenticação do Supabase. |
-| `/app` | Workspace com os fluxos de domínio, lifecycle, conteúdo e aulas. |
+| `/app` | Workspace com domínio, lifecycle, conteúdo, aulas, calendário e comunicação. |
 
 Quando as variáveis do Supabase não estão configuradas, `/app` funciona como uma prévia local e mostra um aviso de configuração. Quando elas estão configuradas, a rota exige um usuário autenticado.
 
@@ -157,4 +165,4 @@ AGENT.md                Regras de execução e atualização do projeto
 
 As especificações vivem em `plan/`. O estado de cada uma é mantido em `kanban.html`, seguindo os estados `To Do`, `In Development`, `In Tests` e `Done`.
 
-Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria e conteúdo/aulas. O próximo conjunto funcional planejado é calendário e comunicação.
+Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria, conteúdo/aulas e calendário/comunicação. O próximo conjunto planejado é a consolidação do roadmap técnico e da estrutura do MVP.
