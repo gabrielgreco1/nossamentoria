@@ -1,9 +1,13 @@
 import type { User } from "@supabase/supabase-js";
+import {
+  INVITATION_VALIDATION_STATUSES,
+  type InvitationValidationStatus
+} from "@/lib/domain-types";
 import { getEnvStatus, isPublicEnvConfigured } from "@/lib/env";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
-export type InvitationStatus = "valid" | "invalid" | "expired" | "revoked" | "used" | "setup";
+export type InvitationStatus = InvitationValidationStatus;
 
 export type InvitationValidation = {
   status: InvitationStatus;
@@ -29,14 +33,7 @@ type InvitationRecord = {
   expiration_date?: string;
 };
 
-const VALID_STATUSES = new Set<InvitationStatus>([
-  "valid",
-  "invalid",
-  "expired",
-  "revoked",
-  "used",
-  "setup"
-]);
+const VALID_STATUSES = new Set<InvitationStatus>(INVITATION_VALIDATION_STATUSES);
 
 export async function getCurrentUser(): Promise<User | null> {
   if (!isPublicEnvConfigured()) {

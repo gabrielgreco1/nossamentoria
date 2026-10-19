@@ -1,3 +1,15 @@
+import {
+  MENTORSHIP_PLAN_STATUSES,
+  type LessonStatus,
+  type MentorshipPlanStatus,
+  type ProgressConfidence,
+  type RelationshipStatus,
+  type SessionStatus
+} from "@/lib/domain-types";
+
+export { MENTORSHIP_PLAN_STATUSES };
+export type { LessonStatus, MentorshipPlanStatus };
+
 export const LIFECYCLE_STEPS = [
   "connection",
   "relationship_active",
@@ -81,7 +93,7 @@ export type AvailableMentee = {
 export type RelationshipKey = {
   mentorId: string;
   menteeId: string;
-  status: "invited" | "requested" | "active" | "paused" | "ended";
+  status: RelationshipStatus;
 };
 
 export type RelationshipRequestDecision =
@@ -137,10 +149,6 @@ export function prepareMenteeInvitation(input: MenteeInvitationInput): MenteeInv
     status: "pending"
   };
 }
-
-export const MENTORSHIP_PLAN_STATUSES = ["draft", "active", "completed", "paused"] as const;
-
-export type MentorshipPlanStatus = (typeof MENTORSHIP_PLAN_STATUSES)[number];
 
 export type MentorshipPlanInput = {
   title: string;
@@ -200,8 +208,6 @@ export type LessonTemplate = {
   suggestedMaterials: string[];
   suggestedExercise: string;
 };
-
-export type LessonStatus = "not_started" | "scheduled" | "in_progress" | "completed" | "skipped";
 
 export type PlanLesson = Omit<LessonTemplate, "id"> & {
   id: string;
@@ -332,7 +338,7 @@ export function copyTemplatesToPlan(
 export type ClassSessionRecord = {
   id: string;
   lessonId?: string;
-  status: "scheduled" | "completed" | "cancelled";
+  status: SessionStatus;
   scheduledAt: string;
   completedAt?: string;
 };
@@ -345,7 +351,7 @@ export type ProgressNote = {
   understood: string;
   needsReview: string;
   nextAction: string;
-  confidence?: "low" | "growing" | "confident";
+  confidence?: ProgressConfidence;
   sharedWithMentee: boolean;
 };
 

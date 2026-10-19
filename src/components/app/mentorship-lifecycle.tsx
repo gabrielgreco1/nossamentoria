@@ -42,6 +42,7 @@ import {
   type RelationshipKey,
   validatePlanForActivation
 } from "@/lib/mentorship-lifecycle";
+import { LESSON_STATUSES } from "@/lib/domain-types";
 import styles from "./mentorship-lifecycle.module.css";
 
 const mentorId = "mentor-preview";
@@ -96,7 +97,7 @@ const initialSessions: ClassSessionRecord[] = [
   {
     id: "session-git",
     lessonId: initialPlanLessons[1].id,
-    status: "scheduled",
+    status: "confirmed",
     scheduledAt: "2026-10-22T19:00:00-03:00"
   }
 ];
@@ -281,7 +282,7 @@ export function MentorshipLifecycle() {
   }
 
   function completeUpcomingSession() {
-    const session = sessions.find((item) => item.status === "scheduled");
+    const session = sessions.find((item) => item.status === "confirmed");
     if (!session) {
       setProgressFeedback({ tone: "error", message: "Não há sessão agendada para concluir." });
       return;
@@ -661,7 +662,7 @@ export function MentorshipLifecycle() {
                       item.id === lesson.id ? { ...item, status: event.target.value as PlanLesson["status"] } : item
                     ))}
                   >
-                    {(["not_started", "scheduled", "in_progress", "completed", "skipped"] as const).map((status) => (
+                    {LESSON_STATUSES.map((status) => (
                       <option key={status} value={status}>{getLessonStatusLabel(status)}</option>
                     ))}
                   </select>

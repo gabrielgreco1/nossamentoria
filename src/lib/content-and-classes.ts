@@ -1,3 +1,12 @@
+import type {
+  AttachmentTargetType,
+  LessonStatus,
+  MaterialType,
+  SessionStatus
+} from "@/lib/domain-types";
+
+export type { AttachmentTargetType, MaterialType };
+
 export const CONTENT_WORKFLOW_STEPS = [
   {
     id: "library",
@@ -26,18 +35,7 @@ export const CONTENT_WORKFLOW_STEPS = [
   }
 ] as const;
 
-export type MaterialType =
-  | "html"
-  | "pdf"
-  | "presentation"
-  | "markdown"
-  | "text"
-  | "image"
-  | "external_link"
-  | "repository";
-
 export type MaterialVisibility = "private" | "shared";
-export type AttachmentTargetType = "plan" | "lesson" | "session";
 
 export type ContentMaterial = {
   id: string;
@@ -284,7 +282,7 @@ export function createMaterialAttachment(
   };
 }
 
-export type OrganizedLessonStatus = "not_started" | "scheduled" | "in_progress" | "completed" | "skipped";
+export type OrganizedLessonStatus = LessonStatus;
 
 export type OrganizedLesson = {
   id: string;
@@ -401,7 +399,7 @@ export function attachMaterialToLesson(
   });
 }
 
-export type ClassSessionStatus = "scheduled" | "completed" | "canceled" | "missed";
+export type ClassSessionStatus = SessionStatus;
 
 export type ClassSessionDetail = {
   id: string;
@@ -443,7 +441,7 @@ export const initialClassSessions: ClassSessionDetail[] = [
     lessonId: "lesson-responsive",
     scheduledStart: "2026-10-22T19:00",
     scheduledEnd: "2026-10-22T20:30",
-    status: "scheduled",
+    status: "confirmed",
     appliedContent: "",
     mentorNotes: "",
     sharedNotes: "",
@@ -453,7 +451,8 @@ export const initialClassSessions: ClassSessionDetail[] = [
 
 export function getClassSessionStatusLabel(status: ClassSessionStatus) {
   const labels: Record<ClassSessionStatus, string> = {
-    scheduled: "Agendada",
+    proposed: "Proposta",
+    confirmed: "Confirmada",
     completed: "Concluída",
     canceled: "Cancelada",
     missed: "Não realizada"

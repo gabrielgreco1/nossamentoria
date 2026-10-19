@@ -51,19 +51,10 @@ import {
   type MaterialType,
   type OrganizedLesson
 } from "@/lib/content-and-classes";
+import { MATERIAL_TYPES } from "@/lib/domain-types";
 import styles from "./content-and-classes.module.css";
 
-const materialTypes: Array<MaterialType | "all"> = [
-  "all",
-  "html",
-  "pdf",
-  "presentation",
-  "markdown",
-  "text",
-  "image",
-  "external_link",
-  "repository"
-];
+const materialTypes: Array<MaterialType | "all"> = ["all", ...MATERIAL_TYPES];
 
 function MaterialIcon({ type }: { type: MaterialType }) {
   if (type === "html") return <FileCode2 size={20} strokeWidth={1.8} />;

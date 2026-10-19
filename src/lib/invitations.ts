@@ -1,14 +1,13 @@
 import type { InvitationStatus } from "@/lib/auth";
+import {
+  INVITATION_RECORD_STATUSES,
+  type InvitationRecordStatus,
+  type InvitationType
+} from "@/lib/domain-types";
 
-export const TRACKED_INVITATION_STATUSES = ["pending", "accepted", "expired", "revoked"] as const;
-
-export type TrackedInvitationStatus = (typeof TRACKED_INVITATION_STATUSES)[number];
-
-export type InvitationType =
-  | "admin_invites_mentor"
-  | "admin_invites_mentee"
-  | "mentor_invites_mentee"
-  | "mentor_requests_future_mentor";
+export const TRACKED_INVITATION_STATUSES = INVITATION_RECORD_STATUSES;
+export type TrackedInvitationStatus = InvitationRecordStatus;
+export type { InvitationType };
 
 export const invitationFlowSteps = [
   "Pessoa convidada abre landing, login ou link de convite.",

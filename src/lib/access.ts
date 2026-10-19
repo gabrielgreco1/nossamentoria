@@ -1,6 +1,7 @@
-export const USER_ROLES = ["admin", "mentor", "mentee"] as const;
+import { USER_ROLES, type UserRole } from "@/lib/domain-types";
 
-export type UserRole = (typeof USER_ROLES)[number];
+export { USER_ROLES };
+export type { UserRole };
 
 export type AccessAction =
   | "manage_platform"

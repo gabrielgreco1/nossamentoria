@@ -6,9 +6,9 @@ O MVP é gratuito, funciona somente por convite e foi modelado para múltiplos m
 
 ## Estado atual
 
-O frontend está funcional e pode ser executado localmente. Os fluxos privados usam dados de demonstração e estado local do React; portanto, mudanças feitas na interface são perdidas ao recarregar a página.
+O frontend está funcional e pode ser executado localmente. Os fluxos privados ainda usam dados de demonstração e estado local do React; portanto, mudanças feitas na interface são perdidas ao recarregar a página.
 
-A integração base com Supabase já existe para autenticação, validação de convites e storage, mas a criação do banco, migrations, políticas RLS, RPCs e persistência dos fluxos será feita no final do desenvolvimento das interfaces.
+A integração base com Supabase já existe para autenticação, validação de convites e Storage. O contrato completo do banco foi preparado em `supabase-schema.sql`, mas ainda precisa ser executado em um projeto Supabase e conectado aos fluxos da interface.
 
 ### Implementado
 
@@ -39,13 +39,15 @@ A integração base com Supabase já existe para autenticação, validação de 
 - Notificações automáticas de agendamento, reagendamento, conclusão e notas compartilhadas.
 - Notas de comunicação ligadas à relação, ao plano, à aula ou à sessão.
 - Separação entre notas privadas do mentor, notas compartilhadas, notas do mentorado, próximas ações e resumos.
+- Vocabulário de domínio centralizado em `src/lib/domain-types.ts`.
+- Schema SQL completo com 15 tabelas, cinco views, funções/RPCs, triggers, índices, RLS e bucket privado `materials`.
 
 ### Ainda não implementado
 
 - Persistência real no Supabase.
-- Schema e migrations do banco.
-- Políticas RLS.
-- RPCs reais para criação e aceite de convites.
+- Aplicação do schema no projeto Supabase e geração das migrations versionadas pela CLI.
+- Testes das políticas RLS com usuários reais de admin, mentor e mentorado.
+- Ligação dos formulários e painéis atuais às tabelas e RPCs reais.
 - Upload real de arquivos para o Supabase Storage.
 - Envio de notificações por e-mail.
 - Operações administrativas completas.
@@ -122,6 +124,36 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 As RPCs `validate_invitation_token` e `accept_invitation_token` precisarão existir no Supabase para o fluxo real de convites funcionar.
 
+## Preparação do banco Supabase
+
+O arquivo `supabase-schema.sql`, na raiz, é a fonte inicial do banco. Ele inclui:
+
+- enums e tabelas de perfis, papéis, convites, relações, planos, aulas, materiais, sessões, notas e notificações;
+- vínculos explícitos de materiais com planos, aulas e sessões;
+- views para relações detalhadas, progresso, próximas sessões, compartilhamentos e notificações não lidas;
+- RPCs para convites, relações, ativação de plano, cópia de templates, sessões e notificações;
+- triggers de consistência, datas de atualização e notificações internas;
+- políticas RLS para admin, mentor, mentorado e usuários com papéis combinados;
+- bucket privado `materials`, limitado a 50 MB por arquivo e organizado por proprietário.
+
+Em um projeto Supabase novo, abra o SQL Editor e execute o conteúdo completo do arquivo uma única vez. Depois, configure em **Authentication > URL Configuration**:
+
+- Site URL local: `http://localhost:3000`;
+- Redirect URL local: `http://localhost:3000/auth/callback`;
+- as URLs equivalentes de produção quando o domínio estiver definido.
+
+O login atual usa magic link por e-mail. Depois de criar o primeiro usuário administrador, adicione o papel com o UUID real desse usuário:
+
+```sql
+insert into public.user_roles (user_id, role)
+values ('UUID_DO_USUARIO', 'admin')
+on conflict (user_id, role) do nothing;
+```
+
+Com o primeiro admin criado, ative `public.hook_require_pending_invitation` em **Authentication > Hooks > Before User Created**. Isso impede a criação de identidades sem um convite pendente e válido, inclusive quando alguém tenta chamar a API de autenticação fora da interface do projeto.
+
+Nunca envie nem exponha a `SUPABASE_SERVICE_ROLE_KEY` no navegador ou em repositórios. Salve-a somente em `.env.local` e nas variáveis secretas do ambiente de deploy.
+
 ## Validação do projeto
 
 Execute a verificação do TypeScript:
@@ -144,8 +176,9 @@ src/
   components/app/       Componentes do workspace
   components/marketing/ Componentes da landing e autenticação
   components/ui/        Componentes visuais compartilhados
-  lib/                  Regras de domínio e clientes Supabase
+  lib/                  Regras, tipos canônicos de domínio e clientes Supabase
 plan/                   Especificações funcionais e visuais
+supabase-schema.sql     Schema, views, RPCs, RLS e Storage do Supabase
 kanban.html             Estado de implementação de cada especificação
 prompt-design.md        Referência original de movimento e interação
 AGENT.md                Regras de execução e atualização do projeto
@@ -165,4 +198,4 @@ AGENT.md                Regras de execução e atualização do projeto
 
 As especificações vivem em `plan/`. O estado de cada uma é mantido em `kanban.html`, seguindo os estados `To Do`, `In Development`, `In Tests` e `Done`.
 
-Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria, conteúdo/aulas e calendário/comunicação. O próximo conjunto planejado é a consolidação do roadmap técnico e da estrutura do MVP.
+Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria, conteúdo/aulas e calendário/comunicação. O schema foi preparado como consolidação técnica, sem iniciar nem mover os cartões da etapa 05 no Kanban.

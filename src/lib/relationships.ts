@@ -1,6 +1,7 @@
-export const RELATIONSHIP_STATES = ["invited", "requested", "active", "paused", "ended"] as const;
+import { RELATIONSHIP_STATUSES, type RelationshipStatus } from "@/lib/domain-types";
 
-export type RelationshipState = (typeof RELATIONSHIP_STATES)[number];
+export const RELATIONSHIP_STATES = RELATIONSHIP_STATUSES;
+export type RelationshipState = RelationshipStatus;
 
 export type RelationshipCreationPath = "mentor_invites" | "mentor_picks" | "admin_creates_or_approves";
 

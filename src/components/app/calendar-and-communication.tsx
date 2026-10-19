@@ -21,6 +21,7 @@ import { useMemo, useState } from "react";
 import { GlassButton } from "@/components/ui/glass-button";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { PillChip } from "@/components/ui/pill-chip";
+import { getRoleLabel } from "@/lib/access";
 import {
   CALENDAR_WORKFLOW_STEPS,
   changeScheduledSessionStatus,
@@ -48,11 +49,7 @@ import {
 } from "@/lib/calendar-and-communication";
 import styles from "./calendar-and-communication.module.css";
 
-const roleLabels: Record<CalendarRole, string> = {
-  mentor: "Mentor",
-  mentee: "Mentorado",
-  admin: "Admin"
-};
+const calendarRoles: CalendarRole[] = ["mentor", "mentee", "admin"];
 
 const weekDays = [
   { date: "2026-10-19", weekday: "Seg", day: "19" },
@@ -309,14 +306,14 @@ export function CalendarAndCommunication() {
             <h3>19 a 25 de outubro de 2026</h3>
           </div>
           <div className={styles.roleSwitch} role="group" aria-label="Contexto da agenda">
-            {(Object.keys(roleLabels) as CalendarRole[]).map((role) => (
+            {calendarRoles.map((role) => (
               <button
                 type="button"
                 key={role}
                 aria-pressed={activeRole === role}
                 onClick={() => setActiveRole(role)}
               >
-                {roleLabels[role]}
+                {getRoleLabel(role)}
               </button>
             ))}
           </div>

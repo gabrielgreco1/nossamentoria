@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-export const MATERIALS_BUCKET = "mentor-materials";
+export const MATERIALS_BUCKET = "materials";
 
 export async function uploadPrivateMaterial(
   supabase: SupabaseClient,

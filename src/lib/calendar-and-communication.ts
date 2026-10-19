@@ -1,3 +1,20 @@
+import type {
+  CommunicationContextType,
+  CommunicationNoteType,
+  CommunicationVisibility,
+  NotificationEntityType,
+  NotificationType,
+  SessionStatus,
+  UserRole
+} from "@/lib/domain-types";
+
+export type {
+  CommunicationContextType,
+  CommunicationNoteType,
+  CommunicationVisibility,
+  NotificationType
+};
+
 export const CALENDAR_WORKFLOW_STEPS = [
   {
     id: "schedule",
@@ -26,8 +43,8 @@ export const CALENDAR_WORKFLOW_STEPS = [
   }
 ] as const;
 
-export type CalendarRole = "admin" | "mentor" | "mentee";
-export type ScheduledSessionStatus = "proposed" | "confirmed" | "completed" | "canceled" | "missed";
+export type CalendarRole = UserRole;
+export type ScheduledSessionStatus = SessionStatus;
 
 export type ScheduledSession = {
   id: string;
@@ -236,23 +253,13 @@ export function countsAsCompletedProgress(session: ScheduledSession) {
   return session.status === "completed";
 }
 
-export type NotificationType =
-  | "invitation_created"
-  | "invitation_accepted"
-  | "relationship_activated"
-  | "plan_activated"
-  | "session_scheduled"
-  | "session_rescheduled"
-  | "session_completed"
-  | "shared_note";
-
 export type InAppNotification = {
   id: string;
   recipientId: string;
   type: NotificationType;
   title: string;
   body: string;
-  relatedEntityType: "invitation" | "relationship" | "plan" | "session" | "note";
+  relatedEntityType: NotificationEntityType;
   relatedEntityId: string;
   read: boolean;
   createdAt: string;
@@ -336,16 +343,6 @@ export function getNotificationTypeLabel(type: NotificationType) {
 
   return labels[type];
 }
-
-export type CommunicationNoteType =
-  | "mentor_private"
-  | "mentor_shared"
-  | "mentee_note"
-  | "next_action"
-  | "session_summary";
-
-export type CommunicationContextType = "relationship" | "plan" | "lesson" | "session";
-export type CommunicationVisibility = "mentor_only" | "mentor_and_mentee";
 
 export type CommunicationNote = {
   id: string;
