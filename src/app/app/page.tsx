@@ -24,6 +24,7 @@ import {
 import { redirect } from "next/navigation";
 import { AppShell } from "@/components/app/app-shell";
 import { EmptyState } from "@/components/app/empty-state";
+import { MentorshipLifecycle } from "@/components/app/mentorship-lifecycle";
 import { PageHeader } from "@/components/app/page-header";
 import { StatCard } from "@/components/app/stat-card";
 import { GlassButton } from "@/components/ui/glass-button";
@@ -313,6 +314,8 @@ export default async function WorkspacePage() {
           <StatCard key={item.label} {...item} />
         ))}
       </section>
+
+      <MentorshipLifecycle />
 
       <section className={styles.domainSection} aria-label="Domínio e permissões">
         <GlassPanel strong className={styles.domainIntro}>
