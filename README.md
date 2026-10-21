@@ -8,7 +8,7 @@ O MVP é gratuito, funciona somente por convite e foi modelado para múltiplos m
 
 O frontend está funcional e pode ser executado localmente. Os fluxos privados ainda usam dados de demonstração e estado local do React; portanto, mudanças feitas na interface são perdidas ao recarregar a página.
 
-A integração base com Supabase já existe para autenticação, validação de convites e Storage. O contrato completo do banco foi preparado em `supabase-schema.sql`, mas ainda precisa ser executado em um projeto Supabase e conectado aos fluxos da interface.
+A integração base com Supabase já existe para autenticação, validação de convites e Storage. O schema completo foi aplicado ao projeto Supabase em 21 de outubro de 2026 e validado pelas APIs de Auth, REST/RPC e Storage, sem depender de uma connection string PostgreSQL. Os fluxos da interface ainda precisam trocar o estado local pela persistência real.
 
 ### Implementado
 
@@ -40,14 +40,17 @@ A integração base com Supabase já existe para autenticação, validação de 
 - Notas de comunicação ligadas à relação, ao plano, à aula ou à sessão.
 - Separação entre notas privadas do mentor, notas compartilhadas, notas do mentorado, próximas ações e resumos.
 - Vocabulário de domínio centralizado em `src/lib/domain-types.ts`.
-- Schema SQL completo com 15 tabelas, cinco views, funções/RPCs, triggers, índices, RLS e bucket privado `materials`.
+- Schema Supabase aplicado com 15 tabelas, cinco views, funções/RPCs, triggers, índices, RLS e bucket privado `materials`.
+- Banco Supabase provisionado com 54 políticas de domínio, quatro políticas de Storage e todas as tabelas protegidas por RLS.
+- Dez templates globais de aula persistidos no banco.
+- RPC pública de validação de convite testada e leitura anônima de perfis bloqueada.
 
 ### Ainda não implementado
 
 - Persistência real no Supabase.
-- Aplicação do schema no projeto Supabase e geração das migrations versionadas pela CLI.
 - Testes das políticas RLS com usuários reais de admin, mentor e mentorado.
 - Ligação dos formulários e painéis atuais às tabelas e RPCs reais.
+- Criação do primeiro usuário admin e ativação do hook de cadastro por convite.
 - Upload real de arquivos para o Supabase Storage.
 - Envio de notificações por e-mail.
 - Operações administrativas completas.
@@ -122,11 +125,13 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 `SUPABASE_SERVICE_ROLE_KEY` é uma credencial exclusiva de servidor e nunca deve ser exposta em componentes cliente ou enviada ao navegador.
 
-As RPCs `validate_invitation_token` e `accept_invitation_token` precisarão existir no Supabase para o fluxo real de convites funcionar.
+Uma connection string PostgreSQL não é necessária para executar a aplicação. Os clientes atuais usam a URL do projeto com a chave pública no navegador/SSR e a service role apenas no servidor.
 
-## Preparação do banco Supabase
+As RPCs `validate_invitation_token` e `accept_invitation_token` já existem no Supabase. A primeira foi validada também pela API REST com a chave pública.
 
-O arquivo `supabase-schema.sql`, na raiz, é a fonte inicial do banco. Ele inclui:
+## Banco Supabase
+
+O projeto Supabase configurado já recebeu:
 
 - enums e tabelas de perfis, papéis, convites, relações, planos, aulas, materiais, sessões, notas e notificações;
 - vínculos explícitos de materiais com planos, aulas e sessões;
@@ -136,7 +141,9 @@ O arquivo `supabase-schema.sql`, na raiz, é a fonte inicial do banco. Ele inclu
 - políticas RLS para admin, mentor, mentorado e usuários com papéis combinados;
 - bucket privado `materials`, limitado a 50 MB por arquivo e organizado por proprietário.
 
-Em um projeto Supabase novo, abra o SQL Editor e execute o conteúdo completo do arquivo uma única vez. Depois, configure em **Authentication > URL Configuration**:
+Os arquivos operacionais `.sql` são mantidos apenas localmente e ignorados pelo Git. Para reproduzir o banco em outro projeto, gere e armazene um export privado do schema antes de fazer a migração. Nunca inclua senhas, connection strings ou chaves secretas nesses artefatos.
+
+Em **Authentication > URL Configuration**, configure:
 
 - Site URL local: `http://localhost:3000`;
 - Redirect URL local: `http://localhost:3000/auth/callback`;
@@ -178,7 +185,6 @@ src/
   components/ui/        Componentes visuais compartilhados
   lib/                  Regras, tipos canônicos de domínio e clientes Supabase
 plan/                   Especificações funcionais e visuais
-supabase-schema.sql     Schema, views, RPCs, RLS e Storage do Supabase
 kanban.html             Estado de implementação de cada especificação
 prompt-design.md        Referência original de movimento e interação
 AGENT.md                Regras de execução e atualização do projeto
@@ -198,4 +204,4 @@ AGENT.md                Regras de execução e atualização do projeto
 
 As especificações vivem em `plan/`. O estado de cada uma é mantido em `kanban.html`, seguindo os estados `To Do`, `In Development`, `In Tests` e `Done`.
 
-Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria, conteúdo/aulas e calendário/comunicação. O schema foi preparado como consolidação técnica, sem iniciar nem mover os cartões da etapa 05 no Kanban.
+Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria, conteúdo/aulas e calendário/comunicação. Na etapa 05, a fundação técnica, landing/autenticação e o plano de banco/Storage estão concluídos; a persistência dos componentes ainda será implementada.
