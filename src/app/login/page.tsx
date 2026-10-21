@@ -25,7 +25,7 @@ function getMessage(error?: string, status?: string) {
   if (error === "setup") {
     return {
       tone: "warning",
-      text: "Variáveis de ambiente do Supabase estão faltando. Configure o .env.local antes de usar autenticação."
+      text: "A autenticação ainda não está configurada. Fale com o administrador da plataforma."
     };
   }
 
@@ -39,7 +39,21 @@ function getMessage(error?: string, status?: string) {
   if (error === "auth") {
     return {
       tone: "warning",
-      text: "O Supabase não conseguiu enviar o link. Revise as configurações de autenticação do projeto."
+      text: "Não foi possível enviar o link agora. Aguarde um momento e tente novamente."
+    };
+  }
+
+  if (error === "rate-limit") {
+    return {
+      tone: "warning",
+      text: "Um link já foi solicitado recentemente. Aguarde alguns minutos antes de pedir outro."
+    };
+  }
+
+  if (error === "email-not-authorized") {
+    return {
+      tone: "warning",
+      text: "O envio para este endereço ainda não está liberado. Fale com o administrador da plataforma."
     };
   }
 

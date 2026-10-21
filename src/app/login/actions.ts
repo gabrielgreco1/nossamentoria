@@ -48,6 +48,20 @@ export async function requestLogin(formData: FormData) {
   });
 
   if (error) {
+    const errorCode = "code" in error ? error.code : undefined;
+    const isRateLimited =
+      error.status === 429 ||
+      errorCode === "over_email_send_rate_limit" ||
+      errorCode === "over_request_rate_limit";
+
+    if (isRateLimited) {
+      redirect(`/login?error=rate-limit&next=${encodeURIComponent(next)}`);
+    }
+
+    if (errorCode === "email_address_not_authorized") {
+      redirect(`/login?error=email-not-authorized&next=${encodeURIComponent(next)}`);
+    }
+
     redirect(`/login?error=auth&next=${encodeURIComponent(next)}`);
   }
 
