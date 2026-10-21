@@ -68,8 +68,8 @@
     color 160ms ease;
 }
 
-.navItem:first-child,
-.navItem:hover {
+.navItem:hover,
+.navItemActive {
   background: rgba(15, 118, 110, 0.09);
   color: var(--text-primary);
 }
@@ -94,6 +94,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.roleButton {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
 }
 
 .previewNote {

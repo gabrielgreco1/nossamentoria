@@ -14,6 +14,22 @@ This phase turns the product specs into an implementation direction.
 
 Use Next.js for the application and Supabase for authentication, database, and storage.
 
+## Current Delivery State
+
+- `technical-stack.md`: complete; the Next.js application, Supabase clients, environment validation and private Storage helper are in place.
+- `landing-and-auth-first.md`: complete; landing, login, invitation entry, callback and protected workspace exist. The first administrator is provisioned.
+- `database-and-storage-plan.md`: complete; the production project contains the MVP schema, RLS policies, RPCs, views, lesson templates and the private `materials` bucket.
+- `frontend-app-structure.md`: complete; the private workspace has a shared protected layout, database-backed roles, mixed-role context switching, real counters and role-aware operational routes.
+- `development-phases.md`: complete; the current result of every phase is recorded, the first administrative write flow is persisted, and remaining editor and deployment work has explicit boundaries.
+
+## Implementation Boundaries
+
+- Browser and SSR clients use the public Supabase key; privileged operations use the service role only on the server.
+- The application runtime does not require a PostgreSQL connection string.
+- Authorization is enforced by database roles and RLS, not only by hidden interface elements.
+- Demo state may remain only where its replacement belongs to a later incremental delivery, and it must be visibly identified.
+- Auth email branding, custom SMTP, the Before User Created hook and production deployment remain explicit operational follow-ups until their external configuration is available.
+
 ## Acceptance Criteria
 
 - The MVP can be built incrementally.

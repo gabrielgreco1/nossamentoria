@@ -30,6 +30,20 @@ Implement scheduling, session detail, completion, applied content, and progress 
 
 Implement QA fixes, responsive checks, RLS tests, seed data, deployment configuration, and launch checklist.
 
+## Execution Snapshot — 21 October 2026
+
+| Phase | Current result |
+| --- | --- |
+| 1. Landing, Auth, invitation | Landing, login, callback, invitation validation/acceptance, first admin and real admin invitation creation/revocation are implemented. Custom SMTP and the Before User Created hook remain operational configuration. |
+| 2. Private workspace shell | Shared protected layout, database-backed roles, mixed-role context switcher, real dashboard counters and role-aware navigation are implemented. |
+| 3. Relationships | Domain rules, database model, RLS and the operational route exist. The rich editor is still local until invited mentor/mentee test users are available. |
+| 4. Mentorship plans | Schema, RPCs, route and validated local editor exist. Persisted create/edit forms remain an incremental delivery. |
+| 5. Lessons and content | Global templates, schema, private Storage bucket and operational route exist. Upload and attachment mutations remain local. |
+| 6. Calendar and sessions | Schema, scheduling/session RPCs and operational route exist. Calendar mutations and notification reads remain local. |
+| 7. Polish and deploy | Intentionally belongs to `plan/06-deploy-and-operations/` after real mentor and mentee accounts validate RLS and the core flows. |
+
+The roadmap is executable without changing the core relationships: later persistence work uses the existing foreign keys, RPCs, RLS policies and route boundaries rather than replacing the domain model.
+
 ## Acceptance Criteria
 
 - Each phase leaves the app in a runnable state.

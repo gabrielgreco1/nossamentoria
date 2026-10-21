@@ -6,7 +6,7 @@ O MVP é gratuito, funciona somente por convite e foi modelado para múltiplos m
 
 ## Estado atual
 
-O frontend está funcional e pode ser executado localmente. Os fluxos privados ainda usam dados de demonstração e estado local do React; portanto, mudanças feitas na interface são perdidas ao recarregar a página.
+O frontend está funcional e pode ser executado localmente. Dashboard, contexto de papéis, resumo administrativo e criação/revogação de convites já usam o Supabase real. Os editores ricos de mentoria, planos, materiais e agenda ainda usam dados de demonstração e estado local do React; mudanças nesses editores são perdidas ao recarregar a página.
 
 A integração base com Supabase já existe para autenticação, validação de convites e Storage. O schema completo foi aplicado ao projeto Supabase em 21 de outubro de 2026 e validado pelas APIs de Auth, REST/RPC e Storage, sem depender de uma connection string PostgreSQL. Os fluxos da interface ainda precisam trocar o estado local pela persistência real.
 
@@ -15,6 +15,9 @@ A integração base com Supabase já existe para autenticação, validação de 
 - Landing page pública e responsiva.
 - Login, aceite de convite e callback de autenticação.
 - Workspace privado com contexto de admin, mentor, mentorado e usuário misto.
+- Layout privado compartilhado com navegação e troca de contexto por papel.
+- Dashboard compacto com contagens reais de relações, planos, sessões e notificações via RLS.
+- Rotas operacionais separadas para administração, mentorias, planos, materiais e agenda.
 - Regras tipadas de papéis, permissões, convites e relações mentor-mentorado.
 - Ciclo de mentoria, da conexão à conclusão ou pausa do plano.
 - Escolha de mentorados existentes e convite por e-mail.
@@ -44,13 +47,17 @@ A integração base com Supabase já existe para autenticação, validação de 
 - Banco Supabase provisionado com 54 políticas de domínio, quatro políticas de Storage e todas as tabelas protegidas por RLS.
 - Dez templates globais de aula persistidos no banco.
 - RPC pública de validação de convite testada e leitura anônima de perfis bloqueada.
+- Primeiro usuário administrador provisionado no Auth, em `profiles`, em `user_roles` e na metadata usada pela interface atual.
+- Sessão autenticada, leitura protegida por RLS e RPC administrativa validadas com o primeiro administrador.
+- Criação e revogação de convites reais pela área administrativa, com link de uso único retornado apenas na criação.
 
 ### Ainda não implementado
 
-- Persistência real no Supabase.
+- Persistência real dos editores de mentorias, planos, materiais, aulas, sessões, notas e notificações.
 - Testes das políticas RLS com usuários reais de admin, mentor e mentorado.
 - Ligação dos formulários e painéis atuais às tabelas e RPCs reais.
-- Criação do primeiro usuário admin e ativação do hook de cadastro por convite.
+- Ativação do hook de cadastro por convite.
+- SMTP próprio e templates de e-mail com a identidade NossaMentoria.
 - Upload real de arquivos para o Supabase Storage.
 - Envio de notificações por e-mail.
 - Operações administrativas completas.
@@ -64,7 +71,7 @@ A integração base com Supabase já existe para autenticação, validação de 
 - CSS Modules e tokens globais de design.
 - Framer Motion para movimentos das páginas públicas.
 - Lucide React para ícones.
-- Supabase SSR e Supabase JS preparados para a integração final.
+- Supabase SSR e Supabase JS em uso na autenticação, autorização, consultas e convites.
 
 ## Rotas disponíveis
 
@@ -75,7 +82,12 @@ A integração base com Supabase já existe para autenticação, validação de 
 | `/invite/[token]` | Validação e aceite de convite. |
 | `/invite/demo-token` | Prévia local da experiência de convite. |
 | `/auth/callback` | Callback de autenticação do Supabase. |
-| `/app` | Workspace com domínio, lifecycle, conteúdo, aulas, calendário e comunicação. |
+| `/app` | Dashboard privado com contagens reais e atalhos por papel. |
+| `/app/admin` | Resumo real de usuários, papéis e convites para administradores. |
+| `/app/relationships` | Relações mentor-mentorado e acompanhamento. |
+| `/app/plans` | Planos, aulas e progresso. |
+| `/app/materials` | Biblioteca de materiais e organização de aulas. |
+| `/app/calendar` | Agenda, sessões, notificações e notas. |
 
 Quando as variáveis do Supabase não estão configuradas, `/app` funciona como uma prévia local e mostra um aviso de configuração. Quando elas estão configuradas, a rota exige um usuário autenticado.
 
@@ -204,4 +216,4 @@ AGENT.md                Regras de execução e atualização do projeto
 
 As especificações vivem em `plan/`. O estado de cada uma é mantido em `kanban.html`, seguindo os estados `To Do`, `In Development`, `In Tests` e `Done`.
 
-Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria, conteúdo/aulas e calendário/comunicação. Na etapa 05, a fundação técnica, landing/autenticação e o plano de banco/Storage estão concluídos; a persistência dos componentes ainda será implementada.
+Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria, conteúdo/aulas, calendário/comunicação e o roadmap da Etapa 05. A base executável da Etapa 05 inclui Supabase, autenticação, layout privado, papéis reais, rotas operacionais, dashboard e convites administrativos persistidos. A persistência dos editores ricos permanece registrada como trabalho incremental antes do deploy.

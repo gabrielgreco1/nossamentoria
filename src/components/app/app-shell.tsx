@@ -1,29 +1,56 @@
+"use client";
+
 import { BookOpen, CalendarDays, Files, LayoutDashboard, ShieldCheck, UsersRound } from "lucide-react";
-import type { ReactNode } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { PillChip } from "@/components/ui/pill-chip";
 import { getRoleLabel, isMixedUser, type UserRole } from "@/lib/access";
 import styles from "./app-shell.module.css";
 
-const navigation = [
-  { label: "Painel", icon: LayoutDashboard },
-  { label: "Acessos", icon: ShieldCheck },
-  { label: "Mentorados", icon: UsersRound },
-  { label: "Planos", icon: BookOpen },
-  { label: "Materiais", icon: Files },
-  { label: "Agenda", icon: CalendarDays }
-];
+const navigationByRole: Record<UserRole, Array<{ label: string; href: string; icon: typeof LayoutDashboard }>> = {
+  admin: [
+    { label: "Painel", href: "/app", icon: LayoutDashboard },
+    { label: "Administração", href: "/app/admin", icon: ShieldCheck }
+  ],
+  mentor: [
+    { label: "Painel", href: "/app", icon: LayoutDashboard },
+    { label: "Mentorados", href: "/app/relationships", icon: UsersRound },
+    { label: "Planos", href: "/app/plans", icon: BookOpen },
+    { label: "Materiais", href: "/app/materials", icon: Files },
+    { label: "Agenda", href: "/app/calendar", icon: CalendarDays }
+  ],
+  mentee: [
+    { label: "Painel", href: "/app", icon: LayoutDashboard },
+    { label: "Minha mentoria", href: "/app/relationships", icon: UsersRound },
+    { label: "Meu plano", href: "/app/plans", icon: BookOpen },
+    { label: "Materiais", href: "/app/materials", icon: Files },
+    { label: "Agenda", href: "/app/calendar", icon: CalendarDays }
+  ]
+};
 
 type AppShellProps = {
   children: ReactNode;
   roles?: UserRole[];
   preview?: boolean;
+  roleSource?: "database" | "metadata" | "preview" | "missing";
 };
 
-const FALLBACK_ROLES: UserRole[] = ["mentor"];
+export function AppShell({ children, roles = [], preview = false, roleSource = "missing" }: AppShellProps) {
+  const pathname = usePathname();
+  const [activeRole, setActiveRole] = useState<UserRole | null>(roles[0] ?? null);
 
-export function AppShell({ children, roles = FALLBACK_ROLES, preview = false }: AppShellProps) {
-  const activeRoles: UserRole[] = roles.length > 0 ? roles : FALLBACK_ROLES;
+  useEffect(() => {
+    if (!activeRole || !roles.includes(activeRole)) {
+      setActiveRole(roles[0] ?? null);
+    }
+  }, [activeRole, roles]);
+
+  const navigation = useMemo(
+    () => (activeRole ? navigationByRole[activeRole] : [{ label: "Painel", href: "/app", icon: LayoutDashboard }]),
+    [activeRole]
+  );
 
   return (
     <div className={styles.shell}>
@@ -37,29 +64,40 @@ export function AppShell({ children, roles = FALLBACK_ROLES, preview = false }: 
         </div>
 
         <nav className={styles.nav} aria-label="Navegação principal">
-          {navigation.map((item) => (
-            <a className={styles.navItem} href="#" key={item.label}>
+          {navigation.map((item) => {
+            const isActive = pathname === item.href || (item.href !== "/app" && pathname.startsWith(`${item.href}/`));
+
+            return (
+            <Link className={[styles.navItem, isActive ? styles.navItemActive : ""].join(" ")} href={item.href} key={item.href}>
               <item.icon size={17} strokeWidth={1.8} />
               <span>{item.label}</span>
-            </a>
-          ))}
+            </Link>
+            );
+          })}
         </nav>
 
         <div className={styles.context}>
           <span className={styles.contextLabel}>Contexto atual</span>
           <div className={styles.roleChips}>
-            {activeRoles.map((role, index) => (
-              <PillChip tone={index === 0 ? "default" : "muted"} key={role}>
-                {getRoleLabel(role)}
-              </PillChip>
-            ))}
+            {roles.length > 0 ? roles.map((role) => (
+              <button
+                className={styles.roleButton}
+                type="button"
+                aria-pressed={role === activeRole}
+                onClick={() => setActiveRole(role)}
+                key={role}
+              >
+                <PillChip tone={role === activeRole ? "default" : "muted"}>{getRoleLabel(role)}</PillChip>
+              </button>
+            )) : <PillChip tone="warning">Sem papel</PillChip>}
           </div>
           <span>
-            {isMixedUser(activeRoles)
+            {isMixedUser(roles)
               ? "Usuários mistos mantêm mentorias, notas e materiais separados por contexto."
               : "O contexto ativo define quais ações e dados ficam disponíveis."}
           </span>
           {preview ? <span className={styles.previewNote}>Prévia até papéis reais virem do banco.</span> : null}
+          {!preview && roleSource === "metadata" ? <span className={styles.previewNote}>Contexto recuperado temporariamente da autenticação.</span> : null}
         </div>
       </GlassPanel>
 
