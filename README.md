@@ -49,7 +49,11 @@ A integração base com Supabase já existe para autenticação, validação de 
 - RPC pública de validação de convite testada e leitura anônima de perfis bloqueada.
 - Primeiro usuário administrador provisionado no Auth, em `profiles`, em `user_roles` e na metadata usada pela interface atual.
 - Sessão autenticada, leitura protegida por RLS e RPC administrativa validadas com o primeiro administrador.
-- Criação e revogação de convites reais pela área administrativa, com link de uso único retornado apenas na criação.
+- Criação de convites reais pela área administrativa, com link de uso único retornado apenas na criação.
+- Revogação administrativa protegida no servidor e correção do trigger compartilhado aplicada e validada no Supabase.
+- Endpoint operacional `/api/health`, cabeçalhos globais de segurança e configuração fail-closed em produção.
+- Validação automatizada de ambiente, build, bundle público, rotas, sessão administrativa e RLS anônima.
+- Runbook de custo zero e modelos reutilizáveis para releases e incidentes.
 
 ### Ainda não implementado
 
@@ -62,6 +66,8 @@ A integração base com Supabase já existe para autenticação, validação de 
 - Envio de notificações por e-mail.
 - Operações administrativas completas.
 - Deploy e observabilidade de produção.
+- Projeto Vercel, variáveis de Preview/Production e smoke test nas URLs publicadas.
+- Reavaliação da hospedagem caso o projeto deixe de ser filantrópico e não comercial, pois o Vercel Hobby não permite uso comercial.
 
 ## Tecnologias
 
@@ -82,6 +88,7 @@ A integração base com Supabase já existe para autenticação, validação de 
 | `/invite/[token]` | Validação e aceite de convite. |
 | `/invite/demo-token` | Prévia local da experiência de convite. |
 | `/auth/callback` | Callback de autenticação do Supabase. |
+| `/api/health` | Estado operacional e de configuração, sem retornar segredos. |
 | `/app` | Dashboard privado com contagens reais e atalhos por papel. |
 | `/app/admin` | Resumo real de usuários, papéis e convites para administradores. |
 | `/app/relationships` | Relações mentor-mentorado e acompanhamento. |
@@ -181,11 +188,31 @@ Execute a verificação do TypeScript:
 npm run typecheck
 ```
 
-Gere o build de produção:
+Valide somente as variáveis obrigatórias:
 
 ```powershell
-npm run build
+npm run check:env
 ```
+
+Execute o gate completo de release — ambiente, TypeScript, build e inspeção do bundle público:
+
+```powershell
+npm run check
+```
+
+Com a aplicação rodando, execute o smoke test local:
+
+```powershell
+npm run qa:smoke
+```
+
+Para testar a sessão administrativa, RLS e convites sem enviar e-mail:
+
+```powershell
+npm run qa:auth
+```
+
+O último teste cria um convite técnico identificado, confirma sua revogação no banco e remove o registro ao final.
 
 ## Estrutura principal
 
@@ -196,6 +223,8 @@ src/
   components/marketing/ Componentes da landing e autenticação
   components/ui/        Componentes visuais compartilhados
   lib/                  Regras, tipos canônicos de domínio e clientes Supabase
+scripts/                Gates de ambiente, segurança e QA operacional
+operations/             Modelos de registro de release e incidente
 plan/                   Especificações funcionais e visuais
 kanban.html             Estado de implementação de cada especificação
 prompt-design.md        Referência original de movimento e interação
@@ -216,4 +245,4 @@ AGENT.md                Regras de execução e atualização do projeto
 
 As especificações vivem em `plan/`. O estado de cada uma é mantido em `kanban.html`, seguindo os estados `To Do`, `In Development`, `In Tests` e `Done`.
 
-Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria, conteúdo/aulas, calendário/comunicação e o roadmap da Etapa 05. A base executável da Etapa 05 inclui Supabase, autenticação, layout privado, papéis reais, rotas operacionais, dashboard e convites administrativos persistidos. A persistência dos editores ricos permanece registrada como trabalho incremental antes do deploy.
+Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria, conteúdo/aulas, calendário/comunicação e o roadmap da Etapa 05. Na Etapa 06, o panorama operacional e o runbook pós-lançamento estão concluídos; deploy, ambiente e QA permanecem em testes até as contas mentor/mentorado validarem os fluxos persistidos e uma URL Vercel existir. A persistência dos editores ricos continua sendo um bloqueador explícito de lançamento.

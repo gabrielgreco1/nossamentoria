@@ -2,10 +2,19 @@
   "name": "nossamentoria",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev",
+    "start": "next start",
     "build": "next build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "check:env": "node scripts/check-environment.mjs",
+    "check:secrets": "node scripts/check-client-secrets.mjs",
+    "check": "npm run check:env && npm run typecheck && npm run build && npm run check:secrets",
+    "qa:smoke": "node scripts/qa-smoke.mjs",
+    "qa:auth": "node scripts/qa-auth-and-rls.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "latest",

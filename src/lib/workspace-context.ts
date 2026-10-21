@@ -29,12 +29,14 @@ export const getWorkspaceContext = cache(async (): Promise<WorkspaceContext> => 
   const user = await getCurrentUser();
 
   if (!envStatus.configured) {
+    const preview = process.env.NODE_ENV !== "production";
+
     return {
       envStatus,
       user: null,
-      roles: ["mentor", "mentee"],
-      roleSource: "preview",
-      preview: true
+      roles: preview ? ["mentor", "mentee"] : [],
+      roleSource: preview ? "preview" : "missing",
+      preview
     };
   }
 

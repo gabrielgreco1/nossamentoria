@@ -10,8 +10,9 @@ type WorkspaceLayoutProps = {
 export default async function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
   const context = await getWorkspaceContext();
 
-  if (context.envStatus.configured && !context.user) {
-    redirect("/login?next=/app");
+  if (!context.preview && !context.user) {
+    const error = context.envStatus.configured ? "" : "&error=setup";
+    redirect(`/login?next=/app${error}`);
   }
 
   return (

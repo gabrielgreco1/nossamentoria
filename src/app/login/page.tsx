@@ -90,7 +90,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
       {!envStatus.configured ? (
         <div className={styles.setup}>
           <PillChip tone="warning">Configuração necessária</PillChip>
-          <code>{envStatus.missing.join(", ")}</code>
+          <code>{[...envStatus.missing, ...envStatus.invalid].join(", ")}</code>
         </div>
       ) : null}
 

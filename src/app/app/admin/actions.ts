@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { canAccess } from "@/lib/access";
+import { getPublicEnv } from "@/lib/env";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { getWorkspaceContext } from "@/lib/workspace-context";
 
@@ -63,7 +65,7 @@ export async function createInvitationAction(
     return { status: "error", message: "O banco não retornou o token do convite." };
   }
 
-  const appUrl = (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000").replace(/\/$/, "");
+  const appUrl = getPublicEnv().NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
   revalidatePath("/app/admin");
 
   return {
@@ -87,14 +89,16 @@ export async function revokeInvitationAction(formData: FormData) {
     return;
   }
 
-  const supabase = await createClient();
-  const { error } = await supabase
+  const admin = createAdminClient();
+  const { data, error } = await admin
     .from("invitations")
     .update({ status: "revoked" })
     .eq("id", invitationId)
-    .eq("status", "pending");
+    .eq("status", "pending")
+    .select("id")
+    .maybeSingle();
 
-  if (error) {
+  if (error || !data) {
     throw new Error("Não foi possível revogar o convite.");
   }
 

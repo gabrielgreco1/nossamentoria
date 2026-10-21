@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getEnvStatus } from "@/lib/env";
+import { getEnvStatus, getPublicEnv } from "@/lib/env";
 import { validateInvitationToken } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 
@@ -37,7 +37,7 @@ export async function requestLogin(formData: FormData) {
   }
 
   const supabase = await createClient();
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const appUrl = getPublicEnv().NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
   const callbackUrl = `${appUrl}/auth/callback?next=${encodeURIComponent(next)}`;
   const { error } = await supabase.auth.signInWithOtp({
     email,

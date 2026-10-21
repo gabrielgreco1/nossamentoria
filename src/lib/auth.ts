@@ -58,7 +58,10 @@ export async function validateInvitationToken(token: string): Promise<Invitation
   if (!envStatus.configured) {
     return {
       status: "setup",
-      message: `Variáveis de ambiente ausentes: ${envStatus.missing.join(", ")}`
+      message: `Variáveis de ambiente ausentes ou inválidas: ${[
+        ...envStatus.missing,
+        ...envStatus.invalid
+      ].join(", ")}`
     };
   }
 

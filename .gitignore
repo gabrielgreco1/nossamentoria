@@ -1,5 +1,6 @@
-.env
-.env*.local
+.env*
+!.env.example
+.vercel
 .next
 node_modules
 dist
