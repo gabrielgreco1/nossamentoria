@@ -20,26 +20,12 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   border: 1px solid rgba(217, 228, 221, 0.82);
   border-radius: var(--radius-pill);
   background: rgba(255, 253, 247, 0.74);
   color: var(--text-primary);
-  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  font-weight: 800;
-  padding: 7px 14px 7px 8px;
+  padding: 7px 14px 7px 10px;
   backdrop-filter: blur(14px);
-}
-
-.brand span {
-  display: inline-grid;
-  width: 36px;
-  height: 36px;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--brand-teal);
-  color: #ffffff;
-  font-size: 0.78rem;
 }
 
 .nav nav {
@@ -60,85 +46,6 @@
   padding: 10px 12px;
 }
 
-.hero {
-  position: relative;
-  display: grid;
-  min-height: 100vh;
-  grid-template-columns: minmax(0, 0.98fr) minmax(380px, 0.86fr);
-  gap: clamp(48px, 6vw, 88px);
-  align-items: center;
-  padding: 132px max(32px, calc((100vw - 1180px) / 2)) 84px;
-}
-
-.motionBackdrop {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.motionBackdrop span {
-  position: absolute;
-  display: block;
-  border-radius: 50%;
-  filter: blur(2px);
-  opacity: 0.32;
-  animation: floatPath 11s ease-in-out infinite alternate;
-}
-
-.motionBackdrop span:nth-child(1) {
-  width: 34rem;
-  height: 34rem;
-  top: 12%;
-  right: -8rem;
-  background: rgba(15, 118, 110, 0.18);
-}
-
-.motionBackdrop span:nth-child(2) {
-  width: 26rem;
-  height: 26rem;
-  bottom: 4%;
-  left: -7rem;
-  background: rgba(245, 184, 75, 0.22);
-  animation-delay: 1.5s;
-}
-
-.motionBackdrop span:nth-child(3) {
-  width: 18rem;
-  height: 18rem;
-  top: 22%;
-  left: 44%;
-  background: rgba(37, 99, 235, 0.12);
-  animation-delay: 0.7s;
-}
-
-.heroCopy,
-.visualReveal {
-  position: relative;
-  z-index: 1;
-}
-
-.heroCopy {
-  display: grid;
-  max-width: 760px;
-  gap: 28px;
-  min-width: 0;
-}
-
-.heroCopy p {
-  max-width: 620px;
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: clamp(1rem, 1.35vw, 1.18rem);
-  line-height: 1.78;
-}
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
 .heroVisual {
   display: grid;
   gap: 20px;
@@ -155,16 +62,16 @@
 }
 
 .progressCard {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 0.72fr);
   align-items: center;
-  justify-content: space-between;
   gap: 18px;
   border-radius: 18px;
   background: linear-gradient(145deg, #ecf8f1, #ffffff);
   padding: 22px;
 }
 
-.progressCard span {
+.progressCard > div:first-child > span {
   display: block;
   color: var(--text-muted);
   font-size: 0.82rem;
@@ -172,7 +79,7 @@
   text-transform: uppercase;
 }
 
-.progressCard strong {
+.progressCard > div:first-child > strong {
   display: block;
   margin-top: 6px;
   color: var(--text-primary);
@@ -180,10 +87,10 @@
   font-size: 1.25rem;
 }
 
-.progressValue {
-  color: var(--brand-teal) !important;
-  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  font-size: 2.6rem !important;
+@media (max-width: 480px) {
+  .progressCard {
+    grid-template-columns: 1fr;
+  }
 }
 
 .lessonList {
@@ -313,22 +220,6 @@
   color: var(--brand-teal);
 }
 
-@keyframes floatPath {
-  from {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-
-  to {
-    transform: translate3d(26px, -34px, 0) scale(1.06);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .motionBackdrop span {
-    animation: none;
-  }
-}
-
 @media (max-width: 900px) {
   .nav {
     align-items: flex-start;
@@ -340,19 +231,9 @@
     overflow-x: auto;
   }
 
-  .hero,
   .workflowGrid,
   .accessGrid {
     grid-template-columns: 1fr;
-  }
-
-  .hero {
-    min-height: auto;
-    padding-top: 148px;
-  }
-
-  .heroCopy {
-    max-width: none;
   }
 }
 

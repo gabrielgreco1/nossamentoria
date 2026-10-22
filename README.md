@@ -13,10 +13,15 @@ A integração base com Supabase já existe para autenticação, validação de 
 ### Implementado
 
 - Landing page pública e responsiva.
+- Design system completo com os 13 componentes obrigatórios da Etapa 07 e gate automatizado.
+- Logo NossaMentoria reutilizável e símbolo próprio aplicado à navegação, autenticação, workspace e metadados do navegador.
+- Landing hero reutilizável, cartões compartilhados de material/sessão e indicador de progresso.
+- Entradas animadas na landing, autenticação e dashboard com suporte a movimento reduzido.
 - Login, aceite de convite e callback de autenticação.
 - Workspace privado com contexto de admin, mentor, mentorado e usuário misto.
 - Layout privado compartilhado com navegação e troca de contexto por papel.
 - Dashboard compacto com contagens reais de relações, planos, sessões e notificações via RLS.
+- Dashboard com prioridades específicas de mentor e mentorado usando dados visíveis via RLS.
 - Rotas operacionais separadas para administração, mentorias, planos, materiais e agenda.
 - Regras tipadas de papéis, permissões, convites e relações mentor-mentorado.
 - Ciclo de mentoria, da conexão à conclusão ou pausa do plano.
@@ -188,6 +193,12 @@ Execute a verificação do TypeScript:
 npm run typecheck
 ```
 
+Valide os componentes, tokens e regras de movimento da identidade visual:
+
+```powershell
+npm run check:design
+```
+
 Valide somente as variáveis obrigatórias:
 
 ```powershell
@@ -223,6 +234,7 @@ src/
   components/marketing/ Componentes da landing e autenticação
   components/ui/        Componentes visuais compartilhados
   lib/                  Regras, tipos canônicos de domínio e clientes Supabase
+public/brand/            Símbolo e ativos públicos da identidade NossaMentoria
 scripts/                Gates de ambiente, segurança e QA operacional
 operations/             Modelos de registro de release e incidente
 plan/                   Especificações funcionais e visuais
@@ -245,4 +257,4 @@ AGENT.md                Regras de execução e atualização do projeto
 
 As especificações vivem em `plan/`. O estado de cada uma é mantido em `kanban.html`, seguindo os estados `To Do`, `In Development`, `In Tests` e `Done`.
 
-Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria, conteúdo/aulas, calendário/comunicação e o roadmap da Etapa 05. Na Etapa 06, o panorama operacional e o runbook pós-lançamento estão concluídos; deploy, ambiente e QA permanecem em testes até as contas mentor/mentorado validarem os fluxos persistidos e uma URL Vercel existir. A persistência dos editores ricos continua sendo um bloqueador explícito de lançamento.
+Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria, conteúdo/aulas, calendário/comunicação e o roadmap da Etapa 05. A Etapa 07 consolidou a identidade visual, os componentes compartilhados, as telas por papel e as regras de movimento. Na Etapa 06, o panorama operacional e o runbook pós-lançamento estão concluídos; deploy, ambiente e QA permanecem em testes porque a publicação na Vercel foi adiada e ainda faltam contas mentor/mentorado com fluxos persistidos. A persistência dos editores ricos continua sendo um bloqueador explícito de lançamento.

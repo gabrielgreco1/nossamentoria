@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { PillChip } from "@/components/ui/pill-chip";
+import { BrandLogo } from "@/components/ui/brand-logo";
 import { getRoleLabel, isMixedUser, type UserRole } from "@/lib/access";
 import styles from "./app-shell.module.css";
 
@@ -56,11 +57,7 @@ export function AppShell({ children, roles = [], preview = false, roleSource = "
     <div className={styles.shell}>
       <GlassPanel as="aside" className={styles.sidebar}>
         <div className={styles.brand}>
-          <span className={styles.mark}>NM</span>
-          <div>
-            <p>NossaMentoria</p>
-            <span>Mentoria privada</span>
-          </div>
+          <BrandLogo subtitle="Mentoria privada" priority />
         </div>
 
         <nav className={styles.nav} aria-label="Navegação principal">

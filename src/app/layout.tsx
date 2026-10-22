@@ -15,7 +15,11 @@ const sora = Sora({
 
 export const metadata: Metadata = {
   title: "NossaMentoria",
-  description: "Plataforma privada de mentoria para planos, aulas, materiais e progresso."
+  description: "Plataforma privada de mentoria para planos, aulas, materiais e progresso.",
+  icons: {
+    icon: "/brand/nossamentoria-symbol-v1.png",
+    apple: "/brand/nossamentoria-symbol-v1.png"
+  }
 };
 
 export default function RootLayout({

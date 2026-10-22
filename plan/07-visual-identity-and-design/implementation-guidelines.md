@@ -61,3 +61,13 @@ Create shared components before duplicating design code:
 - New UI work references this design phase.
 - Core components express the identity consistently.
 - The app can evolve visually without rewriting every screen.
+
+## Enforcement
+
+Run `npm run check:design` after changing shared UI or global styling. The gate verifies that all
+required primitives exist, canonical palette/font tokens remain available, animated components
+honor reduced-motion preferences and the newly extracted primitives are used by product screens.
+
+The full `npm run check` release gate includes this visual check before the production build.
+Component-specific styling remains colocated in CSS Modules; only application-wide tokens,
+defaults and accessibility fallbacks belong in `src/app/globals.css`.

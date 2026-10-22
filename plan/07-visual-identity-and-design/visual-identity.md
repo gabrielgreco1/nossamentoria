@@ -57,3 +57,13 @@ The landing and invitation experience should be warm, aspirational, clear, and m
 - Operational screens remain easy to scan for mentors and mentees.
 - The overall mood encourages learning instead of feeling heavy, cold, or depressive.
 - User-facing screens are written in Portuguese.
+
+## Implemented Translation
+
+The application translates these principles into a warm canvas, restrained teal/blue actions,
+amber/coral status accents, Sora headings and Inter operational copy. Public routes use abstract
+progress shapes and layered learning cards; private routes keep the same brand through compact
+panels, explicit labels and role-aware navigation instead of cinematic decoration.
+
+Global surface, status, spacing, radius, shadow and motion tokens live in `src/app/globals.css`.
+Reduced motion is enforced globally as a safety net and within animated React components.

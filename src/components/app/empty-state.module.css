@@ -1,3 +1,7 @@
+.reveal {
+  width: 100%;
+}
+
 .empty {
   display: grid;
   gap: 12px;

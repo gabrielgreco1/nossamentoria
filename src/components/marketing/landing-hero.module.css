@@ -1,0 +1,97 @@
+.hero {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: minmax(0, 0.98fr) minmax(380px, 0.86fr);
+  gap: clamp(48px, 6vw, 88px);
+  align-items: center;
+  padding: 132px max(var(--space-page), calc((100vw - var(--content-max)) / 2)) 84px;
+}
+
+.motionBackdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.motionBackdrop span {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0.32;
+  animation: floatPath 11s ease-in-out infinite alternate;
+}
+
+.motionBackdrop span:nth-child(1) {
+  width: 34rem;
+  height: 34rem;
+  top: 12%;
+  right: -8rem;
+  background: rgba(15, 118, 110, 0.18);
+}
+
+.motionBackdrop span:nth-child(2) {
+  width: 26rem;
+  height: 26rem;
+  bottom: 4%;
+  left: -7rem;
+  background: rgba(245, 184, 75, 0.22);
+  animation-delay: 1.5s;
+}
+
+.motionBackdrop span:nth-child(3) {
+  width: 18rem;
+  height: 18rem;
+  top: 22%;
+  left: 44%;
+  background: rgba(37, 99, 235, 0.12);
+  animation-delay: 0.7s;
+}
+
+.copy,
+.visual {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.copy {
+  display: grid;
+  max-width: 760px;
+  gap: 28px;
+}
+
+.copy p {
+  max-width: 620px;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: clamp(1rem, 1.35vw, 1.18rem);
+  line-height: 1.78;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@keyframes floatPath {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(26px, -34px, 0) scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motionBackdrop span { animation: none; }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    padding-top: 148px;
+  }
+
+  .copy { max-width: none; }
+}

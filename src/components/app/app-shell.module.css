@@ -16,37 +16,8 @@
 }
 
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
   padding-bottom: 18px;
   border-bottom: 1px solid var(--line);
-}
-
-.brand p {
-  margin: 0;
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-.brand span {
-  color: var(--text-muted);
-  font-size: 0.82rem;
-}
-
-.mark {
-  display: inline-flex;
-  width: 42px;
-  height: 42px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: 1px solid var(--brand-teal);
-  background: var(--brand-teal);
-  color: #ffffff;
-  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.86rem;
-  font-weight: 800;
 }
 
 .nav {

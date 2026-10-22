@@ -24,6 +24,7 @@ import {
   UserRound
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { MaterialCard } from "@/components/app/material-card";
 import { GlassButton } from "@/components/ui/glass-button";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { PillChip } from "@/components/ui/pill-chip";
@@ -336,28 +337,23 @@ export function ContentAndClasses() {
         ) : (
           <div className={styles.materialGrid}>
             {visibleMaterials.map((material) => (
-              <article className={styles.materialCard} key={material.id}>
-                <div className={styles.materialHeader}>
-                  <div className={styles.materialIcon}><MaterialIcon type={material.type} /></div>
-                  <div>
-                    <span>{getMaterialTypeLabel(material.type)} · {material.category}</span>
-                    <h4>{material.title}</h4>
-                  </div>
-                  <PillChip tone={material.visibility === "shared" ? "default" : "muted"}>
-                    {material.visibility === "shared" ? "Em uso" : "Privado"}
-                  </PillChip>
-                </div>
-                <p>{material.description}</p>
-                <div className={styles.tagList}>
-                  {material.tags.map((tag) => <span key={tag}>#{tag}</span>)}
-                </div>
-                <div className={styles.materialFooter}>
-                  <span><LockKeyhole size={14} /> Proprietário: você</span>
+              <MaterialCard
+                key={material.id}
+                icon={<MaterialIcon type={material.type} />}
+                typeLabel={getMaterialTypeLabel(material.type)}
+                category={material.category}
+                title={material.title}
+                description={material.description}
+                tags={material.tags}
+                status={material.visibility === "shared" ? "Em uso" : "Privado"}
+                statusTone={material.visibility === "shared" ? "default" : "muted"}
+                meta={<><LockKeyhole size={14} /> Proprietário: você</>}
+                action={(
                   <button type="button" onClick={() => setPreviewMaterialId(material.id)}>
                     <Eye size={15} /> Abrir
                   </button>
-                </div>
-              </article>
+                )}
+              />
             ))}
           </div>
         )}

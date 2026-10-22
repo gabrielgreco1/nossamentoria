@@ -373,31 +373,15 @@
   background: rgba(255, 255, 255, 0.76);
 }
 
-.progressSummary strong {
+.progressSummary > div:not(:first-child) > strong {
   color: var(--text-primary);
   font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
   font-size: 1.35rem;
 }
 
-.progressSummary span {
+.progressSummary > div:not(:first-child) > span {
   color: var(--text-muted);
   font-size: 0.76rem;
-}
-
-.progressTrack {
-  height: 7px;
-  margin-top: 5px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: var(--canvas-soft);
-}
-
-.progressTrack span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--brand-teal);
-  transition: width 180ms ease;
 }
 
 .progressGrid {
@@ -479,42 +463,6 @@
   padding: 8px;
   color: var(--text-secondary);
   font-size: 0.76rem;
-}
-
-.sessionCard {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 12px;
-  border-radius: 14px;
-  background: rgba(245, 184, 75, 0.13);
-  padding: 13px;
-}
-
-.sessionIcon {
-  display: grid;
-  width: 38px;
-  height: 38px;
-  place-items: center;
-  border-radius: 11px;
-  background: rgba(245, 184, 75, 0.25);
-  color: #8a5a08;
-}
-
-.sessionCard > div:nth-child(2) {
-  display: grid;
-  gap: 3px;
-}
-
-.sessionCard small,
-.sessionCard span {
-  color: var(--text-muted);
-  font-size: 0.72rem;
-}
-
-.sessionCard strong {
-  color: var(--text-primary);
-  font-size: 0.86rem;
 }
 
 .progressForm label {
@@ -814,13 +762,11 @@
     grid-template-columns: 1fr;
   }
 
-  .trackedLessons > div,
-  .sessionCard {
+  .trackedLessons > div {
     grid-template-columns: auto minmax(0, 1fr);
   }
 
-  .trackedLessons select,
-  .sessionCard > :last-child {
+  .trackedLessons select {
     grid-column: 2;
   }
 }

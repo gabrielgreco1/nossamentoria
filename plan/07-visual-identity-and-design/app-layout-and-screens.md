@@ -87,3 +87,19 @@ Calendar:
 - Every major screen uses the visual identity without sacrificing scanability.
 - Empty states guide the next operational action.
 - User-facing UI copy is Portuguese-first.
+
+## Implemented Screen Map
+
+- `/` remains the public value proposition and invite-first entry point.
+- `/login` and `/invite/[token]` remain reachable before the authenticated workspace.
+- `/app` now presents real Supabase counts, an attention surface, role-specific mentor/mentee
+  priorities and compact operational shortcuts.
+- mentor priorities expose visible relationships, upcoming sessions, recent progress context and
+  plan review;
+- mentee priorities expose active plans, upcoming sessions, shared materials and the mentorship
+  entry point;
+- `/app/relationships`, `/app/plans`, `/app/materials` and `/app/calendar` retain their dense,
+  task-oriented layouts.
+
+Mixed users see both priority surfaces while the shell switcher continues to simplify navigation
+for the selected role.

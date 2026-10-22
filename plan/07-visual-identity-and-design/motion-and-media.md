@@ -70,3 +70,17 @@ If looping background video is implemented, follow the prompt's rule:
 - Reduced-motion users get an acceptable static experience.
 - Video never reduces readability of primary actions.
 - Public landing motion should feel related to `prompt-design.md` while remaining warm and learning-oriented.
+
+## Implemented Motion Profile
+
+- The landing hero keeps word-by-word blur only on its single primary headline.
+- Public sections and auth cards use the reusable `Reveal` entrance.
+- Dashboard groups and empty states use the shorter `app` entrance without blur.
+- `BlurText` and `Reveal` use Framer Motion's reduced-motion preference directly.
+- Global CSS disables non-essential transitions and animations when reduced motion is requested.
+- The landing keeps its abstract learning/progress backdrop. No video was added because the
+  project does not yet have a strong, owned learning-oriented asset.
+
+Desktop and responsive production captures were reviewed in reduced-motion mode. This check
+identified and fixed a hydration edge case that could leave animated content hidden when the user
+requested less motion.

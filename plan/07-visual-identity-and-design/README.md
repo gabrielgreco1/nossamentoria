@@ -29,3 +29,26 @@ All user-facing UI copy should be Portuguese by default. English may appear only
 - Core app screens remain usable, dense, and dashboard-first.
 - Typography and glass surfaces follow this folder's specs.
 - No UI-facing implementation should ignore this phase.
+
+## Implementation Baseline
+
+Audit started on 21 October 2026 against the current Next.js application.
+
+Already aligned:
+
+- warm light palette exposed as global CSS tokens;
+- Sora for headings and Inter for operational text through `next/font`;
+- public landing, login, invitation and private workspace routes;
+- shared glass panels, buttons, chips, auth card, page header, stats and empty states;
+- responsive app shell and Portuguese-first interface copy.
+
+Work required by this phase:
+
+- add the missing `LandingHero`, `ProgressIndicator`, `MaterialCard` and `SessionCard` primitives;
+- replace repeated card and progress markup with the shared primitives;
+- make mentor and mentee priorities explicit on the private dashboard;
+- make all Framer Motion entrances respect reduced-motion preferences;
+- complete responsive and visual QA before marking the phase finished.
+
+The Vercel deployment remains outside this phase and was explicitly postponed. Stage 07 can be
+implemented and validated locally without treating Stage 06 deployment cards as complete.

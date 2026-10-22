@@ -1,0 +1,46 @@
+.root {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+}
+
+.meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.meta span {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.meta strong {
+  color: var(--brand-teal);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+}
+
+.track {
+  height: 8px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+}
+
+.track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--brand-teal);
+  transition: width var(--motion-base) ease;
+}
+
+.compact { gap: 6px; }
+.compact .track { height: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .track span { transition: none; }
+}

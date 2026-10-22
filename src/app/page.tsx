@@ -11,11 +11,12 @@ import {
   UsersRound
 } from "lucide-react";
 import { redirect } from "next/navigation";
-import { BlurText } from "@/components/marketing/blur-text";
+import { ProgressIndicator } from "@/components/app/progress-indicator";
+import { LandingHero } from "@/components/marketing/landing-hero";
 import { Reveal } from "@/components/marketing/reveal";
 import { GlassButton } from "@/components/ui/glass-button";
 import { GlassPanel } from "@/components/ui/glass-panel";
-import { PillChip } from "@/components/ui/pill-chip";
+import { BrandLogo } from "@/components/ui/brand-logo";
 import { getCurrentUser } from "@/lib/auth";
 import styles from "./page.module.css";
 
@@ -56,9 +57,8 @@ export default async function Home() {
   return (
     <main className={styles.page}>
       <header className={styles.nav}>
-        <a className={styles.brand} href="/">
-          <span>NM</span>
-          NossaMentoria
+        <a className={styles.brand} href="/" aria-label="NossaMentoria — início">
+          <BrandLogo compact priority />
         </a>
         <nav aria-label="Navegação pública">
           <a href="#trilha">Trilha</a>
@@ -69,36 +69,17 @@ export default async function Home() {
         </nav>
       </header>
 
-      <section className={styles.hero}>
-        <div className={styles.motionBackdrop} aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
-
-        <div className={styles.heroCopy}>
-          <Reveal delay={0.15}>
-            <PillChip>MVP gratuito e privado por convite</PillChip>
-          </Reveal>
-          <BlurText text="Mentoria em tecnologia com trilha, contexto e progresso." />
-          <Reveal delay={0.75}>
-            <p>
-              A NossaMentoria ajuda mentores e mentorados a transformar links, chamadas, notas e
-              aulas soltas em uma jornada organizada de aprendizado, com planos, materiais,
-              encontros e progresso no mesmo lugar.
-            </p>
-          </Reveal>
-          <Reveal delay={1}>
-            <div className={styles.actions}>
-              <GlassButton href="/login">Tenho um convite</GlassButton>
-              <GlassButton href="#acesso" variant="secondary">
-                Como funciona
-              </GlassButton>
-            </div>
-          </Reveal>
-        </div>
-
-        <Reveal delay={1.15} className={styles.visualReveal}>
+      <LandingHero
+        eyebrow="MVP gratuito e privado por convite"
+        title="Mentoria em tecnologia com trilha, contexto e progresso."
+        description="A NossaMentoria ajuda mentores e mentorados a transformar links, chamadas, notas e aulas soltas em uma jornada organizada de aprendizado, com planos, materiais, encontros e progresso no mesmo lugar."
+        actions={(
+          <>
+            <GlassButton href="/login">Tenho um convite</GlassButton>
+            <GlassButton href="#acesso" variant="secondary">Como funciona</GlassButton>
+          </>
+        )}
+        visual={(
           <GlassPanel strong className={styles.heroVisual} aria-label="Prévia de trilha de mentoria">
             <div className={styles.visualHeader}>
               <Sparkles size={18} />
@@ -109,7 +90,7 @@ export default async function Home() {
                 <span>Foco atual</span>
                 <strong>Fundamentos de backend</strong>
               </div>
-              <span className={styles.progressValue}>68%</span>
+              <ProgressIndicator value={68} label="Progresso do plano" compact />
             </div>
             <ol className={styles.lessonList}>
               <li>
@@ -126,8 +107,8 @@ export default async function Home() {
               </li>
             </ol>
           </GlassPanel>
-        </Reveal>
-      </section>
+        )}
+      />
 
       <section className={styles.capabilities} id="trilha">
         <Reveal className={styles.sectionHeader}>

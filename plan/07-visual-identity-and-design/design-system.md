@@ -82,3 +82,22 @@ Required behavior:
 - The UI remains readable on warm light backgrounds.
 - Glass effects enhance hierarchy without hiding content.
 - The palette encourages learning and momentum rather than heaviness.
+
+## Implemented Components
+
+The token system is defined in `src/app/globals.css`. Shared implementations now cover every
+required primitive:
+
+- UI: `GlassPanel`, `GlassButton` and `PillChip`;
+- brand: `BrandLogo`, combining the generated symbol with the canonical Sora wordmark;
+- public/auth: `AuthCard`, `LandingSection` and `LandingHero`;
+- workspace: `AppShell`, `PageHeader`, `StatCard`, `EmptyState`, `ProgressIndicator`,
+  `MaterialCard` and `SessionCard`.
+
+The landing preview and mentorship lifecycle use the shared progress primitive. The content
+library and upcoming-session workflow use their shared card primitives, removing their earlier
+one-off implementations.
+
+The official symbol lives at `public/brand/nossamentoria-symbol-v1.png`. It represents two learning
+paths converging toward the same milestone. The shared logo is used by public navigation, auth and
+the private shell; root metadata uses the same symbol for browser and Apple icons.

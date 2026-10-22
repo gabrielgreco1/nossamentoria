@@ -9,14 +9,20 @@
   position: fixed;
   top: 22px;
   left: 24px;
-  color: var(--text-primary);
-  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  font-weight: 700;
+  border: 1px solid rgba(217, 228, 221, 0.82);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 253, 247, 0.74);
+  padding: 7px 14px 7px 10px;
+  backdrop-filter: blur(14px);
+}
+
+.reveal {
+  width: min(100%, 480px);
 }
 
 .card {
   display: grid;
-  width: min(100%, 480px);
+  width: 100%;
   gap: 16px;
   padding: 30px;
 }

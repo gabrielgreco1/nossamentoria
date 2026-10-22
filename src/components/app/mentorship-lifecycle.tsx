@@ -20,6 +20,8 @@ import {
   UsersRound
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { ProgressIndicator } from "@/components/app/progress-indicator";
+import { SessionCard } from "@/components/app/session-card";
 import { GlassButton } from "@/components/ui/glass-button";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { PillChip } from "@/components/ui/pill-chip";
@@ -633,11 +635,7 @@ export function MentorshipLifecycle() {
 
         <div className={styles.progressSummary}>
           <div>
-            <strong>{progress.completionPercentage}%</strong>
-            <span>Aulas concluídas</span>
-            <div className={styles.progressTrack} aria-label={`${progress.completionPercentage}% das aulas concluídas`}>
-              <span style={{ width: `${progress.completionPercentage}%` }} />
-            </div>
+            <ProgressIndicator value={progress.completionPercentage} label="Aulas concluídas" />
           </div>
           <div><strong>{progress.completedLessons}/{progress.totalLessons}</strong><span>Lições</span></div>
           <div><strong>{progress.completedSessions}</strong><span>Sessões concluídas</span></div>
@@ -670,17 +668,17 @@ export function MentorshipLifecycle() {
               ))}
             </div>
 
-            <div className={styles.sessionCard}>
-              <div className={styles.sessionIcon}><Clock3 size={19} /></div>
-              <div>
-                <small>Próxima sessão · 22 out, 19:00</small>
-                <strong>Fluxo com Git e GitHub</strong>
-                <span>Concluir a sessão também conclui a aula vinculada.</span>
-              </div>
-              <GlassButton type="button" onClick={completeUpcomingSession} icon={<CheckCircle2 size={16} />}>
-                Concluir sessão
-              </GlassButton>
-            </div>
+            <SessionCard
+              icon={<Clock3 size={19} />}
+              eyebrow="Próxima sessão · 22 out, 19:00"
+              title="Fluxo com Git e GitHub"
+              description="Concluir a sessão também conclui a aula vinculada."
+              action={(
+                <GlassButton type="button" onClick={completeUpcomingSession} icon={<CheckCircle2 size={16} />}>
+                  Concluir sessão
+                </GlassButton>
+              )}
+            />
           </div>
 
           <form className={styles.progressForm} onSubmit={addProgressNote}>
