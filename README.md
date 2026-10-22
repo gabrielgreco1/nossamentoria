@@ -130,6 +130,8 @@ npm run dev
 
 Abra `http://localhost:3000` no navegador. Para visualizar diretamente o workspace, use `http://localhost:3000/app`.
 
+No ambiente local, uma conta com papel de administrador recebe um seletor de prévia no rodapé da barra lateral. Use os botões **Admin**, **Mentor** e **Mentorado** para revisar as três experiências sem alterar os papéis gravados no Supabase. A prévia muda a navegação e as superfícies visuais, mas consultas e permissões reais continuam vinculadas à conta autenticada. Esse atalho para papéis não atribuídos fica desabilitado em produção.
+
 Se a porta 3000 estiver ocupada:
 
 ```powershell

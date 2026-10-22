@@ -1,21 +1,24 @@
-import { Files } from "lucide-react";
-import { ContentAndClasses } from "@/components/app/content-and-classes";
+import { MaterialsWorkspace } from "@/components/app/materials-workspace";
 import { PageHeader } from "@/components/app/page-header";
-import { PillChip } from "@/components/ui/pill-chip";
+import { getWorkspaceContext } from "@/lib/workspace-context";
 import styles from "../section-page.module.css";
 
 export const dynamic = "force-dynamic";
 
-export default function MaterialsPage() {
+export default async function MaterialsPage() {
+  const context = await getWorkspaceContext();
+  const isMentee = context.activeRole === "mentee";
+
   return (
     <div className={styles.page}>
       <PageHeader
-        eyebrow="Conteúdo"
-        title="Materiais e aulas"
-        description="Organize a biblioteca privada, conecte materiais ao plano correto e mantenha a sequência de aulas editável."
-        action={<PillChip tone="warning"><Files size={14} /> Editor local</PillChip>}
+        eyebrow="Biblioteca"
+        title={isMentee ? "Meus materiais" : "Materiais e templates"}
+        description={isMentee
+          ? "Acesse os materiais compartilhados pelo seu mentor no contexto do plano atual."
+          : "Encontre, crie e edite materiais ou aulas-base sem misturar a biblioteca com o acompanhamento dos mentorados."}
       />
-      <ContentAndClasses />
+      <MaterialsWorkspace role={context.activeRole} />
     </div>
   );
 }

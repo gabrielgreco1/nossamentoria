@@ -41,6 +41,7 @@ export const dynamic = "force-dynamic";
 
 export default async function WorkspacePage() {
   const context = await getWorkspaceContext();
+  const activeRole = context.activeRole;
   const displayName =
     context.user?.user_metadata?.full_name ?? context.user?.email?.split("@")[0] ?? "pessoa mentora";
 
@@ -79,7 +80,8 @@ export default async function WorkspacePage() {
           description="Acompanhe o que precisa de atenção agora e abra cada área operacional em um clique."
           action={
             <div className={styles.roleSummary}>
-              {context.roles.map((role) => <PillChip key={role}>{getRoleLabel(role)}</PillChip>)}
+              {activeRole ? <PillChip>{getRoleLabel(activeRole)}</PillChip> : <PillChip tone="warning">Sem papel</PillChip>}
+              {context.rolePreview ? <PillChip tone="warning">Prévia visual</PillChip> : null}
             </div>
           }
         />
@@ -104,7 +106,7 @@ export default async function WorkspacePage() {
         </GlassPanel>
       </Reveal>
 
-      {context.roles.includes("mentor") || context.roles.includes("mentee") ? (
+      {activeRole === "mentor" || activeRole === "mentee" ? (
         <Reveal variant="app" delay={0.15}>
           <section className={styles.focusSection} aria-labelledby="role-focus-title">
             <div className={styles.sectionHeading}>
@@ -112,7 +114,7 @@ export default async function WorkspacePage() {
               <h2 id="role-focus-title">O próximo passo muda conforme seu papel</h2>
             </div>
             <div className={styles.focusGrid}>
-              {context.roles.includes("mentor") ? (
+              {activeRole === "mentor" ? (
                 <GlassPanel className={styles.focusCard}>
                   <div className={styles.focusTitle}><Target size={20} /><div><span>Visão de mentor</span><h3>Conduzir e acompanhar</h3></div></div>
                   <ul>
@@ -123,7 +125,7 @@ export default async function WorkspacePage() {
                   <Link href="/app/plans">Revisar planos ativos <ArrowRight size={15} /></Link>
                 </GlassPanel>
               ) : null}
-              {context.roles.includes("mentee") ? (
+              {activeRole === "mentee" ? (
                 <GlassPanel className={styles.focusCard}>
                   <div className={styles.focusTitle}><FileCheck2 size={20} /><div><span>Visão de mentorado</span><h3>Aprender e avançar</h3></div></div>
                   <ul>
@@ -155,7 +157,7 @@ export default async function WorkspacePage() {
               </GlassPanel>
             </Link>
           ))}
-          {context.roles.includes("admin") ? (
+          {activeRole === "admin" && context.roles.includes("admin") ? (
             <Link href="/app/admin">
               <GlassPanel className={styles.quickCard}>
                 <ShieldCheck size={20} aria-hidden="true" />

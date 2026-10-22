@@ -1,21 +1,24 @@
-import { CalendarDays } from "lucide-react";
-import { CalendarAndCommunication } from "@/components/app/calendar-and-communication";
+import { CalendarWorkspace } from "@/components/app/calendar-workspace";
 import { PageHeader } from "@/components/app/page-header";
-import { PillChip } from "@/components/ui/pill-chip";
+import { getWorkspaceContext } from "@/lib/workspace-context";
 import styles from "../section-page.module.css";
 
 export const dynamic = "force-dynamic";
 
-export default function CalendarPage() {
+export default async function CalendarPage() {
+  const context = await getWorkspaceContext();
+  const isMentee = context.activeRole === "mentee";
+
   return (
     <div className={styles.page}>
       <PageHeader
         eyebrow="Agenda"
-        title="Sessões e comunicação"
-        description="Acompanhe próximos encontros, confirmações, histórico, notas e ações combinadas."
-        action={<PillChip tone="warning"><CalendarDays size={14} /> Editor local</PillChip>}
+        title="Calendário"
+        description={isMentee
+          ? "Veja seus próximos encontros, confirme propostas e acompanhe o histórico da mentoria."
+          : "Veja a semana, filtre por mentorado e gerencie cada sessão sem perder o contexto do plano."}
       />
-      <CalendarAndCommunication />
+      <CalendarWorkspace role={context.activeRole} />
     </div>
   );
 }

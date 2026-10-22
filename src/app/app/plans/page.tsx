@@ -1,21 +1,24 @@
-import { BookOpenCheck } from "lucide-react";
-import { MentorshipLifecycle } from "@/components/app/mentorship-lifecycle";
+import { MentorshipPlans } from "@/components/app/mentorship-plans";
 import { PageHeader } from "@/components/app/page-header";
-import { PillChip } from "@/components/ui/pill-chip";
+import { getWorkspaceContext } from "@/lib/workspace-context";
 import styles from "../section-page.module.css";
 
 export const dynamic = "force-dynamic";
 
-export default function PlansPage() {
+export default async function PlansPage() {
+  const context = await getWorkspaceContext();
+  const isMentee = context.activeRole === "mentee";
+
   return (
     <div className={styles.page}>
       <PageHeader
         eyebrow="Planos"
-        title="Planos de mentoria"
-        description="Defina objetivo, duração, tópicos, aulas e próximos passos para cada relação ativa."
-        action={<PillChip tone="warning"><BookOpenCheck size={14} /> Editor local</PillChip>}
+        title={isMentee ? "Meu plano" : "Planos por mentorado"}
+        description={isMentee
+          ? "Veja seus objetivos, a sequência de aulas, o progresso e as próximas ações compartilhadas."
+          : "Selecione uma pessoa para criar a trilha inicial ou acompanhar aulas, agenda e progresso de um plano já ativo."}
       />
-      <MentorshipLifecycle />
+      <MentorshipPlans role={context.activeRole} />
     </div>
   );
 }

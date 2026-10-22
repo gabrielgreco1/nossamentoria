@@ -16,7 +16,14 @@ export default async function WorkspaceLayout({ children }: WorkspaceLayoutProps
   }
 
   return (
-    <AppShell roles={context.roles} preview={context.preview} roleSource={context.roleSource}>
+    <AppShell
+      roles={context.roles}
+      availableRoles={context.availableRoles}
+      activeRole={context.activeRole}
+      preview={context.preview}
+      rolePreview={context.rolePreview}
+      roleSource={context.roleSource}
+    >
       {children}
     </AppShell>
   );

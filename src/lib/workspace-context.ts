@@ -1,5 +1,6 @@
 import { cache } from "react";
-import { normalizeRoles, type UserRole } from "@/lib/access";
+import { cookies } from "next/headers";
+import { normalizeRoles, USER_ROLES, type UserRole } from "@/lib/access";
 import { getCurrentUser } from "@/lib/auth";
 import { getEnvStatus } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
@@ -20,9 +21,34 @@ export type WorkspaceContext = {
   envStatus: ReturnType<typeof getEnvStatus>;
   user: Awaited<ReturnType<typeof getCurrentUser>>;
   roles: UserRole[];
+  availableRoles: UserRole[];
+  activeRole: UserRole | null;
   roleSource: "database" | "metadata" | "preview" | "missing";
   preview: boolean;
+  rolePreview: boolean;
 };
+
+export const WORKSPACE_ROLE_COOKIE = "nossamentoria_view_role";
+
+async function withActiveRole(
+  context: Omit<WorkspaceContext, "availableRoles" | "activeRole" | "rolePreview">
+): Promise<WorkspaceContext> {
+  const canPreviewEveryRole =
+    process.env.NODE_ENV !== "production" && context.roles.includes("admin");
+  const availableRoles = canPreviewEveryRole ? [...USER_ROLES] : context.roles;
+  const requestedRole = (await cookies()).get(WORKSPACE_ROLE_COOKIE)?.value;
+  const activeRole = USER_ROLES.includes(requestedRole as UserRole) &&
+    availableRoles.includes(requestedRole as UserRole)
+    ? requestedRole as UserRole
+    : context.roles[0] ?? availableRoles[0] ?? null;
+
+  return {
+    ...context,
+    availableRoles,
+    activeRole,
+    rolePreview: Boolean(activeRole && !context.roles.includes(activeRole))
+  };
+}
 
 export const getWorkspaceContext = cache(async (): Promise<WorkspaceContext> => {
   const envStatus = getEnvStatus();
@@ -31,23 +57,23 @@ export const getWorkspaceContext = cache(async (): Promise<WorkspaceContext> => 
   if (!envStatus.configured) {
     const preview = process.env.NODE_ENV !== "production";
 
-    return {
+    return withActiveRole({
       envStatus,
       user: null,
       roles: preview ? ["mentor", "mentee"] : [],
       roleSource: preview ? "preview" : "missing",
       preview
-    };
+    });
   }
 
   if (!user) {
-    return {
+    return withActiveRole({
       envStatus,
       user: null,
       roles: [],
       roleSource: "missing",
       preview: false
-    };
+    });
   }
 
   try {
@@ -63,13 +89,13 @@ export const getWorkspaceContext = cache(async (): Promise<WorkspaceContext> => 
       );
 
       if (databaseRoles.length > 0) {
-        return {
+        return withActiveRole({
           envStatus,
           user,
           roles: databaseRoles,
           roleSource: "database",
           preview: false
-        };
+        });
       }
     }
   } catch {
@@ -78,11 +104,11 @@ export const getWorkspaceContext = cache(async (): Promise<WorkspaceContext> => 
 
   const metadataRoles = getMetadataRoles(user);
 
-  return {
+  return withActiveRole({
     envStatus,
     user,
     roles: metadataRoles,
     roleSource: metadataRoles.length > 0 ? "metadata" : "missing",
     preview: false
-  };
+  });
 });
