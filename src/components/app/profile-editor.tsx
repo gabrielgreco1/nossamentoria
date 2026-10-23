@@ -95,7 +95,7 @@ export function ProfileEditor({ data }: { data: ProfilePageData }) {
     <form action={action} className={styles.form}>
       {selectedTopics.map((slug) => <input name="topicSlugs" type="hidden" value={slug} key={slug} />)}
 
-      {data.loadError ? <div className={styles.error} role="alert">Não foi possível carregar tudo: {data.loadError}</div> : null}
+      {data.loadError ? <div className={styles.error} role="alert">Não foi possível carregar o perfil. Tente novamente.</div> : null}
       {state.status !== "idle" ? (
         <div className={state.status === "success" ? styles.feedback : styles.error} role="status">{state.message}</div>
       ) : null}
@@ -103,7 +103,7 @@ export function ProfileEditor({ data }: { data: ProfilePageData }) {
       <div className={styles.grid}>
         <GlassPanel strong className={styles.panel}>
           <div className={styles.heading}>
-            <div><h2>Informações pessoais</h2><p>Dados usados para identificar você na plataforma.</p></div>
+            <div><h2>Informações pessoais</h2></div>
             <span className={styles.icon}><UserRound size={19} /></span>
           </div>
           <div className={styles.fields}>
@@ -115,7 +115,7 @@ export function ProfileEditor({ data }: { data: ProfilePageData }) {
 
         <GlassPanel className={styles.panel}>
           <div className={styles.heading}>
-            <div><h2>Links profissionais</h2><p>Facilite a avaliação e a conexão com outras pessoas.</p></div>
+            <div><h2>Links profissionais</h2></div>
             <span className={styles.icon}><Link2 size={19} /></span>
           </div>
           <label>
@@ -219,7 +219,7 @@ export function ProfileEditor({ data }: { data: ProfilePageData }) {
         {data.role === "mentor" ? (
           <GlassPanel className={styles.widePanel}>
             <div className={styles.heading}>
-              <div><h2>Formação acadêmica</h2><p>Mantenha as formações que ajudam mentorados a conhecer sua trajetória.</p></div>
+              <div><h2>Formação acadêmica</h2></div>
               <span className={styles.icon}><GraduationCap size={19} /></span>
             </div>
             <div className={styles.formationList}>
@@ -250,7 +250,6 @@ export function ProfileEditor({ data }: { data: ProfilePageData }) {
       </div>
 
       <div className={styles.saveBar}>
-        <span className={styles.muted}>As alterações afetam imediatamente como seu perfil aparece na plataforma.</span>
         <GlassButton type="submit" icon={<Save size={16} />} disabled={pending}>{pending ? "Salvando..." : "Salvar perfil"}</GlassButton>
       </div>
     </form>

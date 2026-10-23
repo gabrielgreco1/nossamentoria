@@ -12,6 +12,7 @@ import { EmptyState } from "@/components/app/empty-state";
 import { MaterialCard } from "@/components/app/material-card";
 import { ProgressIndicator } from "@/components/app/progress-indicator";
 import { SessionCard } from "@/components/app/session-card";
+import { WeeklyCalendar } from "@/components/app/weekly-calendar";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { PillChip } from "@/components/ui/pill-chip";
 import type { UserRole } from "@/lib/access";
@@ -65,10 +66,10 @@ export function LivePlansWorkspace({ data, role }: { data: PlansWorkspaceData; r
   const totalLessons = data.items.reduce((total, plan) => total + plan.totalLessons, 0);
 
   return (
-    <section className={styles.workspace} aria-label="Planos reais de mentoria">
+    <section className={styles.workspace} aria-label="Planos de mentoria">
       <div className={styles.summaryGrid}>
         <GlassPanel className={styles.summaryCard}>
-          <div><small>Planos visíveis</small><strong>{data.items.length}</strong><span className={styles.muted}>registros no Supabase</span></div>
+          <div><small>Total de planos</small><strong>{data.items.length}</strong><span className={styles.muted}>no seu perfil</span></div>
           <span className={styles.iconBox}><BookOpenCheck size={19} /></span>
         </GlassPanel>
         <GlassPanel className={styles.summaryCard}>
@@ -81,7 +82,7 @@ export function LivePlansWorkspace({ data, role }: { data: PlansWorkspaceData; r
         </GlassPanel>
       </div>
 
-      {data.loadError ? <div className={styles.notice} role="alert">Não foi possível carregar os planos: {data.loadError}</div> : null}
+      {data.loadError ? <div className={styles.notice} role="alert">Não foi possível carregar os planos. Tente novamente.</div> : null}
 
       {data.items.length ? data.items.map((plan) => (
         <GlassPanel strong className={styles.panel} key={plan.id}>
@@ -119,15 +120,14 @@ export function LivePlansWorkspace({ data, role }: { data: PlansWorkspaceData; r
 
 export function LiveMaterialsWorkspace({ data, role }: { data: MaterialsWorkspaceData; role?: UserRole | null }) {
   return (
-    <section className={styles.workspace} aria-label="Materiais reais da plataforma">
-      {data.loadError ? <div className={styles.notice} role="alert">Não foi possível carregar os materiais: {data.loadError}</div> : null}
+    <section className={styles.workspace} aria-label="Materiais">
+      {data.loadError ? <div className={styles.notice} role="alert">Não foi possível carregar os materiais. Tente novamente.</div> : null}
 
       <GlassPanel strong className={styles.panel}>
         <div className={styles.panelHeader}>
-          <div><span className={styles.eyebrow}>Biblioteca</span><h2>{role === "mentee" ? "Materiais compartilhados" : "Materiais disponíveis"}</h2></div>
+          <div><h2>{role === "mentee" ? "Materiais compartilhados" : "Materiais disponíveis"}</h2></div>
           <PillChip tone="muted">{data.materials.length} item(ns)</PillChip>
         </div>
-        <p>{role === "mentee" ? "Somente materiais explicitamente compartilhados com você são exibidos." : "Esta lista mostra apenas registros persistidos e permitidos pelas políticas de acesso."}</p>
         {data.materials.length ? (
           <div className={styles.materialGrid}>
             {data.materials.map((material) => (
@@ -154,10 +154,9 @@ export function LiveMaterialsWorkspace({ data, role }: { data: MaterialsWorkspac
       {role !== "mentee" ? (
         <GlassPanel className={styles.panel}>
           <div className={styles.panelHeader}>
-            <div><span className={styles.eyebrow}>Base de aulas</span><h2>Templates disponíveis</h2></div>
+            <div><h2>Templates disponíveis</h2></div>
             <PillChip tone="muted">{data.templates.length} template(s)</PillChip>
           </div>
-          <p>Templates globais são conteúdo-base do produto persistido no banco, não dados de demonstração de uma conta.</p>
           {data.templates.length ? (
             <ul className={styles.templateList}>
               {data.templates.map((template) => (
@@ -179,7 +178,7 @@ export function LiveCalendarWorkspace({ data, role }: { data: CalendarWorkspaceD
   const unreadCount = data.notifications.filter((notification) => !notification.read).length;
 
   return (
-    <section className={styles.workspace} aria-label="Agenda e comunicação reais">
+    <section className={styles.workspace} aria-label="Agenda e comunicação">
       <div className={styles.summaryGrid}>
         <GlassPanel className={styles.summaryCard}>
           <div><small>Próximas sessões</small><strong>{data.upcoming.length}</strong><span className={styles.muted}>propostas ou confirmadas</span></div>
@@ -195,12 +194,18 @@ export function LiveCalendarWorkspace({ data, role }: { data: CalendarWorkspaceD
         </GlassPanel>
       </div>
 
-      {data.loadError ? <div className={styles.notice} role="alert">Não foi possível carregar a agenda: {data.loadError}</div> : null}
+      {data.loadError ? <div className={styles.notice} role="alert">Não foi possível carregar a agenda. Tente novamente.</div> : null}
+
+      <WeeklyCalendar
+        sessions={[...data.upcoming, ...data.history]}
+        today={data.today}
+        role={role}
+      />
 
       <div className={styles.mainGrid}>
         <GlassPanel strong className={styles.panel}>
           <div className={styles.panelHeader}>
-            <div><span className={styles.eyebrow}>Agenda</span><h2>Próximos encontros</h2></div>
+            <div><h2>Próximos encontros</h2></div>
             <PillChip>{data.upcoming.length} sessão(ões)</PillChip>
           </div>
           {data.upcoming.length ? (
@@ -220,7 +225,7 @@ export function LiveCalendarWorkspace({ data, role }: { data: CalendarWorkspaceD
 
         <GlassPanel className={styles.panel}>
           <div className={styles.panelHeader}>
-            <div><span className={styles.eyebrow}>Histórico</span><h3>Sessões anteriores</h3></div>
+            <div><h3>Sessões anteriores</h3></div>
             <PillChip tone="muted">{data.history.length}</PillChip>
           </div>
           {data.history.length ? (
@@ -239,7 +244,7 @@ export function LiveCalendarWorkspace({ data, role }: { data: CalendarWorkspaceD
       <div className={styles.mainGrid}>
         <GlassPanel className={styles.panel}>
           <div className={styles.panelHeader}>
-            <div><span className={styles.eyebrow}>Central interna</span><h2>Notificações</h2></div>
+            <div><h2>Notificações</h2></div>
             <PillChip tone={unreadCount ? "warning" : "muted"}>{unreadCount} não lida(s)</PillChip>
           </div>
           {data.notifications.length ? (
@@ -260,7 +265,7 @@ export function LiveCalendarWorkspace({ data, role }: { data: CalendarWorkspaceD
 
         <GlassPanel className={styles.panel}>
           <div className={styles.panelHeader}>
-            <div><span className={styles.eyebrow}>Comunicação</span><h2>Notas recentes</h2></div>
+            <div><h2>Notas recentes</h2></div>
             <span className={styles.iconBox}><NotebookPen size={18} /></span>
           </div>
           {data.notes.length ? (

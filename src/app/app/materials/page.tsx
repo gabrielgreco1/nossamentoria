@@ -1,4 +1,5 @@
 import { LiveMaterialsWorkspace } from "@/components/app/live-workspaces";
+import { MaterialManager } from "@/components/app/material-manager";
 import { PageHeader } from "@/components/app/page-header";
 import { getMaterialsWorkspaceData } from "@/lib/workspace-data";
 import { getWorkspaceContext } from "@/lib/workspace-context";
@@ -13,14 +14,10 @@ export default async function MaterialsPage() {
 
   return (
     <div className={styles.page}>
-      <PageHeader
-        eyebrow="Biblioteca"
-        title={isMentee ? "Meus materiais" : "Materiais e templates"}
-        description={isMentee
-          ? "Acesse os materiais compartilhados pelo seu mentor no contexto do plano atual."
-          : "Encontre, crie e edite materiais ou aulas-base sem misturar a biblioteca com o acompanhamento dos mentorados."}
-      />
-      <LiveMaterialsWorkspace data={data} role={context.activeRole} />
+      <PageHeader title={isMentee ? "Meus materiais" : "Materiais e templates"} />
+      {isMentee
+        ? <LiveMaterialsWorkspace data={data} role={context.activeRole} />
+        : <MaterialManager data={data} />}
     </div>
   );
 }

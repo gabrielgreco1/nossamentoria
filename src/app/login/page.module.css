@@ -14,8 +14,8 @@
 .form input {
   min-height: 48px;
   border: 1px solid var(--line-strong);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.78);
+  border-radius: var(--radius-control);
+  background: var(--surface-control);
   color: var(--text-primary);
   padding: 0 14px;
 }
@@ -33,9 +33,8 @@
 }
 
 .warning,
-.success,
-.setup {
-  border-radius: 14px;
+.success {
+  border-radius: var(--radius-card);
   padding: 12px 14px;
   line-height: 1.45;
 }
@@ -47,20 +46,9 @@
 }
 
 .success {
-  border: 1px solid rgba(15, 118, 110, 0.22);
-  background: rgba(15, 118, 110, 0.09);
+  border: 1px solid rgba(7, 139, 139, 0.22);
+  background: rgba(7, 139, 139, 0.08);
   color: var(--brand-teal-dark);
-}
-
-.setup {
-  display: grid;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.52);
-}
-
-.setup code {
-  color: var(--text-secondary);
-  overflow-wrap: anywhere;
 }
 
 .note {

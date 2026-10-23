@@ -6,7 +6,7 @@ import styles from "./auth-card.module.css";
 type AuthCardProps = {
   eyebrow: string;
   title: string;
-  description: string;
+  description?: string;
   children: ReactNode;
   wide?: boolean;
 };
@@ -21,7 +21,7 @@ export function AuthCard({ eyebrow, title, description, children, wide = false }
         <GlassPanel strong className={styles.card}>
           <span className={styles.eyebrow}>{eyebrow}</span>
           <h1>{title}</h1>
-          <p>{description}</p>
+          {description ? <p>{description}</p> : null}
           {children}
         </GlassPanel>
       </div>

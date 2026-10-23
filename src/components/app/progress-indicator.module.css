@@ -24,17 +24,17 @@
 }
 
 .track {
-  height: 8px;
+  height: 7px;
   overflow: hidden;
   border-radius: var(--radius-pill);
-  background: var(--line);
+  background: #e7edf2;
 }
 
 .track span {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--brand-teal);
+  background: linear-gradient(90deg, var(--brand-teal), #21aaa5);
   transition: width var(--motion-base) ease;
 }
 

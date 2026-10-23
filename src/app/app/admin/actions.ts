@@ -56,13 +56,13 @@ export async function createInvitationAction(
   });
 
   if (error) {
-    return { status: "error", message: error.message };
+    return { status: "error", message: "Não foi possível criar o convite. Tente novamente." };
   }
 
   const invitation = (Array.isArray(data) ? data[0] : data) as InvitationRpcResult | null;
 
   if (!invitation?.invitation_token) {
-    return { status: "error", message: "O banco não retornou o token do convite." };
+    return { status: "error", message: "Não foi possível gerar o link do convite." };
   }
 
   const appUrl = getPublicEnv().NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
@@ -70,7 +70,7 @@ export async function createInvitationAction(
 
   return {
     status: "success",
-    message: "Convite criado. Copie o link agora; o token não fica disponível novamente.",
+    message: "Convite criado. Copie o link e envie para a pessoa convidada.",
     inviteUrl: `${appUrl}/invite/${invitation.invitation_token}`
   };
 }

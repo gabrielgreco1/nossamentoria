@@ -1,27 +1,30 @@
 .chip {
   display: inline-flex;
-  min-height: 28px;
+  min-height: 27px;
   align-items: center;
-  border-radius: var(--radius-pill);
+  gap: 6px;
   border: 1px solid var(--line);
-  padding: 0 10px;
+  border-radius: 7px;
+  padding: 0 9px;
   color: var(--text-secondary);
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 750;
   white-space: nowrap;
 }
 
 .default {
-  background: rgba(15, 118, 110, 0.08);
+  border-color: rgba(7, 139, 139, 0.2);
+  background: rgba(7, 139, 139, 0.08);
   color: var(--brand-teal-dark);
 }
 
 .warning {
-  border-color: rgba(245, 184, 75, 0.48);
-  background: rgba(245, 184, 75, 0.18);
-  color: #735116;
+  border-color: rgba(243, 168, 59, 0.34);
+  background: rgba(243, 168, 59, 0.12);
+  color: #81540d;
 }
 
 .muted {
+  background: var(--surface-subtle);
   color: var(--text-muted);
 }

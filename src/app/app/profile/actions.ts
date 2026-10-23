@@ -142,7 +142,7 @@ export async function updateProfile(
     p_mentor_capacity: capacityValue
   });
 
-  if (error) return result("error", error.message);
+  if (error) return result("error", "Não foi possível salvar o perfil. Tente novamente.");
 
   revalidatePath("/app");
   revalidatePath("/app/profile");

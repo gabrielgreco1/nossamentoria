@@ -8,18 +8,11 @@ export const dynamic = "force-dynamic";
 
 export default async function CalendarPage() {
   const context = await getWorkspaceContext();
-  const isMentee = context.activeRole === "mentee";
   const data = await getCalendarWorkspaceData(context);
 
   return (
     <div className={styles.page}>
-      <PageHeader
-        eyebrow="Agenda"
-        title="Calendário"
-        description={isMentee
-          ? "Veja seus próximos encontros, confirme propostas e acompanhe o histórico da mentoria."
-          : "Veja a semana, filtre por mentorado e gerencie cada sessão sem perder o contexto do plano."}
-      />
+      <PageHeader title="Calendário" />
       <LiveCalendarWorkspace data={data} role={context.activeRole} />
     </div>
   );

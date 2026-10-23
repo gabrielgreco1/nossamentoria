@@ -13,8 +13,9 @@
 .panel,
 .widePanel {
   display: grid;
-  gap: 18px;
-  padding: 22px;
+  gap: 16px;
+  padding: 19px;
+  box-shadow: none;
 }
 
 .widePanel {
@@ -66,9 +67,9 @@
   height: 40px;
   flex: 0 0 auto;
   place-items: center;
-  border-radius: 12px;
+  border-radius: 9px;
   color: var(--brand-teal);
-  background: rgba(15, 118, 110, 0.1);
+  background: rgba(7, 139, 139, 0.08);
 }
 
 .fields,
@@ -118,7 +119,7 @@
 .widePanel select {
   width: 100%;
   border: 1px solid var(--line-strong);
-  border-radius: 11px;
+  border-radius: var(--radius-control);
   outline: none;
   background: var(--surface-control);
   color: var(--text-primary);
@@ -156,7 +157,7 @@
 
 .panel input:disabled {
   color: var(--text-muted);
-  background: rgba(15, 118, 110, 0.04);
+  background: var(--surface-subtle);
 }
 
 .areaList,
@@ -171,8 +172,8 @@
 .periodRow,
 .formationCard {
   border: 1px solid var(--line);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.56);
+  border-radius: var(--radius-card);
+  background: var(--surface);
 }
 
 .areaButton {
@@ -207,9 +208,9 @@
   width: 26px;
   height: 26px;
   place-items: center;
-  border-radius: 8px;
+  border-radius: 7px;
   color: var(--brand-teal);
-  background: rgba(15, 118, 110, 0.1);
+  background: rgba(7, 139, 139, 0.08);
 }
 
 .chevron {
@@ -237,8 +238,8 @@
 }
 
 .topicOptions label:has(input:checked) {
-  border-color: rgba(15, 118, 110, 0.45);
-  background: rgba(15, 118, 110, 0.07);
+  border-color: rgba(7, 139, 139, 0.4);
+  background: rgba(7, 139, 139, 0.055);
 }
 
 .topicOptions input {
@@ -266,7 +267,7 @@
   justify-content: center;
   gap: 6px;
   border: 0;
-  border-radius: var(--radius-pill);
+  border-radius: 8px;
   cursor: pointer;
   font: inherit;
   font-size: 0.8rem;
@@ -277,14 +278,14 @@
   min-height: 39px;
   padding: 0 10px;
   color: var(--status-danger);
-  background: rgba(229, 107, 95, 0.1);
+  background: rgba(249, 115, 96, 0.1);
 }
 
 .addButton {
   width: fit-content;
   padding: 9px 13px;
   color: var(--brand-teal-dark);
-  background: rgba(15, 118, 110, 0.09);
+  background: rgba(7, 139, 139, 0.08);
 }
 
 .capacityBox {
@@ -293,9 +294,9 @@
   gap: 16px;
   align-items: end;
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: var(--radius-card);
   padding: 14px;
-  background: rgba(15, 118, 110, 0.04);
+  background: var(--surface-subtle);
 }
 
 .feedback,
@@ -308,12 +309,12 @@
 
 .feedback {
   color: var(--brand-teal-dark);
-  background: rgba(15, 118, 110, 0.1);
+  background: rgba(7, 139, 139, 0.08);
 }
 
 .error {
   color: #8e3a32;
-  background: rgba(229, 107, 95, 0.12);
+  background: rgba(249, 115, 96, 0.1);
 }
 
 .saveBar {
@@ -321,11 +322,12 @@
   bottom: 16px;
   z-index: 3;
   border: 1px solid var(--line-strong);
-  border-radius: 16px;
+  border-radius: 11px;
   padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.94);
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(16px);
+  justify-content: flex-end;
 }
 
 @media (max-width: 900px) {

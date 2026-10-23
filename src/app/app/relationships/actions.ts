@@ -40,9 +40,9 @@ export async function createMenteeInvitation(
     p_optional_message: message || null
   });
 
-  if (error) return { status: "error", message: error.message };
+  if (error) return { status: "error", message: "Não foi possível criar o convite. Tente novamente." };
   const invitation = (Array.isArray(data) ? data[0] : data) as InvitationResult | null;
-  if (!invitation?.invitation_token) return { status: "error", message: "O banco não retornou o link do convite." };
+  if (!invitation?.invitation_token) return { status: "error", message: "Não foi possível gerar o link do convite." };
 
   const appUrl = getPublicEnv().NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
   return {
@@ -62,7 +62,7 @@ export async function requestMentee(
 ): Promise<RelationshipMutationState> {
   const context = await getWorkspaceContext();
   if (!context.user || !context.roles.includes("mentor")) {
-    return mutationError("Somente uma conta com papel real de mentor pode solicitar esta mentoria.");
+    return mutationError("Somente mentores podem solicitar esta mentoria.");
   }
 
   const menteeUserId = String(formData.get("menteeUserId") ?? "");
@@ -70,7 +70,7 @@ export async function requestMentee(
 
   const supabase = await createClient();
   const { error } = await supabase.rpc("request_mentorship", { p_mentee_user_id: menteeUserId });
-  if (error) return mutationError(error.message);
+  if (error) return mutationError("Não foi possível enviar a solicitação. Tente novamente.");
 
   revalidatePath("/app");
   revalidatePath("/app/relationships");
@@ -91,7 +91,7 @@ export async function requestMentor(
 
   const supabase = await createClient();
   const { error } = await supabase.rpc("request_mentor", { p_mentor_user_id: mentorUserId });
-  if (error) return mutationError(error.message);
+  if (error) return mutationError("Não foi possível enviar a solicitação. Tente novamente.");
 
   revalidatePath("/app");
   revalidatePath("/app/relationships");
@@ -118,7 +118,7 @@ export async function respondToMentorshipRequest(
     p_relationship_id: relationshipId,
     p_accept: decision === "accept"
   });
-  if (error) return mutationError(error.message);
+  if (error) return mutationError("Não foi possível responder à solicitação. Tente novamente.");
 
   revalidatePath("/app");
   revalidatePath("/app/relationships");
@@ -145,7 +145,7 @@ export async function endMentorship(
     p_relationship_id: relationshipId,
     p_status: "ended"
   });
-  if (error) return mutationError(error.message);
+  if (error) return mutationError("Não foi possível encerrar a mentoria. Tente novamente.");
 
   revalidatePath("/app");
   revalidatePath("/app/relationships");
@@ -166,7 +166,7 @@ export async function cancelMenteeInvitation(
 
   const supabase = await createClient();
   const { error } = await supabase.rpc("revoke_invitation", { p_invitation_id: invitationId });
-  if (error) return mutationError(error.message);
+  if (error) return mutationError("Não foi possível cancelar o convite. Tente novamente.");
 
   revalidatePath("/app/relationships");
   return { status: "success", message: "Convite cancelado." };

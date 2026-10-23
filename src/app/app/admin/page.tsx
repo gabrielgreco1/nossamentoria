@@ -4,7 +4,6 @@ import { EmptyState } from "@/components/app/empty-state";
 import { PageHeader } from "@/components/app/page-header";
 import { StatCard } from "@/components/app/stat-card";
 import { GlassPanel } from "@/components/ui/glass-panel";
-import { PillChip } from "@/components/ui/pill-chip";
 import { canAccess } from "@/lib/access";
 import { createClient } from "@/lib/supabase/server";
 import { getWorkspaceContext } from "@/lib/workspace-context";
@@ -27,12 +26,7 @@ export default async function AdminPage() {
   if (!access.allowed) {
     return (
       <div className={styles.page}>
-        <PageHeader
-          eyebrow="Administração"
-          title="Acesso restrito"
-          description="Esta área concentra usuários, papéis e convites da plataforma."
-          action={<PillChip tone="warning">Bloqueado</PillChip>}
-        />
+        <PageHeader title="Acesso restrito" />
         <EmptyState title="Permissão administrativa necessária" description={access.reason} />
       </div>
     );
@@ -54,55 +48,49 @@ export default async function AdminPage() {
 
   return (
     <div className={styles.page}>
-      <PageHeader
-        eyebrow="Administração"
-        title="Acessos da plataforma"
-        description="Acompanhe usuários, papéis e convites sem depender de dados demonstrativos."
-        action={<PillChip><ShieldCheck size={14} /> Admin</PillChip>}
-      />
+      <PageHeader title="Administração" />
 
       <section className={styles.stats} aria-label="Resumo administrativo">
-        <StatCard label="Usuários" value={String(profilesResult.count ?? 0)} detail="Perfis provisionados no banco." icon={<UserCog size={19} />} />
-        <StatCard label="Papéis" value={String(rolesResult.count ?? 0)} detail="Atribuições ativas de acesso." icon={<ShieldCheck size={19} />} />
-        <StatCard label="Convites pendentes" value={String(invitationsResult.count ?? 0)} detail="Entradas ainda não aceitas ou expiradas." icon={<KeyRound size={19} />} />
+        <StatCard label="Usuários" value={String(profilesResult.count ?? 0)} icon={<UserCog size={19} />} />
+        <StatCard label="Papéis ativos" value={String(rolesResult.count ?? 0)} icon={<ShieldCheck size={19} />} />
+        <StatCard label="Convites pendentes" value={String(invitationsResult.count ?? 0)} icon={<KeyRound size={19} />} />
       </section>
 
-      <GlassPanel className={styles.panel}>
-        <div>
-          <PillChip>Novo acesso</PillChip>
-          <h2>Criar convite privado</h2>
-          <p>O link é gerado pelo banco e pode ser usado uma única vez pelo e-mail informado.</p>
-        </div>
-        <AdminInvitationForm />
-      </GlassPanel>
+      <div className={styles.adminGrid}>
+        <GlassPanel className={styles.panel}>
+          <div>
+            <h2>Criar convite</h2>
+            <p>Envie um acesso individual para um novo participante.</p>
+          </div>
+          <AdminInvitationForm />
+        </GlassPanel>
 
-      <GlassPanel className={styles.panel}>
-        <div>
-          <PillChip tone="muted">Dados reais</PillChip>
-          <h2>Convites recentes</h2>
-          <p>A lista respeita as políticas RLS e só é consultada depois da verificação do papel administrativo.</p>
-        </div>
-        {recentInvitations.length > 0 ? (
-          <ul className={styles.list}>
-            {recentInvitations.map((invitation) => (
-              <li key={invitation.id}>
-                <div>
-                  <strong>{invitation.email}</strong>
-                  <span>{invitation.intended_role} · {invitation.status}</span>
-                </div>
-                {invitation.status === "pending" ? (
-                  <form action={revokeInvitationAction}>
-                    <input type="hidden" name="invitationId" value={invitation.id} />
-                    <button className={styles.dangerButton} type="submit">Revogar</button>
-                  </form>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Nenhum convite foi criado ainda.</p>
-        )}
-      </GlassPanel>
+        <GlassPanel className={styles.panel}>
+          <div>
+            <h2>Convites recentes</h2>
+          </div>
+          {recentInvitations.length > 0 ? (
+            <ul className={styles.list}>
+              {recentInvitations.map((invitation) => (
+                <li key={invitation.id}>
+                  <div>
+                    <strong>{invitation.email}</strong>
+                    <span>{invitation.intended_role} · {invitation.status}</span>
+                  </div>
+                  {invitation.status === "pending" ? (
+                    <form action={revokeInvitationAction}>
+                      <input type="hidden" name="invitationId" value={invitation.id} />
+                      <button className={styles.dangerButton} type="submit">Revogar</button>
+                    </form>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Nenhum convite criado.</p>
+          )}
+        </GlassPanel>
+      </div>
     </div>
   );
 }

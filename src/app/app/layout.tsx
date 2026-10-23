@@ -20,7 +20,6 @@ export default async function WorkspaceLayout({ children }: WorkspaceLayoutProps
       roles={context.roles}
       availableRoles={context.availableRoles}
       activeRole={context.activeRole}
-      roleSource={context.roleSource}
     >
       {children}
     </AppShell>

@@ -58,10 +58,7 @@ export async function validateInvitationToken(token: string): Promise<Invitation
   if (!envStatus.configured) {
     return {
       status: "setup",
-      message: `Variáveis de ambiente ausentes ou inválidas: ${[
-        ...envStatus.missing,
-        ...envStatus.invalid
-      ].join(", ")}`
+      message: "Não foi possível validar este convite agora. Tente novamente mais tarde."
     };
   }
 
@@ -81,7 +78,7 @@ export async function validateInvitationToken(token: string): Promise<Invitation
     if (error) {
       return {
         status: "invalid",
-        message: "A validação de convites ainda não está configurada no Supabase."
+        message: "Não foi possível validar este convite."
       };
     }
 
@@ -118,7 +115,7 @@ export async function acceptInvitationToken(token: string, userId: string) {
 
     return {
       ok: !error,
-      message: error?.message ?? "Convite aceito."
+      message: error ? "Não foi possível aceitar o convite." : "Convite aceito."
     };
   } catch {
     return {

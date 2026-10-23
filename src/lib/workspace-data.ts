@@ -5,6 +5,7 @@ import type { WorkspaceContext } from "@/lib/workspace-context";
 
 export type PlanWorkspaceItem = {
   id: string;
+  relationshipId: string;
   title: string;
   status: string;
   mentorName: string;
@@ -21,8 +22,16 @@ export type PlanWorkspaceItem = {
   nextSessionAt: string | null;
 };
 
+export type PlanRelationshipItem = {
+  id: string;
+  status: string;
+  mentorName: string;
+  menteeName: string;
+};
+
 export type PlansWorkspaceData = {
   items: PlanWorkspaceItem[];
+  relationships: PlanRelationshipItem[];
   loadError: string | null;
 };
 
@@ -34,6 +43,10 @@ export type MaterialWorkspaceItem = {
   category: string;
   tags: string[];
   sourceUrl: string | null;
+  storagePath: string | null;
+  openUrl: string | null;
+  mimeType: string | null;
+  sizeBytes: number | null;
   createdAt: string;
   shared: boolean;
 };
@@ -83,6 +96,7 @@ export type CommunicationNoteWorkspaceItem = {
 };
 
 export type CalendarWorkspaceData = {
+  today: string;
   upcoming: CalendarSessionItem[];
   history: CalendarSessionItem[];
   notifications: NotificationWorkspaceItem[];
@@ -92,16 +106,17 @@ export type CalendarWorkspaceData = {
 
 type RelationshipNameRow = {
   id: string;
+  status: string;
   mentor_name: string;
   mentee_name: string;
 };
 
-function errorMessage(error: unknown) {
-  return error instanceof Error ? error.message : "Não foi possível carregar os dados do Supabase.";
+function errorMessage(_error?: unknown) {
+  return "Não foi possível carregar as informações.";
 }
 
 export async function getPlansWorkspaceData(context: WorkspaceContext): Promise<PlansWorkspaceData> {
-  if (!context.user) return { items: [], loadError: null };
+  if (!context.user) return { items: [], relationships: [], loadError: null };
   const supabase = await createClient();
 
   try {
@@ -111,7 +126,7 @@ export async function getPlansWorkspaceData(context: WorkspaceContext): Promise<
       .order("created_at", { ascending: false });
     let relationshipsQuery = supabase
       .from("mentorship_relationship_details")
-      .select("id,mentor_name,mentee_name");
+      .select("id,status,mentor_name,mentee_name");
 
     if (context.activeRole === "mentor") {
       plansQuery = plansQuery.eq("mentor_user_id", context.user.id);
@@ -162,11 +177,20 @@ export async function getPlansWorkspaceData(context: WorkspaceContext): Promise<
 
     return {
       loadError: null,
+      relationships: ((relationshipsResult.data ?? []) as RelationshipNameRow[])
+        .filter((relationship) => ["active", "paused"].includes(relationship.status))
+        .map((relationship) => ({
+          id: relationship.id,
+          status: relationship.status,
+          mentorName: relationship.mentor_name,
+          menteeName: relationship.mentee_name
+        })),
       items: plans.map((plan) => {
         const names = relationshipNames.get(plan.relationship_id);
         const progress = progressByPlan.get(plan.id) ?? { completion: 0, total: 0, completed: 0 };
         return {
           id: plan.id,
+          relationshipId: plan.relationship_id,
           title: plan.title,
           status: plan.status,
           mentorName: names?.mentor_name ?? "Mentor não encontrado",
@@ -185,7 +209,7 @@ export async function getPlansWorkspaceData(context: WorkspaceContext): Promise<
       })
     };
   } catch (error) {
-    return { items: [], loadError: errorMessage(error) };
+    return { items: [], relationships: [], loadError: errorMessage(error) };
   }
 }
 
@@ -220,10 +244,10 @@ export async function getMaterialsWorkspaceData(context: WorkspaceContext): Prom
 
     let materialsQuery = supabase
       .from("content_materials")
-      .select("id,owner_user_id,type,title,description,category,tags,source_url,created_at")
+      .select("id,owner_user_id,type,title,description,category,tags,source_url,storage_path,mime_type,size_bytes,created_at")
       .order("created_at", { ascending: false });
 
-    if (context.activeRole === "mentor") materialsQuery = materialsQuery.eq("owner_user_id", context.user.id);
+    if (context.activeRole !== "mentee") materialsQuery = materialsQuery.eq("owner_user_id", context.user.id);
     if (menteeMaterialIds) {
       if (menteeMaterialIds.length === 0) {
         return { materials: [], templates: [], loadError: null };
@@ -259,6 +283,13 @@ export async function getMaterialsWorkspaceData(context: WorkspaceContext): Prom
       for (const row of sharedResult.data ?? []) sharedIds.add(row.material_id);
     }
 
+    const signedUrls = new Map<string, string>();
+    await Promise.all(materials.map(async (material) => {
+      if (!material.storage_path) return;
+      const { data: signedData } = await supabase.storage.from("materials").createSignedUrl(material.storage_path, 3600);
+      if (signedData?.signedUrl) signedUrls.set(material.id, signedData.signedUrl);
+    }));
+
     return {
       loadError: null,
       materials: materials.map((material) => ({
@@ -269,6 +300,10 @@ export async function getMaterialsWorkspaceData(context: WorkspaceContext): Prom
         category: material.category,
         tags: material.tags ?? [],
         sourceUrl: material.source_url,
+        storagePath: material.storage_path,
+        openUrl: material.source_url ?? signedUrls.get(material.id) ?? null,
+        mimeType: material.mime_type,
+        sizeBytes: material.size_bytes === null ? null : Number(material.size_bytes),
         createdAt: material.created_at,
         shared: context.activeRole === "mentee" || sharedIds.has(material.id)
       })),
@@ -287,7 +322,13 @@ export async function getMaterialsWorkspaceData(context: WorkspaceContext): Prom
 }
 
 export async function getCalendarWorkspaceData(context: WorkspaceContext): Promise<CalendarWorkspaceData> {
-  if (!context.user) return { upcoming: [], history: [], notifications: [], notes: [], loadError: null };
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+  if (!context.user) return { today, upcoming: [], history: [], notifications: [], notes: [], loadError: null };
   const supabase = await createClient();
 
   try {
@@ -377,6 +418,7 @@ export async function getCalendarWorkspaceData(context: WorkspaceContext): Promi
     });
 
     return {
+      today,
       loadError: null,
       upcoming: mappedSessions.filter((session) =>
         ["proposed", "confirmed"].includes(session.status) && new Date(session.scheduledStart).getTime() >= now
@@ -402,6 +444,6 @@ export async function getCalendarWorkspaceData(context: WorkspaceContext): Promi
       }))
     };
   } catch (error) {
-    return { upcoming: [], history: [], notifications: [], notes: [], loadError: errorMessage(error) };
+    return { today, upcoming: [], history: [], notifications: [], notes: [], loadError: errorMessage(error) };
   }
 }

@@ -107,7 +107,7 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
           </GlassPanel>
         </div>
 
-        {data.loadError ? <div className={styles.notice} role="alert">Não foi possível carregar tudo: {data.loadError}</div> : null}
+        {data.loadError ? <div className={styles.notice} role="alert">Não foi possível carregar as mentorias. Tente novamente.</div> : null}
         {mutationFeedback ? <div className={styles.feedback} role="status">{mutationFeedback.message}</div> : null}
 
         <div className={styles.mainGrid}>
@@ -209,7 +209,6 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
             <div><span className={styles.eyebrow}>Encontrar mentoria</span><h2>Mentores com vagas disponíveis</h2></div>
             <PillChip tone="muted">{data.mentee.availableMentors.length} mentor(es)</PillChip>
           </div>
-          <p>Conheça os perfis, confira as especialidades e solicite uma mentoria diretamente ao mentor.</p>
           <div className={styles.toolbar}>
             <label className={styles.searchWrap}>
               <Search size={17} />
@@ -284,7 +283,7 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
         </GlassPanel>
       </div>
 
-      {data.loadError ? <div className={styles.notice} role="alert">Não foi possível carregar tudo: {data.loadError}</div> : null}
+      {data.loadError ? <div className={styles.notice} role="alert">Não foi possível carregar os mentorados. Tente novamente.</div> : null}
       {mutationFeedback ? <div className={styles.feedback} role="status">{mutationFeedback.message}</div> : null}
 
       <div className={styles.mainGrid}>
@@ -293,7 +292,6 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
             <div><span className={styles.eyebrow}>Seu grupo</span><h2>Seus mentorados</h2></div>
             <PillChip>{mentees.length} pessoa(s)</PillChip>
           </div>
-          <p>Aqui aparecem somente relações reais. Plano, aulas e progresso são gerenciados na aba Planos.</p>
 
           {mentees.length ? (
             <ul className={styles.list}>
@@ -301,7 +299,9 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
                 <li className={styles.personRow} key={mentee.relationshipId}>
                   <span className={styles.avatar}>{mentee.initials}</span>
                   <span className={styles.personCopy}>
-                    <strong>{mentee.name}</strong>
+                    <Link className={styles.personLink} href={`/app/plans?relationship=${mentee.relationshipId}`}>
+                      <strong>{mentee.name}</strong>
+                    </Link>
                     <small>{mentee.focus} · {mentee.availability}</small>
                     <span>
                       <PillChip tone={mentee.planStatus === "active" ? "default" : "warning"}>
@@ -310,7 +310,9 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
                     </span>
                   </span>
                   <span className={styles.rowActions}>
-                    {mentee.planId ? <Link className={styles.textButton} href="/app/plans">Abrir plano <ArrowUpRight size={13} /></Link> : null}
+                    <Link className={styles.textButton} href={`/app/plans?relationship=${mentee.relationshipId}`}>
+                      {mentee.planId ? "Abrir plano" : "Criar plano"} <ArrowUpRight size={13} />
+                    </Link>
                     {removalId === mentee.relationshipId ? (
                       <form action={endAction} className={styles.rowActions}>
                         <input name="relationshipId" type="hidden" value={mentee.relationshipId} />
@@ -395,7 +397,7 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
           <div><span className={styles.eyebrow}>Descobrir</span><h2>Mentorados disponíveis</h2></div>
           <PillChip tone="muted">{availableMentees.length} perfil(is)</PillChip>
         </div>
-        <p>Perfis cadastrados, com e-mail confirmado e sem mentoria ativa.</p>
+        <p>Pessoas disponíveis para iniciar uma mentoria.</p>
         <div className={styles.toolbar}>
           <label className={styles.searchWrap}>
             <Search size={17} />

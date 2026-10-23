@@ -1,21 +1,22 @@
 .workspace {
   display: grid;
-  gap: 16px;
+  gap: 14px;
 }
 
 .summaryGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
 }
 
 .summaryCard {
   display: flex;
-  min-height: 112px;
+  min-height: 120px;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  padding: 18px;
+  padding: 17px;
+  box-shadow: none;
 }
 
 .summaryCard > div {
@@ -33,7 +34,8 @@
 
 .summaryCard strong {
   font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
+  font-weight: 650;
   line-height: 1;
 }
 
@@ -43,13 +45,13 @@
   flex: 0 0 auto;
   place-items: center;
   color: var(--brand-teal);
-  background: rgba(15, 118, 110, 0.1);
+  background: rgba(7, 139, 139, 0.08);
 }
 
 .iconBox {
   width: 38px;
   height: 38px;
-  border-radius: 11px;
+  border-radius: 9px;
 }
 
 .avatar {
@@ -65,15 +67,16 @@
 .editorGrid,
 .calendarWorkspace {
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.85fr);
-  gap: 16px;
+  grid-template-columns: minmax(0, 1.65fr) minmax(320px, 0.85fr);
+  gap: 14px;
   align-items: start;
 }
 
 .panel {
   display: grid;
-  gap: 16px;
-  padding: 20px;
+  gap: 15px;
+  padding: 18px;
+  box-shadow: none;
 }
 
 .panelHeader,
@@ -141,8 +144,8 @@
 .templateItem,
 .materialCard {
   border: 1px solid var(--line);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.58);
+  border-radius: var(--radius-card);
+  background: var(--surface);
 }
 
 .personRow,
@@ -151,7 +154,7 @@
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px;
-  padding: 14px;
+  padding: 12px 13px;
 }
 
 .personCopy,
@@ -159,6 +162,15 @@
   display: grid;
   min-width: 0;
   gap: 4px;
+}
+
+.personLink {
+  width: fit-content;
+  color: var(--text-primary);
+}
+
+.personLink:hover {
+  color: var(--brand-teal-dark);
 }
 
 .personCopy small,
@@ -193,15 +205,15 @@
   justify-content: center;
   gap: 6px;
   padding: 7px 10px;
-  border-radius: var(--radius-pill);
-  background: rgba(15, 118, 110, 0.09);
+  border-radius: 8px;
+  background: rgba(7, 139, 139, 0.08);
   color: var(--brand-teal-dark);
   font-size: 0.79rem;
   font-weight: 750;
 }
 
 .textButtonDanger {
-  background: rgba(229, 107, 95, 0.1);
+  background: rgba(249, 115, 96, 0.1);
   color: var(--status-danger);
 }
 
@@ -211,22 +223,22 @@
   height: 36px;
   place-items: center;
   border: 1px solid var(--line);
-  border-radius: 11px;
+  border-radius: 9px;
   background: var(--surface-control);
 }
 
 .cardGrid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .selectCard {
   display: grid;
-  gap: 12px;
-  padding: 16px;
+  gap: 11px;
+  padding: 14px;
   text-align: left;
   border: 1px solid var(--line);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.58);
+  border-radius: var(--radius-card);
+  background: var(--surface);
   transition: border-color var(--motion-fast), transform var(--motion-fast);
 }
 
@@ -234,8 +246,8 @@
 .selectCardActive,
 .agendaItemActive,
 .templateItemActive {
-  border-color: rgba(15, 118, 110, 0.5);
-  background: rgba(15, 118, 110, 0.07);
+  border-color: rgba(7, 139, 139, 0.42);
+  background: rgba(7, 139, 139, 0.055);
 }
 
 .selectCard:hover {
@@ -283,7 +295,7 @@
 .toolbar select {
   width: 100%;
   border: 1px solid var(--line-strong);
-  border-radius: 11px;
+  border-radius: var(--radius-control);
   outline: none;
   background: var(--surface-control);
   color: var(--text-primary);
@@ -338,19 +350,29 @@
 
 .feedback,
 .notice {
-  background: rgba(15, 118, 110, 0.09);
+  background: rgba(7, 139, 139, 0.08);
   color: var(--brand-teal-dark);
+}
+
+.noticeError {
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: rgba(249, 115, 96, 0.1);
+  color: var(--status-danger);
+  font-size: 0.85rem;
+  line-height: 1.45;
 }
 
 .emptyState {
   border: 1px dashed var(--line-strong);
+  background: var(--surface-subtle);
   color: var(--text-muted);
   text-align: center;
 }
 
 .selectorStrip {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 10px;
 }
 
@@ -361,14 +383,15 @@
 .planHero {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.6fr);
-  gap: 20px;
-  padding: 24px;
+  gap: 18px;
+  padding: 20px;
 }
 
 .planHero h2 {
   margin: 7px 0 10px;
   font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(1.45rem, 3vw, 2.3rem);
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  letter-spacing: -0.035em;
 }
 
 .planHero p {
@@ -390,8 +413,8 @@
   gap: 5px;
   min-height: 92px;
   border: 1px solid var(--line);
-  border-radius: 13px;
-  background: rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-card);
+  background: var(--surface-subtle);
 }
 
 .planStats strong {
@@ -408,7 +431,7 @@
   overflow: hidden;
   height: 8px;
   border-radius: var(--radius-pill);
-  background: rgba(15, 118, 110, 0.12);
+  background: rgba(7, 139, 139, 0.12);
 }
 
 .progressTrack span {
@@ -431,8 +454,8 @@
   width: 34px;
   height: 34px;
   place-items: center;
-  border-radius: 10px;
-  background: rgba(15, 118, 110, 0.09);
+  border-radius: 8px;
+  background: rgba(7, 139, 139, 0.08);
   color: var(--brand-teal-dark);
   font-size: 0.76rem;
   font-weight: 800;
@@ -496,8 +519,8 @@
   justify-content: flex-start;
   padding: 5px;
   border: 1px solid var(--line);
-  border-radius: 13px;
-  background: rgba(255, 255, 255, 0.48);
+  border-radius: 10px;
+  background: var(--surface-subtle);
 }
 
 .tab {
@@ -505,7 +528,7 @@
   min-height: 38px;
   align-items: center;
   gap: 8px;
-  border-radius: 10px;
+  border-radius: 7px;
   padding: 0 14px;
   background: transparent;
   color: var(--text-secondary);
@@ -516,7 +539,7 @@
 .tabActive {
   background: var(--surface-raised);
   color: var(--brand-teal-dark);
-  box-shadow: 0 5px 14px rgba(19, 35, 31, 0.08);
+  box-shadow: 0 2px 7px rgba(16, 36, 62, 0.08);
 }
 
 .toolbar {
@@ -541,7 +564,7 @@
 
 .materialGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 12px;
 }
 
@@ -563,8 +586,8 @@
   width: 40px;
   height: 40px;
   place-items: center;
-  border-radius: 11px;
-  background: rgba(37, 99, 235, 0.08);
+  border-radius: 9px;
+  background: rgba(37, 99, 235, 0.07);
   color: var(--brand-blue);
 }
 
@@ -575,9 +598,9 @@
 }
 
 .tagRow span {
-  border-radius: var(--radius-pill);
+  border-radius: 6px;
   padding: 5px 8px;
-  background: rgba(15, 118, 110, 0.08);
+  background: rgba(7, 139, 139, 0.07);
   color: var(--text-secondary);
   font-size: 0.7rem;
 }
@@ -587,7 +610,7 @@
   width: 100%;
   padding: 13px;
   text-align: left;
-  background: rgba(255, 255, 255, 0.58);
+  background: var(--surface);
 }
 
 .templateItem {
@@ -619,7 +642,7 @@
 .calendarControls select {
   min-height: 42px;
   border: 1px solid var(--line-strong);
-  border-radius: 11px;
+  border-radius: var(--radius-control);
   background: var(--surface-control);
   color: var(--text-primary);
   padding: 0 11px;
@@ -639,14 +662,14 @@
   gap: 8px;
   min-height: 230px;
   border: 1px solid var(--line);
-  border-radius: 13px;
+  border-radius: var(--radius-card);
   padding: 10px;
-  background: rgba(255, 255, 255, 0.45);
+  background: var(--surface);
 }
 
 .dayToday {
-  border-color: rgba(15, 118, 110, 0.48);
-  background: rgba(15, 118, 110, 0.05);
+  border-color: rgba(7, 139, 139, 0.4);
+  background: rgba(7, 139, 139, 0.045);
 }
 
 .dayLabel {
@@ -675,9 +698,9 @@
   border-left: 3px solid var(--brand-teal);
   border-radius: 9px;
   padding: 9px;
-  background: rgba(15, 118, 110, 0.08);
+  background: rgba(7, 139, 139, 0.075);
   color: inherit;
-  cursor: pointer;
+  cursor: default;
   font: inherit;
   text-align: left;
   font-size: 0.76rem;
@@ -699,7 +722,7 @@
   min-width: 48px;
   place-items: center;
   gap: 1px;
-  border-radius: 11px;
+  border-radius: 9px;
   padding: 8px;
   background: rgba(37, 99, 235, 0.08);
   color: var(--brand-blue);
@@ -724,8 +747,9 @@
   display: grid;
   gap: 4px;
   padding: 11px;
-  border-radius: 11px;
-  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface-subtle);
 }
 
 .detailGrid span {

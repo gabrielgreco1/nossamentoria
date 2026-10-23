@@ -40,7 +40,6 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
     <AuthCard
       eyebrow={invitedRole ? "Cadastro por convite" : "Nova conta"}
       title="Crie seu perfil na NossaMentoria"
-      description="Conclua seu cadastro em quatro etapas rápidas. Cada etapa é exibida separadamente para deixar o processo mais claro."
       wide
     >
       <RegistrationForm

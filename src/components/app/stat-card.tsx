@@ -5,7 +5,7 @@ import styles from "./stat-card.module.css";
 type StatCardProps = {
   label: string;
   value: string;
-  detail: string;
+  detail?: string;
   icon: ReactNode;
 };
 
@@ -15,7 +15,7 @@ export function StatCard({ label, value, detail, icon }: StatCardProps) {
       <div className={styles.icon}>{icon}</div>
       <span>{label}</span>
       <strong>{value}</strong>
-      <p>{detail}</p>
+      {detail ? <p>{detail}</p> : null}
     </GlassPanel>
   );
 }

@@ -180,7 +180,7 @@ export async function getProfilePageData(context: WorkspaceContext): Promise<Pro
 
     return result;
   } catch (error) {
-    result.loadError = error instanceof Error ? error.message : "Não foi possível carregar seu perfil.";
+    result.loadError = "Não foi possível carregar seu perfil.";
     return result;
   }
 }

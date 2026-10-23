@@ -3,9 +3,9 @@
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 14px;
   align-items: center;
-  border: 1px solid rgba(245, 184, 75, 0.48);
+  border: 1px solid rgba(243, 168, 59, 0.34);
   border-radius: var(--radius-card);
-  background: rgba(245, 184, 75, 0.13);
+  background: rgba(243, 168, 59, 0.1);
   padding: 16px;
 }
 
@@ -14,8 +14,8 @@
   width: 38px;
   height: 38px;
   place-items: center;
-  border-radius: 50%;
-  background: rgba(245, 184, 75, 0.25);
+  border-radius: 9px;
+  background: rgba(243, 168, 59, 0.18);
   color: var(--status-attention);
 }
 

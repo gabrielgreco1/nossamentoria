@@ -1,70 +1,97 @@
 .shell {
   display: grid;
   min-height: 100vh;
-  grid-template-columns: 280px minmax(0, 1fr);
-  gap: 18px;
-  padding: 18px;
+  grid-template-columns: 220px minmax(0, 1fr);
+  background: var(--canvas);
 }
 
 .sidebar {
   position: sticky;
-  top: 18px;
+  top: 0;
   display: flex;
-  height: calc(100vh - 36px);
+  height: 100vh;
   flex-direction: column;
-  padding: 18px;
+  border-width: 0 1px 0 0;
+  border-radius: 0;
+  padding: 20px 14px;
+  box-shadow: none;
 }
 
 .brand {
-  padding-bottom: 18px;
+  min-height: 58px;
+  padding: 0 8px 18px;
   border-bottom: 1px solid var(--line);
 }
 
 .nav {
   display: grid;
-  gap: 6px;
-  margin-top: 22px;
+  gap: 4px;
+  margin-top: 18px;
 }
 
 .navItem {
+  position: relative;
   display: flex;
   min-height: 42px;
   align-items: center;
-  gap: 10px;
-  border-radius: 12px;
-  padding: 0 12px;
+  gap: 11px;
+  border-radius: 9px;
+  padding: 0 11px;
   color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 650;
   transition:
-    background 160ms ease,
-    color 160ms ease;
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease;
 }
 
-.navItem:hover,
-.navItemActive {
-  background: rgba(15, 118, 110, 0.09);
+.navItem::before {
+  position: absolute;
+  left: 0;
+  width: 3px;
+  height: 18px;
+  border-radius: 0 3px 3px 0;
+  background: transparent;
+  content: "";
+}
+
+.navItem:hover {
+  background: var(--surface-subtle);
   color: var(--text-primary);
+}
+
+.navItemActive {
+  background: rgba(7, 139, 139, 0.09);
+  color: var(--brand-teal-dark);
+}
+
+.navItemActive::before {
+  background: var(--brand-teal);
 }
 
 .context {
   display: grid;
   gap: 10px;
   margin-top: auto;
+  border-top: 1px solid var(--line);
+  padding: 18px 8px 0;
   color: var(--text-muted);
-  font-size: 0.85rem;
+  font-size: 0.76rem;
   line-height: 1.45;
 }
 
 .contextLabel {
   color: var(--text-secondary);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .roleChips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .roleChips form {
@@ -79,11 +106,6 @@
   cursor: pointer;
 }
 
-.previewNote {
-  color: var(--text-muted);
-  font-size: 0.78rem;
-}
-
 .signOutButton {
   display: inline-flex;
   align-items: center;
@@ -94,12 +116,53 @@
   color: var(--text-secondary);
   cursor: pointer;
   font: inherit;
-  font-weight: 800;
+  font-weight: 750;
   padding: 4px 0;
 }
 
-.main {
+.content {
   min-width: 0;
+}
+
+.topbar {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(245, 247, 250, 0.92);
+  padding: 0 clamp(18px, 3vw, 34px);
+  backdrop-filter: blur(12px);
+}
+
+.currentSection {
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 0.86rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profileShortcut {
+  display: inline-grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--text-secondary);
+}
+
+.main {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 28px clamp(22px, 3vw, 48px) 52px;
 }
 
 @media (max-width: 900px) {
@@ -109,20 +172,60 @@
 
   .sidebar {
     position: relative;
+    z-index: 21;
     top: 0;
     height: auto;
+    border-width: 0 0 1px;
+    padding: 12px 14px;
+  }
+
+  .brand {
+    display: none;
   }
 
   .nav {
-    grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+    display: flex;
+    margin: 0;
     overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
   }
 
   .navItem {
+    flex: 0 0 auto;
+    min-height: 40px;
+  }
+
+  .navItem::before {
+    inset: auto 10px 0;
+    width: auto;
+    height: 2px;
+  }
+
+  .context {
+    display: none;
+  }
+
+  .topbar {
+    top: 65px;
+  }
+}
+
+@media (max-width: 560px) {
+  .navItem {
+    min-width: 42px;
     justify-content: center;
+    padding: 0 11px;
   }
 
   .navItem span {
     display: none;
+  }
+
+  .main {
+    padding-top: 18px;
   }
 }

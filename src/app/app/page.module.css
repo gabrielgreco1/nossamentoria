@@ -1,39 +1,58 @@
 .dashboard {
   display: grid;
-  gap: 14px;
-}
-
-.roleSummary {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 8px;
+  gap: 16px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .attentionPanel {
+  position: relative;
   display: flex;
+  min-height: 86px;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 22px;
+  overflow: hidden;
+  border-color: rgba(7, 139, 139, 0.24);
+  background:
+    linear-gradient(110deg, rgba(7, 139, 139, 0.1), rgba(37, 99, 235, 0.045) 62%, transparent),
+    var(--surface);
+  padding: 18px 20px;
   color: var(--brand-teal);
+  box-shadow: none;
+}
+
+.attentionPanel::after {
+  position: absolute;
+  right: -34px;
+  width: 128px;
+  height: 128px;
+  border: 28px solid rgba(37, 99, 235, 0.055);
+  border-radius: 50%;
+  content: "";
 }
 
 .attentionPanel div {
+  position: relative;
+  z-index: 1;
   display: grid;
-  gap: 8px;
+  gap: 6px;
+}
+
+.attentionPanel > svg {
+  position: relative;
+  z-index: 1;
 }
 
 .attentionPanel span {
-  color: var(--brand-teal);
-  font-size: 0.76rem;
+  color: var(--brand-teal-dark);
+  font-size: 0.7rem;
   font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
@@ -45,25 +64,21 @@
 .attentionPanel h2 {
   color: var(--text-primary);
   font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  font-size: 1.35rem;
-}
-
-.attentionPanel p {
-  color: var(--text-secondary);
-  line-height: 1.5;
+  font-size: 1.2rem;
+  letter-spacing: -0.025em;
 }
 
 .quickSection,
 .focusSection,
 .sectionHeading {
   display: grid;
-  gap: 14px;
+  gap: 12px;
 }
 
 .focusGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 12px;
 }
 
 .focusGrid > :only-child {
@@ -72,15 +87,21 @@
 
 .focusCard {
   display: grid;
+  grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.3fr);
   gap: 18px;
-  padding: 20px;
+  padding: 18px;
+  box-shadow: none;
 }
 
 .focusTitle {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 11px;
   color: var(--brand-teal);
+}
+
+.focusTitle > svg {
+  margin-top: 2px;
 }
 
 .focusTitle div {
@@ -90,8 +111,9 @@
 
 .focusTitle span {
   color: var(--text-muted);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
@@ -99,16 +121,15 @@
   margin: 0;
   color: var(--text-primary);
   font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
 }
 
 .focusCard ul {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  overflow: hidden;
+  gap: 0;
   border: 1px solid var(--line);
   border-radius: var(--radius-card);
-  background: var(--line);
   padding: 0;
   margin: 0;
   list-style: none;
@@ -117,65 +138,70 @@
 .focusCard li {
   display: grid;
   gap: 5px;
-  background: var(--surface-control);
-  padding: 14px;
+  padding: 12px;
+}
+
+.focusCard li + li {
+  border-left: 1px solid var(--line);
 }
 
 .focusCard li strong {
   font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
 }
 
 .focusCard li span {
   color: var(--text-muted);
-  font-size: 0.76rem;
-  line-height: 1.4;
+  font-size: 0.7rem;
+  line-height: 1.35;
 }
 
 .focusCard > a {
   display: inline-flex;
+  grid-column: 1 / -1;
   align-items: center;
   gap: 7px;
   justify-self: start;
-  color: var(--brand-teal);
+  color: var(--brand-teal-dark);
+  font-size: 0.82rem;
   font-weight: 800;
-}
-
-.sectionHeading span {
-  color: var(--brand-teal);
-  font-size: 0.76rem;
-  font-weight: 800;
-  text-transform: uppercase;
 }
 
 .sectionHeading h2 {
   max-width: 780px;
   margin: 0;
   font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  font-size: 1.45rem;
+  font-size: 1.18rem;
+  letter-spacing: -0.025em;
 }
 
 .quickGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
 }
 
 .quickCard {
   display: grid;
-  min-height: 180px;
-  align-content: start;
+  min-height: 92px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
   gap: 12px;
-  padding: 20px;
-  transition: transform 160ms ease, border-color 160ms ease;
+  padding: 18px;
+  box-shadow: none;
+  transition:
+    transform var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
 }
 
 .quickCard:hover {
   transform: translateY(-2px);
-  border-color: var(--line-strong);
+  border-color: rgba(7, 139, 139, 0.34);
+  box-shadow: var(--shadow-hover);
 }
 
-.quickCard svg {
+.quickCard > svg:first-child {
   color: var(--brand-teal);
 }
 
@@ -186,27 +212,40 @@
 
 .quickCard h3 {
   font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.96rem;
 }
 
-.quickCard p {
-  color: var(--text-secondary);
-  line-height: 1.5;
+.quickArrow {
+  color: var(--text-muted);
 }
 
 @media (max-width: 900px) {
-  .grid,
-  .focusGrid,
-  .quickGrid {
+  .focusGrid {
     grid-template-columns: 1fr;
   }
 
-  .roleSummary {
-    justify-content: flex-start;
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 680px) {
+  .focusCard {
+    grid-template-columns: 1fr;
+  }
+
   .focusCard ul {
+    grid-template-columns: 1fr;
+  }
+
+  .focusCard li + li {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
     grid-template-columns: 1fr;
   }
 }

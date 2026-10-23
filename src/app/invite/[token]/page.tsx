@@ -48,7 +48,7 @@ export default async function InvitePage({ params }: InvitePageProps) {
         <div className={styles.state}>
           <ShieldAlert size={22} />
           <div>
-            <strong>{invitation.status === "setup" ? "Configuração necessária" : "Convite bloqueado"}</strong>
+            <strong>{invitation.status === "setup" ? "Convite indisponível" : "Convite bloqueado"}</strong>
             <PillChip tone="warning">{getInvitationStatusLabel(invitation.status)}</PillChip>
             <p>{blockedReason ?? "Peça um novo convite ao mentor ou administrador."}</p>
           </div>

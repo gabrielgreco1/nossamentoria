@@ -13,13 +13,7 @@ export default async function RelationshipsPage() {
 
   return (
     <div className={styles.page}>
-      <PageHeader
-        eyebrow={isMentee ? "Minha jornada" : "Relacionamentos"}
-        title={isMentee ? "Minha mentoria" : "Mentorados"}
-        description={isMentee
-          ? "Acompanhe sua conexão com o mentor, o estado do plano e as próximas ações combinadas."
-          : "Encontre pessoas disponíveis, acompanhe convites e mantenha seu grupo de mentorados organizado."}
-      />
+      <PageHeader title={isMentee ? "Minha mentoria" : "Mentorados"} />
       <RelationshipManager data={data} role={context.activeRole} />
     </div>
   );

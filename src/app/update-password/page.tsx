@@ -10,7 +10,7 @@ type Props = { searchParams: Promise<{ error?: string }> };
 export default async function UpdatePasswordPage({ searchParams }: Props) {
   const { error } = await searchParams;
   const message = error === "confirmation" ? "A confirmação não corresponde." : error ? "Não foi possível atualizar a senha. Revise os requisitos." : null;
-  return <AuthCard eyebrow="Segurança" title="Escolha uma nova senha" description="A nova senha será protegida pelo Supabase Auth com hash e salt aleatório.">
+  return <AuthCard eyebrow="Segurança" title="Escolha uma nova senha" description="Use pelo menos oito caracteres e evite senhas utilizadas em outros serviços.">
     <form action={updatePassword} className={styles.form}>
       <label>Nova senha<input name="password" type="password" autoComplete="new-password" minLength={PASSWORD_MIN_LENGTH} required /></label>
       <label>Confirmar nova senha<input name="passwordConfirmation" type="password" autoComplete="new-password" minLength={PASSWORD_MIN_LENGTH} required /></label>

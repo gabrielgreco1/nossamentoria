@@ -4,11 +4,11 @@ import { BookOpen, CalendarDays, Files, LayoutDashboard, LogOut, ShieldCheck, Us
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { signOut } from "@/app/app/actions";
+import { BrandLogo } from "@/components/ui/brand-logo";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { PillChip } from "@/components/ui/pill-chip";
-import { BrandLogo } from "@/components/ui/brand-logo";
-import { signOut } from "@/app/app/actions";
-import { getRoleLabel, isMixedUser, type UserRole } from "@/lib/access";
+import { getRoleLabel, type UserRole } from "@/lib/access";
 import styles from "./app-shell.module.css";
 
 const navigationByRole: Record<UserRole, Array<{ label: string; href: string; icon: typeof LayoutDashboard }>> = {
@@ -44,20 +44,21 @@ type AppShellProps = {
   roles?: UserRole[];
   availableRoles?: UserRole[];
   activeRole?: UserRole | null;
-  roleSource?: "database" | "metadata" | "missing";
 };
 
 export function AppShell({
   children,
   roles = [],
   availableRoles = roles,
-  activeRole = roles[0] ?? null,
-  roleSource = "missing"
+  activeRole = roles[0] ?? null
 }: AppShellProps) {
   const pathname = usePathname();
   const navigation = activeRole
     ? navigationByRole[activeRole]
     : [{ label: "Painel", href: "/app", icon: LayoutDashboard }];
+  const currentSection = navigation.find((item) =>
+    pathname === item.href || (item.href !== "/app" && pathname.startsWith(`${item.href}/`))
+  )?.label ?? "Painel";
 
   return (
     <div className={styles.shell}>
@@ -71,16 +72,16 @@ export function AppShell({
             const isActive = pathname === item.href || (item.href !== "/app" && pathname.startsWith(`${item.href}/`));
 
             return (
-            <Link className={[styles.navItem, isActive ? styles.navItemActive : ""].join(" ")} href={item.href} key={item.href}>
-              <item.icon size={17} strokeWidth={1.8} />
-              <span>{item.label}</span>
-            </Link>
+              <Link className={[styles.navItem, isActive ? styles.navItemActive : ""].join(" ")} href={item.href} key={item.href}>
+                <item.icon size={17} strokeWidth={1.8} />
+                <span>{item.label}</span>
+              </Link>
             );
           })}
         </nav>
 
         <div className={styles.context}>
-          <span className={styles.contextLabel}>Contexto atual</span>
+          <span className={styles.contextLabel}>Perfil ativo</span>
           <div className={styles.roleChips}>
             {availableRoles.length > 0 ? availableRoles.map((role) => (
               <form action="/app/view-role" method="post" key={role}>
@@ -93,21 +94,23 @@ export function AppShell({
                   <PillChip tone={role === activeRole ? "default" : "muted"}>{getRoleLabel(role)}</PillChip>
                 </button>
               </form>
-            )) : <PillChip tone="warning">Sem papel</PillChip>}
+            )) : <PillChip tone="warning">Sem perfil</PillChip>}
           </div>
-          <span>
-            {isMixedUser(roles)
-              ? "Usuários mistos mantêm mentorias, notas e materiais separados por contexto."
-              : "O contexto ativo define quais ações e dados ficam disponíveis."}
-          </span>
-          {roleSource === "metadata" ? <span className={styles.previewNote}>Contexto recuperado temporariamente da autenticação.</span> : null}
           <form action={signOut}>
             <button className={styles.signOutButton} type="submit"><LogOut size={14} /> Sair</button>
           </form>
         </div>
       </GlassPanel>
 
-      <main className={styles.main}>{children}</main>
+      <div className={styles.content}>
+        <header className={styles.topbar}>
+          <strong className={styles.currentSection}>{currentSection}</strong>
+          <Link className={styles.profileShortcut} href="/app/profile" aria-label="Abrir perfil">
+            <UserRound size={17} />
+          </Link>
+        </header>
+        <main className={styles.main}>{children}</main>
+      </div>
     </div>
   );
 }

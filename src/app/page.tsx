@@ -71,7 +71,7 @@ export default async function Home() {
       </header>
 
       <LandingHero
-        eyebrow="MVP gratuito para mentores e mentorados"
+        eyebrow="Para quem ensina e para quem aprende"
         title="Mentoria em tecnologia com trilha, contexto e progresso."
         description="A NossaMentoria ajuda mentores e mentorados a transformar links, chamadas, notas e aulas soltas em uma jornada organizada de aprendizado, com planos, materiais, encontros e progresso no mesmo lugar."
         actions={(
@@ -104,7 +104,7 @@ export default async function Home() {
               </li>
               <li>
                 <span />
-                Autenticação, permissões e deploy
+                Autenticação, permissões e segurança
               </li>
             </ol>
           </GlassPanel>

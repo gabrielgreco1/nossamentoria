@@ -2,8 +2,6 @@ import { LockKeyhole } from "lucide-react";
 import Link from "next/link";
 import { AuthCard } from "@/components/marketing/auth-card";
 import { GlassButton } from "@/components/ui/glass-button";
-import { PillChip } from "@/components/ui/pill-chip";
-import { getEnvStatus } from "@/lib/env";
 import { signInWithPassword } from "./actions";
 import styles from "./page.module.css";
 
@@ -14,7 +12,7 @@ type LoginPageProps = {
 function getMessage(error?: string, status?: string) {
   if (status === "password-updated") return { tone: "success", text: "Senha atualizada. Entre novamente com a nova senha." };
   if (status === "email-confirmed") return { tone: "success", text: "E-mail confirmado. Sua conta está pronta para entrar." };
-  if (error === "setup") return { tone: "warning", text: "A autenticação ainda não está configurada." };
+  if (error === "setup") return { tone: "warning", text: "Não foi possível iniciar o acesso. Tente novamente mais tarde." };
   if (error === "missing-credentials") return { tone: "warning", text: "Informe e-mail e senha." };
   if (error === "invalid-credentials") return { tone: "warning", text: "E-mail ou senha incorretos." };
   if (error === "email-not-confirmed") return { tone: "warning", text: "Confirme seu e-mail antes de entrar." };
@@ -27,11 +25,10 @@ function getMessage(error?: string, status?: string) {
 export default async function LoginPage({ searchParams }: LoginPageProps) {
   const params = await searchParams;
   const message = getMessage(params.error, params.status);
-  const envStatus = getEnvStatus();
   const next = params.next?.startsWith("/") ? params.next : "/app";
 
   return (
-    <AuthCard eyebrow="Acesso seguro" title="Entrar na NossaMentoria" description="Use o mesmo e-mail e senha em qualquer papel da plataforma.">
+    <AuthCard eyebrow="Acesso seguro" title="Entrar na NossaMentoria">
       <form action={signInWithPassword} className={styles.form}>
         <input type="hidden" name="next" value={next} />
         <label>E-mail<input name="email" type="email" autoComplete="email" placeholder="voce@exemplo.com" required /></label>
@@ -41,8 +38,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
       </form>
 
       {message ? <div className={message.tone === "success" ? styles.success : styles.warning}>{message.text}</div> : null}
-      {!envStatus.configured ? <div className={styles.setup}><PillChip tone="warning">Configuração necessária</PillChip><code>{[...envStatus.missing, ...envStatus.invalid].join(", ")}</code></div> : null}
-      <p className={styles.note}>Ainda não possui conta? <Link href="/register">Faça seu cadastro</Link>. Contas administrativas continuam disponíveis somente por convite.</p>
+      <p className={styles.note}>Ainda não possui conta? <Link href="/register">Faça seu cadastro</Link>.</p>
     </AuthCard>
   );
 }

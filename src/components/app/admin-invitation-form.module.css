@@ -22,8 +22,8 @@
 .form textarea {
   width: 100%;
   border: 1px solid var(--line-strong);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.78);
+  border-radius: var(--radius-control);
+  background: var(--surface-control);
   color: var(--text-primary);
   padding: 11px 12px;
 }
@@ -42,14 +42,14 @@
 }
 
 .success {
-  border: 1px solid rgba(15, 118, 110, 0.28);
-  background: rgba(15, 118, 110, 0.08);
+  border: 1px solid rgba(7, 139, 139, 0.25);
+  background: rgba(7, 139, 139, 0.075);
   color: var(--brand-teal-dark);
 }
 
 .error {
-  border: 1px solid rgba(229, 107, 95, 0.3);
-  background: rgba(229, 107, 95, 0.08);
+  border: 1px solid rgba(249, 115, 96, 0.3);
+  background: rgba(249, 115, 96, 0.08);
   color: #9f3f37;
 }
 

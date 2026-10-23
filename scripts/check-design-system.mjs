@@ -24,13 +24,13 @@ const requiredAssets = [
 ];
 
 const requiredTokens = [
-  "--canvas: #f7f3ea",
-  "--surface: #fffdf7",
-  "--text-primary: #13231f",
-  "--brand-teal: #0f766e",
+  "--canvas: #f5f7fa",
+  "--surface: #ffffff",
+  "--text-primary: #10243e",
+  "--brand-teal: #078b8b",
   "--brand-blue: #2563eb",
-  "--accent-amber: #f5b84b",
-  "--accent-coral: #e56b5f",
+  "--accent-amber: #f3a83b",
+  "--accent-coral: #f97360",
   "prefers-reduced-motion"
 ];
 

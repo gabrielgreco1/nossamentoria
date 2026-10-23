@@ -2,9 +2,9 @@ import type { ReactNode } from "react";
 import styles from "./page-header.module.css";
 
 type PageHeaderProps = {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
-  description: string;
+  description?: string;
   action?: ReactNode;
 };
 
@@ -12,9 +12,9 @@ export function PageHeader({ eyebrow, title, description, action }: PageHeaderPr
   return (
     <header className={styles.header}>
       <div>
-        <span className={styles.eyebrow}>{eyebrow}</span>
+        {eyebrow ? <span className={styles.eyebrow}>{eyebrow}</span> : null}
         <h1>{title}</h1>
-        <p>{description}</p>
+        {description ? <p>{description}</p> : null}
       </div>
       {action ? <div className={styles.action}>{action}</div> : null}
     </header>

@@ -3,15 +3,17 @@
   min-height: 42px;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  border-radius: var(--radius-pill);
-  padding: 0 18px;
-  font-weight: 600;
-  letter-spacing: 0;
+  gap: 9px;
+  border-radius: var(--radius-control);
+  padding: 0 16px;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   transition:
-    transform 160ms ease,
-    border-color 160ms ease,
-    background 160ms ease;
+    transform var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    background var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
 }
 
 .button:hover {
@@ -22,13 +24,24 @@
   border: 1px solid var(--brand-teal);
   background: var(--brand-teal);
   color: #ffffff;
-  box-shadow: 0 12px 28px rgba(15, 118, 110, 0.22);
+  box-shadow: 0 6px 16px rgba(7, 139, 139, 0.2);
+}
+
+.primary:hover {
+  background: var(--brand-teal-dark);
+  box-shadow: 0 9px 22px rgba(7, 139, 139, 0.24);
 }
 
 .secondary {
   border: 1px solid var(--line-strong);
-  background: rgba(255, 255, 255, 0.68);
-  color: var(--text-secondary);
+  background: var(--surface);
+  color: var(--text-primary);
+  box-shadow: 0 2px 7px rgba(16, 36, 62, 0.045);
+}
+
+.secondary:hover {
+  border-color: #aebdca;
+  background: var(--surface-subtle);
 }
 
 .icon {

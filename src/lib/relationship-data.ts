@@ -14,6 +14,11 @@ type RelationshipRow = {
   created_by_user_id: string;
 };
 
+type RelationshipCreatorRow = {
+  id: string;
+  created_by_user_id: string;
+};
+
 type PlanRow = {
   id: string;
   relationship_id: string;
@@ -198,13 +203,18 @@ export async function getRelationshipPageData(context: WorkspaceContext): Promis
     if (isMenteeView) {
       if (!isActualMentee) return result;
 
-      const [relationshipsResult, profileResult, availableMentorsResult] = await Promise.all([
+      const [relationshipsResult, relationshipCreatorsResult, profileResult, availableMentorsResult] = await Promise.all([
         supabase
           .from("mentorship_relationship_details")
-          .select("id,status,mentor_user_id,mentor_name,mentee_user_id,mentee_name,created_at,created_by_user_id")
+          .select("id,status,mentor_user_id,mentor_name,mentee_user_id,mentee_name,created_at")
           .eq("mentee_user_id", context.user.id)
           .neq("status", "ended")
           .order("created_at", { ascending: false }),
+        supabase
+          .from("mentor_mentee_relationships")
+          .select("id,created_by_user_id")
+          .eq("mentee_user_id", context.user.id)
+          .neq("status", "ended"),
         supabase
           .from("profiles")
           .select("stack,is_available_for_mentorship")
@@ -214,10 +224,18 @@ export async function getRelationshipPageData(context: WorkspaceContext): Promis
       ]);
 
       if (relationshipsResult.error) throw relationshipsResult.error;
+      if (relationshipCreatorsResult.error) throw relationshipCreatorsResult.error;
       if (profileResult.error) throw profileResult.error;
       if (availableMentorsResult.error) throw availableMentorsResult.error;
 
-      const relationships = (relationshipsResult.data ?? []) as RelationshipRow[];
+      const creatorByRelationship = new Map(
+        ((relationshipCreatorsResult.data ?? []) as RelationshipCreatorRow[])
+          .map((relationship) => [relationship.id, relationship.created_by_user_id])
+      );
+      const relationships = (relationshipsResult.data ?? []).map((relationship) => ({
+        ...relationship,
+        created_by_user_id: creatorByRelationship.get(relationship.id) ?? relationship.mentor_user_id
+      })) as RelationshipRow[];
       const profile = profileResult.data as { stack: string[] | null; is_available_for_mentorship: boolean } | null;
       result.mentee.interests = profile?.stack ?? [];
       result.mentee.isAvailable = profile?.is_available_for_mentorship ?? false;
@@ -314,14 +332,23 @@ export async function getRelationshipPageData(context: WorkspaceContext): Promis
 
     let relationshipsQuery = supabase
       .from("mentorship_relationship_details")
-      .select("id,status,mentor_user_id,mentor_name,mentee_user_id,mentee_name,created_at,created_by_user_id")
+      .select("id,status,mentor_user_id,mentor_name,mentee_user_id,mentee_name,created_at")
       .neq("status", "ended")
       .order("created_at", { ascending: false });
 
-    if (isActualMentor) relationshipsQuery = relationshipsQuery.eq("mentor_user_id", context.user.id);
+    let relationshipCreatorsQuery = supabase
+      .from("mentor_mentee_relationships")
+      .select("id,created_by_user_id")
+      .neq("status", "ended");
 
-    const [relationshipsResult, availableResult, invitationsResult, capacityResult] = await Promise.all([
+    if (isActualMentor) {
+      relationshipsQuery = relationshipsQuery.eq("mentor_user_id", context.user.id);
+      relationshipCreatorsQuery = relationshipCreatorsQuery.eq("mentor_user_id", context.user.id);
+    }
+
+    const [relationshipsResult, relationshipCreatorsResult, availableResult, invitationsResult, capacityResult] = await Promise.all([
       relationshipsQuery,
+      relationshipCreatorsQuery,
       supabase.rpc("list_available_mentees"),
       supabase
         .from("invitations")
@@ -338,11 +365,19 @@ export async function getRelationshipPageData(context: WorkspaceContext): Promis
     ]);
 
     if (relationshipsResult.error) throw relationshipsResult.error;
+    if (relationshipCreatorsResult.error) throw relationshipCreatorsResult.error;
     if (availableResult.error) throw availableResult.error;
     if (invitationsResult.error) throw invitationsResult.error;
     if (capacityResult.error) throw capacityResult.error;
 
-    const relationships = (relationshipsResult.data ?? []) as RelationshipRow[];
+    const creatorByRelationship = new Map(
+      ((relationshipCreatorsResult.data ?? []) as RelationshipCreatorRow[])
+        .map((relationship) => [relationship.id, relationship.created_by_user_id])
+    );
+    const relationships = (relationshipsResult.data ?? []).map((relationship) => ({
+      ...relationship,
+      created_by_user_id: creatorByRelationship.get(relationship.id) ?? relationship.mentor_user_id
+    })) as RelationshipRow[];
     const relationshipIds = relationships.map((relationship) => relationship.id);
     let plans: PlanRow[] = [];
 
@@ -420,7 +455,7 @@ export async function getRelationshipPageData(context: WorkspaceContext): Promis
 
     return result;
   } catch (error) {
-    result.loadError = error instanceof Error ? error.message : "Não foi possível carregar os relacionamentos.";
+    result.loadError = "Não foi possível carregar os relacionamentos.";
     return result;
   }
 }

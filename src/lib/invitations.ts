@@ -10,12 +10,9 @@ export type TrackedInvitationStatus = InvitationRecordStatus;
 export type { InvitationType };
 
 export const invitationFlowSteps = [
-  "Pessoa convidada abre landing, login ou link de convite.",
-  "Sistema valida o token antes de criar conta.",
-  "Conta entra apenas pelo caminho de convite válido.",
-  "Papel pretendido é aplicado sem edição pelo convidado.",
-  "Relação com mentor é criada ou fica pendente quando existir alvo.",
-  "Usuário vai para o workspace privado correto."
+  "Confirme os dados do convite.",
+  "Crie sua conta ou entre com uma conta existente.",
+  "Acesse seu perfil na NossaMentoria."
 ];
 
 export function getInvitationStatusLabel(status: InvitationStatus) {
@@ -25,7 +22,7 @@ export function getInvitationStatusLabel(status: InvitationStatus) {
     expired: "Expirado",
     revoked: "Revogado",
     used: "Já usado",
-    setup: "Setup pendente"
+    setup: "Indisponível"
   };
 
   return labels[status];
@@ -36,8 +33,8 @@ export function getInvitationBlockedReason(status: InvitationStatus) {
     expired: "Convites expirados não podem criar ou acessar contas.",
     revoked: "Convites revogados precisam ser recriados por mentor ou admin.",
     used: "Convites aceitos não podem ser reutilizados.",
-    invalid: "O token não existe ou não pôde ser validado.",
-    setup: "A validação depende da configuração do Supabase e das RPCs de convite."
+    invalid: "Este convite é inválido ou não pôde ser validado.",
+    setup: "Não foi possível validar este convite agora. Tente novamente mais tarde."
   };
 
   return reasons[status] ?? null;

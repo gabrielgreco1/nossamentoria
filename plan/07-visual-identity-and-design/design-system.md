@@ -4,20 +4,20 @@
 
 Base colors:
 
-- `canvas`: `#f7f3ea`
-- `canvas-soft`: `#eef6f1`
-- `surface`: `#fffdf7`
+- `canvas`: `#f5f7fa`
+- `canvas-soft`: `#eef3f7`
+- `surface`: `#ffffff`
 - `surface-raised`: `#ffffff`
-- `surface-tint`: `rgba(255,255,255,0.72)`
-- `ink`: `#13231f`
-- `text-primary`: `#13231f`
-- `text-secondary`: `#43534e`
-- `text-muted`: `#6f7f78`
-- `line`: `#d9e4dd`
-- `brand-teal`: `#0f766e`
+- `surface-tint`: `#ffffff`
+- `ink`: `#10243e`
+- `text-primary`: `#10243e`
+- `text-secondary`: `#526477`
+- `text-muted`: `#7a8998`
+- `line`: `#e1e8ee`
+- `brand-teal`: `#078b8b`
 - `brand-blue`: `#2563eb`
-- `accent-amber`: `#f5b84b`
-- `accent-coral`: `#e56b5f`
+- `accent-amber`: `#f3a83b`
+- `accent-coral`: `#f97360`
 
 Status colors should be restrained and readable. Use teal for positive progress, amber for attention, coral/red for destructive or blocked states, and blue for informational actions. Do not make the whole product green or gray.
 
@@ -54,17 +54,17 @@ Avoid overly rounded nested cards in dense dashboards. Dense operational element
 
 ## Depth And Glass
 
-Use two variants:
+Use two variants, both deliberately opaque inside the authenticated workspace:
 
 - `soft-panel`: default cards, forms, dashboard panels, and landing sections.
-- `translucent-panel`: landing overlays, auth cards, highlighted dashboard panels, and modal surfaces.
+- `translucent-panel`: restricted to public navigation, auth framing, and sticky utility bars.
 
 Required behavior:
 
-- Warm light surface.
+- Neutral light surface with a subtle warm brand undertone.
 - Subtle border.
 - Soft shadow.
-- Optional backdrop blur only when it helps separate foreground from media.
+- Backdrop blur only on floating navigation or sticky utility bars.
 - No heavy black glass by default.
 
 ## Component Defaults
@@ -72,7 +72,7 @@ Required behavior:
 - Primary CTA: teal or blue filled button with strong contrast and an arrow icon.
 - Secondary action: outlined or soft-tinted button.
 - Navigation: light, structured, and role-aware.
-- Cards: warm surfaces with clear labels and useful density.
+- Cards: white modular surfaces with clear labels, compact spacing and useful density.
 - Tables/lists: readable light rows with subtle separators.
 - Progress: quiet segmented, stepper, or ring indicators using teal/amber/blue accents.
 
