@@ -1,16 +1,15 @@
-import { Mail, ShieldAlert, ShieldCheck } from "lucide-react";
-import { redirect } from "next/navigation";
-import { requestLogin } from "@/app/login/actions";
+import { LogIn, ShieldAlert, ShieldCheck, UserPlus } from "lucide-react";
 import { AuthCard } from "@/components/marketing/auth-card";
 import { GlassButton } from "@/components/ui/glass-button";
 import { PillChip } from "@/components/ui/pill-chip";
-import { acceptInvitationToken, getCurrentUser, validateInvitationToken } from "@/lib/auth";
+import { getCurrentUser, validateInvitationToken } from "@/lib/auth";
 import {
   getInvitationBlockedReason,
   getInvitationStatusLabel,
   invitationFlowSteps
 } from "@/lib/invitations";
 import styles from "./page.module.css";
+import { acceptInvitation } from "./actions";
 
 type InvitePageProps = {
   params: Promise<{
@@ -25,21 +24,16 @@ export default async function InvitePage({ params }: InvitePageProps) {
   const blockedReason = getInvitationBlockedReason(invitation.status);
 
   if (user && invitation.status === "valid") {
-    const accepted = await acceptInvitationToken(token, user.id);
-
-    if (accepted.ok) {
-      redirect("/app");
-    }
-
     return (
       <AuthCard
         eyebrow="Convite"
-        title="A aceitação do convite precisa de configuração"
-        description={accepted.message}
+        title="Confirme o aceite do convite"
+        description="Sua conta está autenticada. Confirme para receber o papel e, quando aplicável, criar a relação com o mentor que fez o convite."
       >
-        <GlassButton href="/app" variant="secondary">
-          Ir para a área privada
-        </GlassButton>
+        <form action={acceptInvitation}>
+          <input name="token" type="hidden" value={token} />
+          <GlassButton type="submit">Aceitar convite</GlassButton>
+        </form>
       </AuthCard>
     );
   }
@@ -70,7 +64,7 @@ export default async function InvitePage({ params }: InvitePageProps) {
     <AuthCard
       eyebrow="Convite"
       title="Aceite seu convite da NossaMentoria"
-      description="Confirme o email convidado para criar ou acessar sua conta. A área privada só abre depois que este convite for validado."
+      description="Crie seu perfil completo com o e-mail convidado ou entre em uma conta existente para concluir o aceite."
     >
       <div className={styles.summary}>
         <ShieldCheck size={20} />
@@ -98,21 +92,10 @@ export default async function InvitePage({ params }: InvitePageProps) {
         ))}
       </ol>
 
-      <form action={requestLogin} className={styles.form}>
-        <input type="hidden" name="next" value={`/invite/${token}`} />
-        <input type="hidden" name="inviteToken" value={token} />
-        <label>
-          Email
-          <input
-            name="email"
-            type="email"
-            placeholder="voce@exemplo.com"
-            defaultValue={invitation.email}
-            required
-          />
-        </label>
-        <GlassButton type="submit" icon={<Mail size={16} />}>Continuar com email</GlassButton>
-      </form>
+      <div className={styles.actions}>
+        <GlassButton href={`/register?invite=${encodeURIComponent(token)}`} icon={<UserPlus size={16} />}>Criar conta com este convite</GlassButton>
+        <GlassButton href={`/login?next=${encodeURIComponent(`/invite/${token}`)}`} variant="secondary" icon={<LogIn size={16} />}>Já tenho uma conta</GlassButton>
+      </div>
     </AuthCard>
   );
 }

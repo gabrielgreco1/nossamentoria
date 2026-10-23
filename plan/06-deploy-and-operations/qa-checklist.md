@@ -58,7 +58,7 @@ Never save the optional `QA_ADMIN_EMAIL` override or test credentials in the rep
 | Service key bundle isolation | Passed locally | Exact configured service role was absent from `.next/static`. |
 | Invitation acceptance by a new user | Pending | Requires custom SMTP, the auth hook and a controlled invited account. |
 | Mentor versus unrelated mentee RLS | Pending — launch blocker | Requires separate mentor and mentee Auth users with seeded relationships. |
-| Persisted plans, lessons, materials and sessions | Pending — launch blocker | Current rich editors still use local demonstration state. |
+| Persisted plans, lessons, materials and sessions | Pending — launch blocker | Read surfaces are real and show production empty states; creation and editing actions are still pending. |
 | Upload and private download in deployed app | Pending — launch blocker | Storage helper and private bucket exist; the UI mutation is not connected. |
 | Mobile and desktop visual pass | Pending | Must be repeated on the final Preview URL after core persistence is complete. |
 | Production smoke test | Pending | No Vercel Production deployment exists yet. |

@@ -84,6 +84,20 @@
   font-size: 0.78rem;
 }
 
+.signOutButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  padding: 4px 0;
+}
+
 .main {
   min-width: 0;
 }

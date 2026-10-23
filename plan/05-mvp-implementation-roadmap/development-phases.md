@@ -2,7 +2,7 @@
 
 ## Phase 1: Landing, Auth, And Invitation Foundation
 
-Create the Next.js project, public landing page, Supabase setup, login, invitation acceptance, profiles, roles, and invite-only access.
+Create the Next.js project, public landing page, Supabase setup, password login, complete registration, invitation acceptance, profiles, roles, and restricted administrative access.
 
 This phase must land before private dashboard work becomes the main focus. The app's unauthenticated root route should introduce NossaMentoria and guide invited users into authentication.
 

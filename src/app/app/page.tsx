@@ -81,7 +81,6 @@ export default async function WorkspacePage() {
           action={
             <div className={styles.roleSummary}>
               {activeRole ? <PillChip>{getRoleLabel(activeRole)}</PillChip> : <PillChip tone="warning">Sem papel</PillChip>}
-              {context.rolePreview ? <PillChip tone="warning">Prévia visual</PillChip> : null}
             </div>
           }
         />

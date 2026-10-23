@@ -20,9 +20,9 @@ Launch a private, reliable enough tool for Gabriel and invited mentors/mentees.
 | Application | Ready locally | TypeScript and production builds pass; public, auth and protected routes exist. |
 | Supabase | Provisioned | Auth, schema, RLS, RPCs, seed templates and the private `materials` bucket exist. |
 | Administration | Partially operational | The first admin can access the protected area and create or revoke invitations. |
-| Core editor persistence | Launch blocker | Relationship, plan, material, lesson, session and note editors still use local demonstration state. |
+| Core editor persistence | Launch blocker | Read surfaces use real Supabase data; creation and editing for plans, materials, lessons, sessions and notes still need persistent actions. |
 | Email delivery | Launch blocker | Supabase's default sender is suitable only for testing; custom SMTP and branded templates are required for invited real users. |
-| Invite-only enforcement | Launch blocker | The Before User Created hook must be enabled and tested after SMTP is configured. |
+| Registration enforcement | Partially operational | The Before User Created hook validates complete mentor/mentee profiles and restricts administrators to valid admin invitations; end-to-end email confirmation still depends on SMTP. |
 | Hosting | Not connected | The repository is prepared for Vercel, but no preview or production project is linked yet. |
 | Hosting eligibility | Confirmed for current use | NossaMentoria is currently philanthropic and non-commercial, so Vercel Hobby is eligible; reassess before any commercial use. |
 | Cross-role QA | Not run | Real mentor and mentee test accounts are still required for end-to-end RLS validation. |
@@ -44,7 +44,7 @@ Launch a private, reliable enough tool for Gabriel and invited mentors/mentees.
 1. Validate and document environment configuration.
 2. Run repository checks and the local QA matrix.
 3. Persist the remaining core editor flows and test RLS with mentor and mentee accounts.
-4. Configure custom SMTP, branded auth templates and invite-only enforcement.
+4. Configure custom SMTP, branded auth templates and verify registration/admin-invitation enforcement.
 5. Create a Vercel Preview deployment and repeat QA against it.
 6. Promote the verified commit to Production and start the post-launch routine.
 

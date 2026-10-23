@@ -34,7 +34,7 @@ Use Next.js for the application and Supabase for authentication, database, and s
 
 - The MVP can be built incrementally.
 - Each development phase produces usable product behavior.
-- Technical decisions support invite-only, multi-mentor operation.
+- Technical decisions support public mentor/mentee registration, invitation-only administrators, and multi-mentor operation.
 
 ## Global Design Direction
 

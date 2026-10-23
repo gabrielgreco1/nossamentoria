@@ -20,6 +20,18 @@
   padding: 0 14px;
 }
 
+.formLinks {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -5px;
+}
+
+.formLinks a,
+.note a {
+  color: var(--brand-teal-dark);
+  font-weight: 800;
+}
+
 .warning,
 .success,
 .setup {

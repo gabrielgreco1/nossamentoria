@@ -4,7 +4,7 @@ Lesson templates help mentors create plans quickly.
 
 ## Template Purpose
 
-Templates are reusable mock lessons that can be copied into a mentorship plan. They are not completed lessons until attached to a plan.
+Templates are reusable predefined lessons persisted in the catalog and can be copied into a mentorship plan. They are not completed lessons until attached to a plan.
 
 ## MVP Template Examples
 

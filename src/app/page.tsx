@@ -8,6 +8,7 @@ import {
   LockKeyhole,
   Route,
   Sparkles,
+  UserPlus,
   UsersRound
 } from "lucide-react";
 import { redirect } from "next/navigation";
@@ -22,9 +23,9 @@ import styles from "./page.module.css";
 
 const workflow = [
   {
-    title: "Convite",
-    description: "O acesso começa por um convite de mentor ou administrador.",
-    icon: LockKeyhole
+    title: "Cadastro",
+    description: "Mentores e mentorados criam um perfil completo e confirmam o próprio e-mail.",
+    icon: UserPlus
   },
   {
     title: "Plano",
@@ -70,12 +71,12 @@ export default async function Home() {
       </header>
 
       <LandingHero
-        eyebrow="MVP gratuito e privado por convite"
+        eyebrow="MVP gratuito para mentores e mentorados"
         title="Mentoria em tecnologia com trilha, contexto e progresso."
         description="A NossaMentoria ajuda mentores e mentorados a transformar links, chamadas, notas e aulas soltas em uma jornada organizada de aprendizado, com planos, materiais, encontros e progresso no mesmo lugar."
         actions={(
           <>
-            <GlassButton href="/login">Tenho um convite</GlassButton>
+            <GlassButton href="/register">Criar meu perfil</GlassButton>
             <GlassButton href="#acesso" variant="secondary">Como funciona</GlassButton>
           </>
         )}
@@ -113,7 +114,7 @@ export default async function Home() {
       <section className={styles.capabilities} id="trilha">
         <Reveal className={styles.sectionHeader}>
           <span>// Trilha de aprendizado</span>
-          <h2>Do convite ao avanço mensurável</h2>
+          <h2>Do cadastro ao avanço mensurável</h2>
         </Reveal>
 
         <div className={styles.workflowGrid}>
@@ -132,14 +133,14 @@ export default async function Home() {
           <Reveal delay={0.15}>
             <GlassPanel strong className={styles.accessCard}>
               <LockKeyhole size={24} />
-              <h3>Acesso privado desde o começo</h3>
+              <h3>Cadastro completo e acesso protegido</h3>
               <p>
-                Não existe cadastro público aberto, plano pago ou marketplace no MVP. Novas contas
-                só nascem de convites válidos, e convites expirados, revogados ou já usados são
-                bloqueados antes da criação da conta.
+                Mentores e mentorados podem se cadastrar com e-mail e senha, informar formação e
+                áreas de conhecimento e confirmar o endereço antes do primeiro acesso. Contas de
+                administrador continuam restritas a convites emitidos por outro administrador.
               </p>
-              <GlassButton href="/login" variant="secondary">
-                Entrar com email
+              <GlassButton href="/register" variant="secondary">
+                Fazer cadastro
               </GlassButton>
             </GlassPanel>
           </Reveal>

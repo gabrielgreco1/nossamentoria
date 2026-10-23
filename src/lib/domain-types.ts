@@ -8,6 +8,7 @@ export const INVITATION_VALIDATION_STATUSES = ["valid", "invalid", "expired", "r
 export type InvitationValidationStatus = (typeof INVITATION_VALIDATION_STATUSES)[number];
 
 export const INVITATION_TYPES = [
+  "admin_invites_admin",
   "admin_invites_mentor",
   "admin_invites_mentee",
   "mentor_invites_mentee",

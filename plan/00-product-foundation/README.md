@@ -2,7 +2,7 @@
 
 This phase defines the reason NossaMentoria exists, who it serves, and how the MVP will be judged.
 
-Read this folder before implementing product behavior. The goal is to keep the MVP focused: a free, invite-only mentorship platform for organizing mentors, mentees, classes, materials, plans, and progress.
+Read this folder before implementing product behavior. The goal is to keep the MVP focused: a free mentorship platform with public mentor and mentee registration, invitation-based relationships, and invitation-only administrative access.
 
 ## Specs
 
@@ -17,7 +17,7 @@ All future implementation should preserve these defaults:
 
 - No billing or paid plan behavior in MVP.
 - Multi-mentor support from the beginning.
-- Invite-only onboarding.
+- Complete public onboarding for mentors and mentees; invitation-only onboarding for administrators.
 - Dashboard-first product experience.
 - Gabriel can be an initial admin and mentor, but the system must support other mentors.
 

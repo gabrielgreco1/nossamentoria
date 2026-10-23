@@ -23,19 +23,15 @@ export type WorkspaceContext = {
   roles: UserRole[];
   availableRoles: UserRole[];
   activeRole: UserRole | null;
-  roleSource: "database" | "metadata" | "preview" | "missing";
-  preview: boolean;
-  rolePreview: boolean;
+  roleSource: "database" | "metadata" | "missing";
 };
 
 export const WORKSPACE_ROLE_COOKIE = "nossamentoria_view_role";
 
 async function withActiveRole(
-  context: Omit<WorkspaceContext, "availableRoles" | "activeRole" | "rolePreview">
+  context: Omit<WorkspaceContext, "availableRoles" | "activeRole">
 ): Promise<WorkspaceContext> {
-  const canPreviewEveryRole =
-    process.env.NODE_ENV !== "production" && context.roles.includes("admin");
-  const availableRoles = canPreviewEveryRole ? [...USER_ROLES] : context.roles;
+  const availableRoles = context.roles;
   const requestedRole = (await cookies()).get(WORKSPACE_ROLE_COOKIE)?.value;
   const activeRole = USER_ROLES.includes(requestedRole as UserRole) &&
     availableRoles.includes(requestedRole as UserRole)
@@ -45,8 +41,7 @@ async function withActiveRole(
   return {
     ...context,
     availableRoles,
-    activeRole,
-    rolePreview: Boolean(activeRole && !context.roles.includes(activeRole))
+    activeRole
   };
 }
 
@@ -55,14 +50,11 @@ export const getWorkspaceContext = cache(async (): Promise<WorkspaceContext> => 
   const user = await getCurrentUser();
 
   if (!envStatus.configured) {
-    const preview = process.env.NODE_ENV !== "production";
-
     return withActiveRole({
       envStatus,
       user: null,
-      roles: preview ? ["mentor", "mentee"] : [],
-      roleSource: preview ? "preview" : "missing",
-      preview
+      roles: [],
+      roleSource: "missing"
     });
   }
 
@@ -71,8 +63,7 @@ export const getWorkspaceContext = cache(async (): Promise<WorkspaceContext> => 
       envStatus,
       user: null,
       roles: [],
-      roleSource: "missing",
-      preview: false
+      roleSource: "missing"
     });
   }
 
@@ -93,8 +84,7 @@ export const getWorkspaceContext = cache(async (): Promise<WorkspaceContext> => 
           envStatus,
           user,
           roles: databaseRoles,
-          roleSource: "database",
-          preview: false
+          roleSource: "database"
         });
       }
     }
@@ -108,7 +98,6 @@ export const getWorkspaceContext = cache(async (): Promise<WorkspaceContext> => 
     envStatus,
     user,
     roles: metadataRoles,
-    roleSource: metadataRoles.length > 0 ? "metadata" : "missing",
-    preview: false
+    roleSource: metadataRoles.length > 0 ? "metadata" : "missing"
   });
 });

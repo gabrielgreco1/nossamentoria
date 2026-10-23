@@ -15,9 +15,15 @@ export async function GET(request: NextRequest) {
   const next = getSafeNext(requestUrl.searchParams.get("next"));
   const origin = requestUrl.origin;
 
-  if (code) {
-    const supabase = await createClient();
-    await supabase.auth.exchangeCodeForSession(code);
+  if (!code) {
+    return NextResponse.redirect(`${origin}/login?error=invalid-link`);
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+  if (error) {
+    return NextResponse.redirect(`${origin}/login?error=invalid-link`);
   }
 
   return NextResponse.redirect(`${origin}${next}`);

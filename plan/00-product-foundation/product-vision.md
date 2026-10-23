@@ -12,11 +12,12 @@ Mentorship usually starts informally: messages, calls, links, slides, and tasks 
 
 ## MVP Goal
 
-Create a free, invite-only platform where:
+Create a free platform where:
 
-- Visitors first see a landing page that explains the mentorship offer, learning outcomes, and invite-only access.
-- Invited users can authenticate, accept an invitation, and enter the correct role-based workspace.
-- Uninvited users cannot create accounts or reach private product surfaces.
+- Visitors first see a landing page that explains the mentorship offer, learning outcomes, and available account types.
+- Mentors and mentees can create complete accounts with verified email, password, and knowledge areas; academic formation is required only for mentors.
+- Invited users can also accept mentor/mentee relationships, while administrative accounts require an administrator invitation.
+- Unauthenticated users cannot reach private product surfaces, and users cannot self-assign administrative access.
 
 Inside the authenticated platform, mentors can:
 

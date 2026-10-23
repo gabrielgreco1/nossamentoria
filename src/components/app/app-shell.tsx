@@ -1,12 +1,13 @@
 "use client";
 
-import { BookOpen, CalendarDays, Files, LayoutDashboard, ShieldCheck, UsersRound } from "lucide-react";
+import { BookOpen, CalendarDays, Files, LayoutDashboard, LogOut, ShieldCheck, UsersRound } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { PillChip } from "@/components/ui/pill-chip";
 import { BrandLogo } from "@/components/ui/brand-logo";
+import { signOut } from "@/app/app/actions";
 import { getRoleLabel, isMixedUser, type UserRole } from "@/lib/access";
 import styles from "./app-shell.module.css";
 
@@ -40,9 +41,7 @@ type AppShellProps = {
   roles?: UserRole[];
   availableRoles?: UserRole[];
   activeRole?: UserRole | null;
-  preview?: boolean;
-  rolePreview?: boolean;
-  roleSource?: "database" | "metadata" | "preview" | "missing";
+  roleSource?: "database" | "metadata" | "missing";
 };
 
 export function AppShell({
@@ -50,8 +49,6 @@ export function AppShell({
   roles = [],
   availableRoles = roles,
   activeRole = roles[0] ?? null,
-  preview = false,
-  rolePreview = false,
   roleSource = "missing"
 }: AppShellProps) {
   const pathname = usePathname();
@@ -100,9 +97,10 @@ export function AppShell({
               ? "Usuários mistos mantêm mentorias, notas e materiais separados por contexto."
               : "O contexto ativo define quais ações e dados ficam disponíveis."}
           </span>
-          {preview ? <span className={styles.previewNote}>Prévia até papéis reais virem do banco.</span> : null}
-          {rolePreview ? <span className={styles.previewNote}>Prévia visual local. Suas permissões reais continuam como Admin.</span> : null}
-          {!preview && roleSource === "metadata" ? <span className={styles.previewNote}>Contexto recuperado temporariamente da autenticação.</span> : null}
+          {roleSource === "metadata" ? <span className={styles.previewNote}>Contexto recuperado temporariamente da autenticação.</span> : null}
+          <form action={signOut}>
+            <button className={styles.signOutButton} type="submit"><LogOut size={14} /> Sair</button>
+          </form>
         </div>
       </GlassPanel>
 

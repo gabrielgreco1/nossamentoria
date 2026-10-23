@@ -2,53 +2,50 @@
 
 Plataforma privada de mentoria para organizar relacionamentos entre mentores e mentorados, planos de aprendizado, aulas, materiais, sessões e progresso.
 
-O MVP é gratuito, funciona somente por convite e foi modelado para múltiplos mentores desde o início. A interface está em português e segue uma identidade visual clara, acolhedora e orientada a aprendizado.
+O MVP é gratuito e foi modelado para múltiplos mentores desde o início. Mentores e mentorados podem criar uma conta pública completa; somente o acesso administrativo permanece restrito a convites emitidos por administradores. A interface está em português e segue uma identidade visual clara, acolhedora e orientada a aprendizado.
 
 ## Estado atual
 
-O frontend está funcional e pode ser executado localmente. Dashboard, contexto de papéis, resumo administrativo e criação/revogação de convites já usam o Supabase real. Os editores ricos de mentoria, planos, materiais e agenda ainda usam dados de demonstração e estado local do React; mudanças nesses editores são perdidas ao recarregar a página.
+O frontend está funcional e pode ser executado localmente. Todas as rotas privadas exibem exclusivamente dados reais permitidos pelo Supabase. Quando ainda não existem relações, planos, materiais, sessões, notificações ou notas, a interface apresenta estados vazios equivalentes aos do futuro deploy; não há mais registros fictícios nem editores que simulam persistência local.
 
-A integração base com Supabase já existe para autenticação, validação de convites e Storage. O schema completo foi aplicado ao projeto Supabase em 21 de outubro de 2026 e validado pelas APIs de Auth, REST/RPC e Storage, sem depender de uma connection string PostgreSQL. Os fluxos da interface ainda precisam trocar o estado local pela persistência real.
+A integração com Supabase cobre autenticação, validação de convites, relacionamentos e leitura das áreas operacionais. O schema completo foi aplicado ao projeto Supabase em 21 de outubro de 2026 e validado pelas APIs de Auth, REST/RPC e Storage, sem depender de uma connection string PostgreSQL. As próximas implementações devem adicionar as mutações reais que ainda faltam, sem reintroduzir estado demonstrativo no navegador.
 
 ### Implementado
 
 - Landing page pública e responsiva.
-- Design system completo com os 13 componentes obrigatórios da Etapa 07 e gate automatizado.
+- Design system completo com os 14 componentes obrigatórios da Etapa 07 e gate automatizado.
 - Logo NossaMentoria reutilizável e símbolo próprio aplicado à navegação, autenticação, workspace e metadados do navegador.
 - Landing hero reutilizável, cartões compartilhados de material/sessão e indicador de progresso.
 - Entradas animadas na landing, autenticação e dashboard com suporte a movimento reduzido.
-- Login, aceite de convite e callback de autenticação.
+- Cadastro guiado em quatro etapas, com nome, e-mail, senha e áreas de conhecimento; formação acadêmica obrigatória somente para mentores.
+- LinkedIn e GitHub obrigatórios para mentores e opcionais para mentorados.
+- Login unificado por e-mail e senha, confirmação de e-mail, recuperação e alteração de senha.
+- Senhas armazenadas exclusivamente pelo Supabase Auth com bcrypt e salt aleatório por senha; nenhuma senha ou salt é copiado para tabelas públicas.
+- Aceite de convite e callback de autenticação.
+- Catálogo persistido com 15 áreas e 80 conhecimentos para especialidades de mentores e interesses de mentorados.
 - Workspace privado com contexto de admin, mentor, mentorado e usuário misto.
 - Layout privado compartilhado com navegação e troca de contexto por papel.
 - Dashboard compacto com contagens reais de relações, planos, sessões e notificações via RLS.
 - Dashboard com prioridades específicas de mentor e mentorado usando dados visíveis via RLS.
+- Tela de relacionamentos alimentada pelo Supabase, sem mentores, planos, sessões ou pessoas fictícias.
+- Planos, materiais, templates, calendário, notificações e notas carregados das tabelas e views reais, com estados vazios de produção.
+- Ambiente local com as mesmas exigências de autenticação, configuração e papéis do deploy; não existe troca para papéis não atribuídos.
+- Catálogo seguro de mentorados disponíveis para mentores e administradores, sem expor e-mail ou dados privados do perfil.
+- Solicitação de mentoria e aceite ou recusa pelo mentorado persistidos no banco.
+- Sincronização automática da disponibilidade do mentorado ao iniciar ou encerrar uma relação.
 - Rotas operacionais separadas para administração, mentorias, planos, materiais e agenda.
 - Regras tipadas de papéis, permissões, convites e relações mentor-mentorado.
-- Ciclo de mentoria, da conexão à conclusão ou pausa do plano.
-- Escolha de mentorados existentes e convite por e-mail.
+- Ciclo real de relacionamento com solicitação, aceite, recusa e encerramento.
+- Escolha de mentorados existentes e criação de convite por link associado a um e-mail.
 - Prevenção de relações duplicadas.
-- Editor de plano com rascunho, ativação e validação dos campos obrigatórios.
-- Dez templates de aulas que geram cópias editáveis no plano.
-- Progresso calculado a partir de aulas, sessões, notas e próximas ações.
-- Biblioteca privada de materiais com busca e filtros.
-- Suporte de interface para HTML, PDF, apresentações, Markdown, texto, imagens, URLs e repositórios.
-- Cadastro local de arquivos e links com metadados, tags e categoria.
-- Regra de prévia isolada para arquivos HTML.
-- Anexos explícitos entre materiais, planos, aulas e sessões.
-- Criação manual e reordenação de aulas.
-- Visões específicas de materiais e aulas compartilhados com o mentorado.
-- Registro de sessões com conteúdo aplicado, notas e próximas ações.
-- Atualização automática da aula vinculada ao concluir uma sessão.
-- Agenda semanal com próximas sessões, histórico e visibilidade por papel.
-- Agendamento rápido com sessão confirmada ou proposta ao mentorado.
-- Confirmação, reagendamento, conclusão, cancelamento e registro de falta.
-- Preservação da criação, das notas e da aula vinculada ao reagendar.
-- Central de notificações internas com contagem de não lidas e vínculos navegáveis.
-- Notificações automáticas de agendamento, reagendamento, conclusão e notas compartilhadas.
-- Notas de comunicação ligadas à relação, ao plano, à aula ou à sessão.
-- Separação entre notas privadas do mentor, notas compartilhadas, notas do mentorado, próximas ações e resumos.
+- Leitura real de planos e progresso calculado pelas aulas persistidas.
+- Biblioteca privada que respeita propriedade, relações e compartilhamentos via RLS.
+- Dez templates globais de aula persistidos e exibidos diretamente do catálogo do banco.
+- Leitura real de próximas sessões, histórico, notificações e notas visíveis para o usuário.
+- Estrutura de banco pronta para anexos entre materiais, planos, aulas e sessões.
+- Triggers e RPCs de domínio para ativação de plano, sessões, notificações e consistência dos vínculos.
 - Vocabulário de domínio centralizado em `src/lib/domain-types.ts`.
-- Schema Supabase aplicado com 15 tabelas, cinco views, funções/RPCs, triggers, índices, RLS e bucket privado `materials`.
+- Schema Supabase aplicado com tabelas de domínio, perfis, formações acadêmicas, catálogo de conhecimentos, vínculos por usuário, cinco views, funções/RPCs, triggers, índices, RLS e bucket privado `materials`.
 - Banco Supabase provisionado com 54 políticas de domínio, quatro políticas de Storage e todas as tabelas protegidas por RLS.
 - Dez templates globais de aula persistidos no banco.
 - RPC pública de validação de convite testada e leitura anônima de perfis bloqueada.
@@ -62,10 +59,9 @@ A integração base com Supabase já existe para autenticação, validação de 
 
 ### Ainda não implementado
 
-- Persistência real dos editores de mentorias, planos, materiais, aulas, sessões, notas e notificações.
+- Criação e edição reais de planos, materiais, aulas, sessões, notas e notificações — as telas atuais são somente leitura onde a mutação ainda não foi ligada.
 - Testes das políticas RLS com usuários reais de admin, mentor e mentorado.
-- Ligação dos formulários e painéis atuais às tabelas e RPCs reais.
-- Ativação do hook de cadastro por convite.
+- Ligação dos formulários e painéis restantes às tabelas e RPCs reais.
 - SMTP próprio e templates de e-mail com a identidade NossaMentoria.
 - Upload real de arquivos para o Supabase Storage.
 - Envio de notificações por e-mail.
@@ -89,19 +85,21 @@ A integração base com Supabase já existe para autenticação, validação de 
 | Rota | Descrição |
 | --- | --- |
 | `/` | Landing page pública. |
-| `/login` | Entrada para usuários convidados. |
+| `/login` | Login unificado por e-mail e senha. |
+| `/register` | Cadastro público completo para mentor e mentorado; aceita também token de convite. |
+| `/forgot-password` | Solicitação segura de recuperação de senha. |
+| `/update-password` | Definição da nova senha após validar o link de recuperação. |
 | `/invite/[token]` | Validação e aceite de convite. |
-| `/invite/demo-token` | Prévia local da experiência de convite. |
 | `/auth/callback` | Callback de autenticação do Supabase. |
 | `/api/health` | Estado operacional e de configuração, sem retornar segredos. |
 | `/app` | Dashboard privado com contagens reais e atalhos por papel. |
 | `/app/admin` | Resumo real de usuários, papéis e convites para administradores. |
-| `/app/relationships` | Relações mentor-mentorado e acompanhamento. |
+| `/app/relationships` | Relações reais, mentorados disponíveis, solicitações, aceite e acompanhamento. |
 | `/app/plans` | Planos, aulas e progresso. |
 | `/app/materials` | Biblioteca de materiais e organização de aulas. |
 | `/app/calendar` | Agenda, sessões, notificações e notas. |
 
-Quando as variáveis do Supabase não estão configuradas, `/app` funciona como uma prévia local e mostra um aviso de configuração. Quando elas estão configuradas, a rota exige um usuário autenticado.
+`/app` sempre exige configuração válida do Supabase e um usuário autenticado, tanto localmente quanto no deploy.
 
 ## Como executar localmente
 
@@ -130,7 +128,7 @@ npm run dev
 
 Abra `http://localhost:3000` no navegador. Para visualizar diretamente o workspace, use `http://localhost:3000/app`.
 
-No ambiente local, uma conta com papel de administrador recebe um seletor de prévia no rodapé da barra lateral. Use os botões **Admin**, **Mentor** e **Mentorado** para revisar as três experiências sem alterar os papéis gravados no Supabase. A prévia muda a navegação e as superfícies visuais, mas consultas e permissões reais continuam vinculadas à conta autenticada. Esse atalho para papéis não atribuídos fica desabilitado em produção.
+O seletor de contexto mostra apenas papéis realmente atribuídos ao usuário no Supabase. Para revisar as experiências de Admin, Mentor e Mentorado, use contas reais de cada papel; o ambiente local segue a mesma regra do deploy.
 
 Se a porta 3000 estiver ocupada:
 
@@ -160,9 +158,11 @@ As RPCs `validate_invitation_token` e `accept_invitation_token` já existem no S
 O projeto Supabase configurado já recebeu:
 
 - enums e tabelas de perfis, papéis, convites, relações, planos, aulas, materiais, sessões, notas e notificações;
+- tabelas de formações acadêmicas, áreas, conhecimentos e seleções de especialidade ou interesse;
+- catálogo inicial com 15 áreas e 80 conhecimentos ativos;
 - vínculos explícitos de materiais com planos, aulas e sessões;
 - views para relações detalhadas, progresso, próximas sessões, compartilhamentos e notificações não lidas;
-- RPCs para convites, relações, ativação de plano, cópia de templates, sessões e notificações;
+- RPCs para convites, catálogo seguro de mentorados, solicitação e resposta de mentoria, ativação de plano, cópia de templates, sessões e notificações;
 - triggers de consistência, datas de atualização e notificações internas;
 - políticas RLS para admin, mentor, mentorado e usuários com papéis combinados;
 - bucket privado `materials`, limitado a 50 MB por arquivo e organizado por proprietário.
@@ -175,7 +175,11 @@ Em **Authentication > URL Configuration**, configure:
 - Redirect URL local: `http://localhost:3000/auth/callback`;
 - as URLs equivalentes de produção quando o domínio estiver definido.
 
-O login atual usa magic link por e-mail. Depois de criar o primeiro usuário administrador, adicione o papel com o UUID real desse usuário:
+O login é único para todos os papéis e usa e-mail e senha. Mentor e mentorado podem se cadastrar publicamente, precisam confirmar o endereço de e-mail e só então conseguem entrar. Administradores continuam restritos a convites emitidos por outro administrador.
+
+As senhas ficam exclusivamente no Supabase Auth. O serviço aplica bcrypt com um salt aleatório por senha e salva apenas o resultado necessário à autenticação em `auth.users`; o projeto não cria colunas públicas de senha, hash ou salt. O salt impede que duas senhas iguais gerem hashes iguais, mas não impede usuários de escolherem a mesma senha.
+
+O administrador original, criado antes da migração para senha, deve usar **Esqueci minha senha** uma vez para definir a própria senha. Em uma instalação nova, o primeiro administrador pode ser promovido manualmente depois de confirmar o e-mail:
 
 ```sql
 insert into public.user_roles (user_id, role)
@@ -183,7 +187,9 @@ values ('UUID_DO_USUARIO', 'admin')
 on conflict (user_id, role) do nothing;
 ```
 
-Com o primeiro admin criado, ative `public.hook_require_pending_invitation` em **Authentication > Hooks > Before User Created**. Isso impede a criação de identidades sem um convite pendente e válido, inclusive quando alguém tenta chamar a API de autenticação fora da interface do projeto.
+Mantenha `public.hook_require_pending_invitation` configurada em **Authentication > Hooks > Before User Created**. Apesar do nome histórico, a função agora valida o cadastro completo de mentor e mentorado e bloqueia a criação de administradores sem convite administrativo válido, inclusive quando alguém tenta chamar a API de autenticação fora da interface do projeto.
+
+Para a confirmação de e-mail e recuperação de senha funcionarem com usuários reais, configure um SMTP próprio em **Authentication > SMTP Settings**. O remetente padrão do Supabase é limitado e não deve ser usado em produção; é possível manter custo zero usando a franquia gratuita de um provedor SMTP compatível.
 
 Nunca envie nem exponha a `SUPABASE_SERVICE_ROLE_KEY` no navegador ou em repositórios. Salve-a somente em `.env.local` e nas variáveis secretas do ambiente de deploy.
 
@@ -227,6 +233,14 @@ npm run qa:auth
 
 O último teste cria um convite técnico identificado, confirma sua revogação no banco e remove o registro ao final.
 
+Para validar cadastro completo, materialização do perfil e login por senha sem enviar e-mail:
+
+```powershell
+npm run qa:registration
+```
+
+Esse teste cria uma conta descartável já confirmada, verifica papel, formação e especialidade e remove o usuário ao final.
+
 ## Estrutura principal
 
 ```text
@@ -248,7 +262,7 @@ AGENT.md                Regras de execução e atualização do projeto
 ## Direção de produto e design
 
 - MVP gratuito, privado e sem pagamentos.
-- Contas criadas somente por convite.
+- Cadastro público para mentor e mentorado; contas administrativas somente por convite de outro administrador.
 - Suporte a admin, mentor, mentorado e usuários com papéis combinados.
 - Superfícies claras e quentes, com Sora em títulos e Inter na interface operacional.
 - Landing e onboarding mais expressivos; workspace compacto e orientado a tarefas.
@@ -259,4 +273,4 @@ AGENT.md                Regras de execução e atualização do projeto
 
 As especificações vivem em `plan/`. O estado de cada uma é mantido em `kanban.html`, seguindo os estados `To Do`, `In Development`, `In Tests` e `Done`.
 
-Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria, conteúdo/aulas, calendário/comunicação e o roadmap da Etapa 05. A Etapa 07 consolidou a identidade visual, os componentes compartilhados, as telas por papel e as regras de movimento. Na Etapa 06, o panorama operacional e o runbook pós-lançamento estão concluídos; deploy, ambiente e QA permanecem em testes porque a publicação na Vercel foi adiada e ainda faltam contas mentor/mentorado com fluxos persistidos. A persistência dos editores ricos continua sendo um bloqueador explícito de lançamento.
+Até o momento, estão concluídas as etapas de fundação, domínio e permissões, ciclo de mentoria, conteúdo/aulas, calendário/comunicação e o roadmap da Etapa 05. A Etapa 07 consolidou a identidade visual, os componentes compartilhados, as telas por papel e as regras de movimento. Na Etapa 06, o panorama operacional e o runbook pós-lançamento estão concluídos; o deploy permanece adiado. As telas privadas agora representam o estado real do banco, enquanto a criação e edição persistentes de planos, materiais, aulas, sessões e notas continuam como bloqueadores explícitos de lançamento.

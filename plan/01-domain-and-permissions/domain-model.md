@@ -6,10 +6,10 @@ This model defines the minimum entities needed for the MVP.
 
 - User: authenticated identity.
 - Profile: display name, bio, role flags, stack, availability notes.
-- Invitation: invite-only access record.
+- Invitation: one-time record for a mentorship relationship or restricted administrative access.
 - MentorMenteeRelationship: connection between a mentor and a mentee.
 - MentorshipPlan: structured learning plan for a relationship.
-- LessonTemplate: reusable mock or predefined lesson.
+- LessonTemplate: reusable predefined lesson persisted in the platform catalog.
 - Lesson: planned item inside a mentorship plan.
 - ContentMaterial: uploaded or linked learning material.
 - ClassSession: scheduled or completed class instance.

@@ -11,8 +11,8 @@ NossaMentoria is a mentorship product. Before showing operational tools, it need
 - What the platform is.
 - Who it is for.
 - What kind of learning outcome it supports.
-- Why access is invite-only.
-- How an invited user signs in or accepts an invite.
+- Which profiles can register publicly and why administrative access is restricted.
+- How a user signs in, creates an account, or accepts an invite.
 
 The dashboard is still central to the product, but it belongs behind authentication.
 
@@ -24,18 +24,21 @@ It must include:
 
 - Clear value proposition for structured technology mentorship.
 - Visual language that feels optimistic, educational, and focused.
-- Primary action for invited users to sign in.
-- Secondary explanation for invite-only access.
-- A section showing the learning workflow: invite, plan, lessons, materials, sessions, progress.
-- No public signup path that bypasses invitations.
+- Primary actions to sign in and create a mentor or mentee account.
+- An explanation that administrators require an invitation from another administrator.
+- A section showing the learning workflow: register or invite, plan, lessons, materials, sessions, progress.
 
 ## Auth Surfaces
 
 Required MVP auth screens:
 
 - Login.
+- Complete mentor and mentee registration with password and email verification.
+- Academic formation for mentors and knowledge-area selection for both mentor and mentee registration.
+- Required LinkedIn and GitHub profile links for mentors.
 - Invitation acceptance by token or invite link.
-- Account creation only when a valid invitation is present.
+- Administrative account creation only when a valid administrator invitation is present.
+- Password recovery and update.
 - Post-auth redirect into the correct role-aware dashboard.
 - Setup error states for expired, revoked, reused, or invalid invitations.
 
@@ -74,7 +77,7 @@ Prefer:
 
 - Visiting `/` unauthenticated shows the landing page, not the dashboard.
 - Login and invitation acceptance are reachable from the landing page.
-- Account creation requires a valid invitation.
+- Mentor and mentee accounts can be created publicly; administrative accounts require a valid invitation.
 - Authenticated users are redirected away from the landing page into their workspace.
 - The visual design feels learning-oriented, optimistic, and readable.
 - The implementation does not add billing, subscriptions, or public marketplace behavior.

@@ -28,6 +28,7 @@ export function AdminInvitationForm() {
           <select name="role" defaultValue="mentee">
             <option value="mentee">Mentorado</option>
             <option value="mentor">Mentor</option>
+            <option value="admin">Administrador</option>
           </select>
         </label>
       </div>

@@ -2,7 +2,7 @@
 
 This phase defines who can access what and how the core mentorship domain should behave.
 
-The MVP is invite-only and multi-mentor. Permission boundaries matter because mentors will manage private information about mentees, classes, and progress.
+The MVP supports public mentor and mentee registration, invitation-based relationships, invitation-only administrators, and multiple mentors. Permission boundaries matter because mentors will manage private information about mentees, classes, and progress.
 
 ## Specs
 

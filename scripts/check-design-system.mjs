@@ -72,9 +72,9 @@ if (motionFiles.some((content) => !content.includes("useReducedMotion"))) {
 
 const reuseChecks = [
   ["src/app/page.tsx", "LandingHero"],
-  ["src/components/app/content-and-classes.tsx", "MaterialCard"],
-  ["src/components/app/mentorship-lifecycle.tsx", "ProgressIndicator"],
-  ["src/components/app/mentorship-lifecycle.tsx", "SessionCard"]
+  ["src/components/app/live-workspaces.tsx", "MaterialCard"],
+  ["src/components/app/live-workspaces.tsx", "ProgressIndicator"],
+  ["src/components/app/live-workspaces.tsx", "SessionCard"]
 ];
 
 for (const [file, component] of reuseChecks) {

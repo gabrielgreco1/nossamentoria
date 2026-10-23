@@ -15,7 +15,8 @@
     "check:secrets": "node scripts/check-client-secrets.mjs",
     "check": "npm run check:env && npm run typecheck && npm run check:design && npm run build && npm run check:secrets",
     "qa:smoke": "node scripts/qa-smoke.mjs",
-    "qa:auth": "node scripts/qa-auth-and-rls.mjs"
+    "qa:auth": "node scripts/qa-auth-and-rls.mjs",
+    "qa:registration": "node scripts/qa-registration.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "latest",

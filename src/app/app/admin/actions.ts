@@ -43,7 +43,7 @@ export async function createInvitationAction(
     return { status: "error", message: "Informe um e-mail válido." };
   }
 
-  if (role !== "mentor" && role !== "mentee") {
+  if (role !== "admin" && role !== "mentor" && role !== "mentee") {
     return { status: "error", message: "Escolha um papel válido para o convite." };
   }
 
@@ -51,7 +51,7 @@ export async function createInvitationAction(
   const { data, error } = await supabase.rpc("create_invitation", {
     p_email: email,
     p_intended_role: role,
-    p_type: role === "mentor" ? "admin_invites_mentor" : "admin_invites_mentee",
+    p_type: role === "admin" ? "admin_invites_admin" : role === "mentor" ? "admin_invites_mentor" : "admin_invites_mentee",
     p_optional_message: message || null
   });
 

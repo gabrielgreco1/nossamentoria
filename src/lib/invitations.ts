@@ -45,6 +45,7 @@ export function getInvitationBlockedReason(status: InvitationStatus) {
 
 export function getInvitationTypeLabel(type: InvitationType) {
   const labels: Record<InvitationType, string> = {
+    admin_invites_admin: "Admin convida administrador",
     admin_invites_mentor: "Admin convida mentor",
     admin_invites_mentee: "Admin convida mentorado",
     mentor_invites_mentee: "Mentor convida mentorado",
