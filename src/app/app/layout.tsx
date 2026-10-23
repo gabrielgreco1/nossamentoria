@@ -17,6 +17,7 @@ export default async function WorkspaceLayout({ children }: WorkspaceLayoutProps
 
   return (
     <AppShell
+      userId={context.user.id}
       roles={context.roles}
       availableRoles={context.availableRoles}
       activeRole={context.activeRole}

@@ -1,0 +1,284 @@
+.helpWrap {
+  position: relative;
+}
+
+.helpButton,
+.closeButton,
+.progress button,
+.skipButton,
+.backButton,
+.nextButton {
+  appearance: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+
+.helpButton,
+.closeButton {
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text-secondary);
+}
+
+.helpButton {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  transition: border-color var(--motion-fast) ease, color var(--motion-fast) ease, background var(--motion-fast) ease;
+}
+
+.helpButton:hover,
+.helpButton:focus-visible,
+.helpButtonActive {
+  border-color: rgba(7, 139, 139, 0.45);
+  background: rgba(7, 139, 139, 0.08);
+  color: var(--brand-teal-dark);
+}
+
+.spotlight {
+  position: fixed;
+  z-index: 80;
+  border: 2px solid var(--brand-teal);
+  border-radius: 14px;
+  box-shadow: 0 0 0 9999px rgba(8, 24, 40, 0.48), 0 0 0 5px rgba(7, 139, 139, 0.15);
+  pointer-events: none;
+  transition: inset 280ms ease, width 280ms ease, height 280ms ease;
+}
+
+.spotlight::after {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 12px;
+  height: 12px;
+  border: 3px solid var(--surface-raised);
+  border-radius: 50%;
+  background: var(--brand-teal);
+  box-shadow: 0 0 0 5px rgba(7, 139, 139, 0.24);
+  content: "";
+  animation: tutorialPulse 1.8s ease-in-out infinite;
+}
+
+.coachmark {
+  position: fixed;
+  z-index: 90;
+  width: min(370px, calc(100vw - 36px));
+  overflow: hidden;
+  border: 1px solid rgba(7, 139, 139, 0.28);
+  border-radius: 16px;
+  background: var(--surface-raised);
+  box-shadow: 0 22px 60px rgba(8, 24, 40, 0.25);
+  animation: coachEnter 220ms ease both;
+}
+
+.coachHeader {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--line);
+  padding: 12px 13px;
+}
+
+.coachHeader > div {
+  display: grid;
+  gap: 1px;
+}
+
+.coachHeader span:not(.stepIcon) {
+  color: var(--text-muted);
+  font-size: 0.67rem;
+  font-weight: 750;
+}
+
+.coachHeader strong {
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.83rem;
+}
+
+.stepIcon {
+  display: inline-grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 9px;
+  background: rgba(7, 139, 139, 0.1);
+  color: var(--brand-teal);
+}
+
+.closeButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.closeButton:hover,
+.closeButton:focus-visible {
+  color: var(--brand-teal-dark);
+}
+
+.progress {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+  padding: 12px 15px 0;
+}
+
+.progress button {
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: rgba(8, 24, 40, 0.11);
+}
+
+.progress button:hover,
+.progressDone {
+  background: rgba(7, 139, 139, 0.38) !important;
+}
+
+.progressActive {
+  background: var(--brand-teal) !important;
+}
+
+.coachContent {
+  padding: 17px 18px 14px;
+}
+
+.counter {
+  color: var(--brand-teal-dark);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.coachContent h2 {
+  margin: 6px 0 0;
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.12rem;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.coachContent > p {
+  margin: 8px 0 0;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 13px;
+  border-radius: 9px;
+  padding: 9px 10px;
+  background: rgba(7, 139, 139, 0.07);
+  color: var(--brand-teal-dark);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.hint svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.actions,
+.actions > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+}
+
+.actions {
+  border-top: 1px solid var(--line);
+  padding: 11px 13px;
+  background: var(--surface-subtle);
+}
+
+.skipButton {
+  min-height: 34px;
+  padding: 0 5px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+.backButton,
+.nextButton {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border-radius: 8px;
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+.backButton {
+  width: 36px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text-secondary);
+}
+
+.backButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.nextButton {
+  min-width: 100px;
+  padding: 0 13px;
+  background: var(--brand-teal);
+  color: white;
+}
+
+.nextButton:hover,
+.nextButton:focus-visible {
+  background: var(--brand-teal-dark);
+}
+
+@keyframes coachEnter {
+  from { opacity: 0; transform: translateY(8px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes tutorialPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(7, 139, 139, 0.18); }
+  50% { box-shadow: 0 0 0 8px rgba(7, 139, 139, 0.04); }
+}
+
+@media (max-width: 680px) {
+  .coachmark {
+    right: 10px !important;
+    bottom: 10px !important;
+    left: 10px !important;
+    top: auto !important;
+    width: auto;
+    max-height: min(62vh, 520px);
+    overflow-y: auto;
+  }
+
+  .spotlight {
+    border-radius: 11px;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coachmark,
+  .spotlight,
+  .spotlight::after {
+    animation: none;
+    transition: none;
+  }
+}

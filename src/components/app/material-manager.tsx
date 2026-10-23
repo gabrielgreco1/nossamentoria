@@ -67,7 +67,7 @@ export function MaterialManager({ data }: { data: MaterialsWorkspaceData }) {
   const materialBeingEdited = editor && editor !== "new" ? data.materials.find((material) => material.id === editor) : undefined;
 
   return (
-    <section className={styles.workspace} aria-label="Gerenciar materiais">
+    <section className={styles.workspace} aria-label="Gerenciar materiais" data-tour="materials-workspace">
       {data.loadError ? <div className={styles.notice} role="alert">Não foi possível carregar os materiais. Tente novamente.</div> : null}
       <div className={styles.panelHeader}>
         <div><h2>Seus materiais</h2></div>

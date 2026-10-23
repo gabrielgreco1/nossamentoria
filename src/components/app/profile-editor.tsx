@@ -92,7 +92,7 @@ export function ProfileEditor({ data }: { data: ProfilePageData }) {
   }
 
   return (
-    <form action={action} className={styles.form}>
+    <form action={action} className={styles.form} data-tour="profile-editor">
       {selectedTopics.map((slug) => <input name="topicSlugs" type="hidden" value={slug} key={slug} />)}
 
       {data.loadError ? <div className={styles.error} role="alert">Não foi possível carregar o perfil. Tente novamente.</div> : null}

@@ -38,7 +38,7 @@ export function WeeklyCalendar({ sessions, today, role }: { sessions: CalendarSe
   const range = `${new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short" }).format(days[0].date)} – ${new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short", year: "numeric" }).format(days[6].date)}`;
 
   return (
-    <GlassPanel strong className={styles.panel}>
+    <GlassPanel strong className={styles.panel} data-tour="weekly-calendar">
       <div className={styles.panelHeader}>
         <div><span className={styles.eyebrow}>Visão semanal</span><h2>{range}</h2></div>
         <div className={styles.calendarControls}>

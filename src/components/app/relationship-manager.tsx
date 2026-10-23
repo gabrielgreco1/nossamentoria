@@ -79,7 +79,7 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
     const activePlan = mentorship?.planStatus === "active";
 
     return (
-      <section className={styles.workspace} aria-label="Minha relação de mentoria">
+      <section className={styles.workspace} aria-label="Minha relação de mentoria" data-tour="relationships-workspace">
         <div className={styles.summaryGrid}>
           <GlassPanel className={styles.summaryCard}>
             <div>
@@ -263,7 +263,7 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
   const { mentees, availableMentees, incomingRequests, capacity, openRequestCount, pendingInvitations } = data.management;
 
   return (
-    <section className={styles.workspace} aria-label="Gestão de mentorados">
+    <section className={styles.workspace} aria-label="Gestão de mentorados" data-tour="relationships-workspace">
       <div className={styles.summaryGrid}>
         <GlassPanel className={styles.summaryCard}>
           <div>

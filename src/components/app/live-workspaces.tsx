@@ -66,7 +66,7 @@ export function LivePlansWorkspace({ data, role }: { data: PlansWorkspaceData; r
   const totalLessons = data.items.reduce((total, plan) => total + plan.totalLessons, 0);
 
   return (
-    <section className={styles.workspace} aria-label="Planos de mentoria">
+    <section className={styles.workspace} aria-label="Planos de mentoria" data-tour="plans-workspace">
       <div className={styles.summaryGrid}>
         <GlassPanel className={styles.summaryCard}>
           <div><small>Total de planos</small><strong>{data.items.length}</strong><span className={styles.muted}>no seu perfil</span></div>
@@ -120,7 +120,7 @@ export function LivePlansWorkspace({ data, role }: { data: PlansWorkspaceData; r
 
 export function LiveMaterialsWorkspace({ data, role }: { data: MaterialsWorkspaceData; role?: UserRole | null }) {
   return (
-    <section className={styles.workspace} aria-label="Materiais">
+    <section className={styles.workspace} aria-label="Materiais" data-tour="materials-workspace">
       {data.loadError ? <div className={styles.notice} role="alert">Não foi possível carregar os materiais. Tente novamente.</div> : null}
 
       <GlassPanel strong className={styles.panel}>

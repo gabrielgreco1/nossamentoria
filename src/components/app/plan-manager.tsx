@@ -95,7 +95,7 @@ export function PlanManager({ data, selectedRelationshipId }: {
   const planBeingEdited = editor && editor !== "new" ? data.items.find((plan) => plan.id === editor) : undefined;
 
   return (
-    <section className={styles.workspace} aria-label="Planos por mentorado">
+    <section className={styles.workspace} aria-label="Planos por mentorado" data-tour="plans-workspace">
       <GlassPanel className={styles.panel}>
         <div className={styles.panelHeader}>
           <div><h2>Escolha um mentorado</h2></div>

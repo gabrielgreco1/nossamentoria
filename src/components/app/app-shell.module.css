@@ -147,6 +147,12 @@
   white-space: nowrap;
 }
 
+.topbarActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .profileShortcut {
   display: inline-grid;
   width: 34px;

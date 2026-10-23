@@ -121,7 +121,7 @@ export default async function WorkspacePage() {
       ) : null}
 
       <Reveal variant="app" delay={0.2}>
-        <section className={styles.quickSection} aria-labelledby="quick-actions-title">
+        <section className={styles.quickSection} aria-labelledby="quick-actions-title" data-tour="dashboard-actions">
           <div className={styles.sectionHeading}>
             <h2 id="quick-actions-title">Acesso rápido</h2>
           </div>

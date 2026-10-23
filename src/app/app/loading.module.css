@@ -1,0 +1,95 @@
+.loading {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+}
+
+.title,
+.stats > span,
+.panel,
+.panel > span {
+  overflow: hidden;
+  background: linear-gradient(90deg, var(--surface-subtle) 20%, var(--surface) 45%, var(--surface-subtle) 70%);
+  background-size: 240% 100%;
+  animation: loadingShimmer 1.25s ease-in-out infinite;
+}
+
+.title {
+  width: min(330px, 56%);
+  height: 38px;
+  border-radius: 9px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.stats > span {
+  min-height: 104px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+}
+
+.panel {
+  display: grid;
+  min-height: 270px;
+  align-content: start;
+  gap: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  padding: 22px;
+}
+
+.panel > span {
+  height: 18px;
+  border-radius: 6px;
+  background-color: rgba(122, 137, 152, 0.1);
+}
+
+.panel > span:nth-child(1) {
+  width: 38%;
+}
+
+.panel > span:nth-child(2) {
+  width: 82%;
+}
+
+.panel > span:nth-child(3) {
+  width: 65%;
+}
+
+.srOnly {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@keyframes loadingShimmer {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+@media (max-width: 680px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stats > span {
+    min-height: 76px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .stats > span,
+  .panel,
+  .panel > span {
+    animation: none;
+  }
+}

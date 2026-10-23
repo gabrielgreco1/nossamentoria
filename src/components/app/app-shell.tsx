@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { signOut } from "@/app/app/actions";
 import { BrandLogo } from "@/components/ui/brand-logo";
+import { PlatformTutorial } from "@/components/app/platform-tutorial";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { PillChip } from "@/components/ui/pill-chip";
 import { getRoleLabel, type UserRole } from "@/lib/access";
@@ -41,6 +42,7 @@ const navigationByRole: Record<UserRole, Array<{ label: string; href: string; ic
 
 type AppShellProps = {
   children: ReactNode;
+  userId: string;
   roles?: UserRole[];
   availableRoles?: UserRole[];
   activeRole?: UserRole | null;
@@ -48,6 +50,7 @@ type AppShellProps = {
 
 export function AppShell({
   children,
+  userId,
   roles = [],
   availableRoles = roles,
   activeRole = roles[0] ?? null
@@ -72,7 +75,7 @@ export function AppShell({
             const isActive = pathname === item.href || (item.href !== "/app" && pathname.startsWith(`${item.href}/`));
 
             return (
-              <Link className={[styles.navItem, isActive ? styles.navItemActive : ""].join(" ")} href={item.href} key={item.href}>
+              <Link className={[styles.navItem, isActive ? styles.navItemActive : ""].join(" ")} href={item.href} data-tour-route={item.href} key={item.href}>
                 <item.icon size={17} strokeWidth={1.8} />
                 <span>{item.label}</span>
               </Link>
@@ -105,11 +108,14 @@ export function AppShell({
       <div className={styles.content}>
         <header className={styles.topbar}>
           <strong className={styles.currentSection}>{currentSection}</strong>
-          <Link className={styles.profileShortcut} href="/app/profile" aria-label="Abrir perfil">
-            <UserRound size={17} />
-          </Link>
+          <div className={styles.topbarActions}>
+            <PlatformTutorial userId={userId} activeRole={activeRole} />
+            <Link className={styles.profileShortcut} href="/app/profile" aria-label="Abrir perfil">
+              <UserRound size={17} />
+            </Link>
+          </div>
         </header>
-        <main className={styles.main}>{children}</main>
+        <main className={styles.main} data-tour-page={pathname}>{children}</main>
       </div>
     </div>
   );
