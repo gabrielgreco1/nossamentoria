@@ -9,9 +9,15 @@ When a mentee already exists in the platform, a mentor can request or pick them 
 Minimum behavior:
 
 - Show available mentees.
-- Allow mentor to start a relationship request.
+- Allow mentor to use **Adicionar mentorado** to start a relationship request.
 - Prevent duplicate active relationships between the same mentor and mentee.
-- Confirm before creating the relationship.
+- Keep the relationship pending until the mentee accepts it.
+
+## Mentor Capacity And Discovery
+
+Mentors define how many active mentees they can support, from zero to 50. The database blocks every activation above that limit, including concurrent accepts and relationships created from invitations.
+
+Mentees can browse only mentors with at least one available slot, see their specialties and availability, and use **Solicitar mentoria**. In this direction, the mentor is the recipient and must accept or decline the request.
 
 ## Invite New Mentee
 
@@ -29,12 +35,16 @@ Minimum behavior:
 After the mentee accepts:
 
 - Relationship becomes active.
+- The accepted mentee appears immediately in the mentor's **Seus mentorados** list.
 - Mentor is prompted to create a mentorship plan.
 - Mentee can see mentor and pending plan status.
 
 ## Acceptance Criteria
 
 - Mentors can start mentorship without admin manually creating every relationship.
+- Mentees can request mentors with open capacity without admin intervention.
+- Only the recipient can accept or decline a request, regardless of which side initiated it.
+- A mentor cannot accept or activate more mentees than the configured limit.
 - Admin retains visibility into invitations and active relationships.
 - The next suggested action after connecting is plan creation.
 

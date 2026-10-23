@@ -1,5 +1,24 @@
 # QA Checklist
 
+## Mentor Matching — 22/10/2026
+
+- [x] Mentor consegue definir limite entre zero e 50, nunca abaixo das relações ativas.
+- [x] Mentor vê perfis disponíveis e usa **Adicionar mentorado**.
+- [x] Mentorado vê apenas mentores com vagas e usa **Solicitar mentoria**.
+- [x] Somente o destinatário aceita ou recusa a solicitação.
+- [x] Os dois sentidos de aceite criam relação ativa em teste transacional.
+- [x] Rollback confirmou zero relações e zero papéis de mentor de teste persistidos.
+- [x] Typecheck, design system, build de produção, verificação de segredos e smoke test passaram.
+
+## Profile Editing — 22/10/2026
+
+- [x] Perfil compartilhado edita nome, apresentação e links.
+- [x] Mentor edita especialidades, formação, horários de ensino e limite de mentorados.
+- [x] Mentorado edita interesses e horários de aprendizado.
+- [x] Horários de ensino e aprendizado são persistidos separadamente.
+- [x] Testes transacionais de mentor e mentorado passaram sem deixar dados persistidos.
+- [x] Build de produção e rota autenticada `/app/profile` passaram contra o servidor atualizado.
+
 Run this checklist before marking launch or major feature cards as done.
 
 ## Automated Gates

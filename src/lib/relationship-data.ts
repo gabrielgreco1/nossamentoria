@@ -11,6 +11,7 @@ type RelationshipRow = {
   mentee_user_id: string;
   mentee_name: string;
   created_at: string;
+  created_by_user_id: string;
 };
 
 type PlanRow = {
@@ -46,6 +47,20 @@ type AvailableMenteeRow = {
   current_relationship_status: string | null;
 };
 
+type AvailableMentorRow = {
+  user_id: string;
+  display_name: string;
+  bio: string | null;
+  stack: string[] | null;
+  availability_notes: string | null;
+  mentor_capacity: number;
+  active_mentee_count: number;
+  available_slots: number;
+  current_relationship_id: string | null;
+  current_relationship_status: string | null;
+  current_relationship_created_by_user_id: string | null;
+};
+
 type InvitationRow = {
   id: string;
   email: string;
@@ -72,11 +87,28 @@ export type AvailableMentee = RelationshipPerson & {
   bio: string;
   relationshipId: string | null;
   relationshipStatus: string | null;
+  relationshipDirection: "incoming" | "outgoing" | null;
+};
+
+export type AvailableMentor = RelationshipPerson & {
+  bio: string;
+  capacity: number;
+  activeMenteeCount: number;
+  availableSlots: number;
+  relationshipId: string | null;
+  relationshipStatus: string | null;
+  relationshipDirection: "incoming" | "outgoing" | null;
 };
 
 export type MenteeRequest = {
   relationshipId: string;
   mentorName: string;
+  requestedAt: string;
+};
+
+export type MentorRequest = {
+  relationshipId: string;
+  menteeName: string;
   requestedAt: string;
 };
 
@@ -102,12 +134,16 @@ export type RelationshipPageData = {
   mentee: {
     mentorship: MenteeMentorship | null;
     requests: MenteeRequest[];
+    outgoingRequests: MenteeRequest[];
+    availableMentors: AvailableMentor[];
     interests: string[];
     isAvailable: boolean;
   };
   management: {
     mentees: ManagedMentee[];
     availableMentees: AvailableMentee[];
+    incomingRequests: MentorRequest[];
+    capacity: { limit: number; activeCount: number; availableSlots: number } | null;
     openRequestCount: number;
     pendingInvitations: Array<{
       id: string;
@@ -135,8 +171,15 @@ function emptyData(): RelationshipPageData {
   return {
     canRequestMentorship: false,
     loadError: null,
-    mentee: { mentorship: null, requests: [], interests: [], isAvailable: false },
-    management: { mentees: [], availableMentees: [], openRequestCount: 0, pendingInvitations: [] }
+    mentee: { mentorship: null, requests: [], outgoingRequests: [], availableMentors: [], interests: [], isAvailable: false },
+    management: {
+      mentees: [],
+      availableMentees: [],
+      incomingRequests: [],
+      capacity: null,
+      openRequestCount: 0,
+      pendingInvitations: []
+    }
   };
 }
 
@@ -155,10 +198,10 @@ export async function getRelationshipPageData(context: WorkspaceContext): Promis
     if (isMenteeView) {
       if (!isActualMentee) return result;
 
-      const [relationshipsResult, profileResult] = await Promise.all([
+      const [relationshipsResult, profileResult, availableMentorsResult] = await Promise.all([
         supabase
           .from("mentorship_relationship_details")
-          .select("id,status,mentor_user_id,mentor_name,mentee_user_id,mentee_name,created_at")
+          .select("id,status,mentor_user_id,mentor_name,mentee_user_id,mentee_name,created_at,created_by_user_id")
           .eq("mentee_user_id", context.user.id)
           .neq("status", "ended")
           .order("created_at", { ascending: false }),
@@ -166,23 +209,48 @@ export async function getRelationshipPageData(context: WorkspaceContext): Promis
           .from("profiles")
           .select("stack,is_available_for_mentorship")
           .eq("user_id", context.user.id)
-          .maybeSingle()
+          .maybeSingle(),
+        supabase.rpc("list_available_mentors")
       ]);
 
       if (relationshipsResult.error) throw relationshipsResult.error;
       if (profileResult.error) throw profileResult.error;
+      if (availableMentorsResult.error) throw availableMentorsResult.error;
 
       const relationships = (relationshipsResult.data ?? []) as RelationshipRow[];
       const profile = profileResult.data as { stack: string[] | null; is_available_for_mentorship: boolean } | null;
       result.mentee.interests = profile?.stack ?? [];
       result.mentee.isAvailable = profile?.is_available_for_mentorship ?? false;
       result.mentee.requests = relationships
-        .filter((relationship) => relationship.status === "requested")
+        .filter((relationship) => relationship.status === "requested" && relationship.created_by_user_id !== context.user?.id)
         .map((relationship) => ({
           relationshipId: relationship.id,
           mentorName: relationship.mentor_name,
           requestedAt: formatDate(relationship.created_at, { dateStyle: "medium" })
         }));
+      result.mentee.outgoingRequests = relationships
+        .filter((relationship) => relationship.status === "requested" && relationship.created_by_user_id === context.user?.id)
+        .map((relationship) => ({
+          relationshipId: relationship.id,
+          mentorName: relationship.mentor_name,
+          requestedAt: formatDate(relationship.created_at, { dateStyle: "medium" })
+        }));
+      result.mentee.availableMentors = ((availableMentorsResult.data ?? []) as AvailableMentorRow[]).map((person) => ({
+        id: person.user_id,
+        name: person.display_name,
+        initials: initials(person.display_name),
+        focus: person.stack?.length ? person.stack.slice(0, 3).join(" · ") : "Especialidades ainda não informadas",
+        availability: person.availability_notes || "Disponibilidade a combinar",
+        bio: person.bio || "Mentor disponível para iniciar uma nova jornada.",
+        capacity: person.mentor_capacity,
+        activeMenteeCount: person.active_mentee_count,
+        availableSlots: person.available_slots,
+        relationshipId: person.current_relationship_id,
+        relationshipStatus: person.current_relationship_status,
+        relationshipDirection: person.current_relationship_id
+          ? person.current_relationship_created_by_user_id === context.user?.id ? "outgoing" : "incoming"
+          : null
+      }));
 
       const currentRelationship = relationships.find((relationship) => relationship.status === "active")
         ?? relationships.find((relationship) => relationship.status === "paused");
@@ -246,13 +314,13 @@ export async function getRelationshipPageData(context: WorkspaceContext): Promis
 
     let relationshipsQuery = supabase
       .from("mentorship_relationship_details")
-      .select("id,status,mentor_user_id,mentor_name,mentee_user_id,mentee_name,created_at")
+      .select("id,status,mentor_user_id,mentor_name,mentee_user_id,mentee_name,created_at,created_by_user_id")
       .neq("status", "ended")
       .order("created_at", { ascending: false });
 
     if (isActualMentor) relationshipsQuery = relationshipsQuery.eq("mentor_user_id", context.user.id);
 
-    const [relationshipsResult, availableResult, invitationsResult] = await Promise.all([
+    const [relationshipsResult, availableResult, invitationsResult, capacityResult] = await Promise.all([
       relationshipsQuery,
       supabase.rpc("list_available_mentees"),
       supabase
@@ -261,12 +329,18 @@ export async function getRelationshipPageData(context: WorkspaceContext): Promis
         .eq("intended_role", "mentee")
         .eq("status", "pending")
         .gt("expires_at", new Date().toISOString())
-        .order("created_at", { ascending: false })
+        .order("created_at", { ascending: false }),
+      supabase
+        .from("profiles")
+        .select("mentor_capacity")
+        .eq("user_id", context.user.id)
+        .maybeSingle()
     ]);
 
     if (relationshipsResult.error) throw relationshipsResult.error;
     if (availableResult.error) throw availableResult.error;
     if (invitationsResult.error) throw invitationsResult.error;
+    if (capacityResult.error) throw capacityResult.error;
 
     const relationships = (relationshipsResult.data ?? []) as RelationshipRow[];
     const relationshipIds = relationships.map((relationship) => relationship.id);
@@ -302,16 +376,40 @@ export async function getRelationshipPageData(context: WorkspaceContext): Promis
         };
       });
 
-    result.management.availableMentees = ((availableResult.data ?? []) as AvailableMenteeRow[]).map((person) => ({
-      id: person.user_id,
-      name: person.display_name,
-      initials: initials(person.display_name),
-      focus: person.stack?.length ? person.stack.slice(0, 3).join(" · ") : "Interesses ainda não informados",
-      availability: person.availability_notes || "Disponibilidade a combinar",
-      bio: person.bio || "Perfil disponível para iniciar uma mentoria.",
-      relationshipId: person.current_relationship_id,
-      relationshipStatus: person.current_relationship_status
-    }));
+    result.management.incomingRequests = relationships
+      .filter((relationship) =>
+        isActualMentor
+        && relationship.status === "requested"
+        && relationship.created_by_user_id === relationship.mentee_user_id
+      )
+      .map((relationship) => ({
+        relationshipId: relationship.id,
+        menteeName: relationship.mentee_name,
+        requestedAt: formatDate(relationship.created_at, { dateStyle: "medium" })
+      }));
+
+    if (isActualMentor) {
+      const limit = Number((capacityResult.data as { mentor_capacity: number } | null)?.mentor_capacity ?? 3);
+      const activeCount = relationships.filter((relationship) => relationship.status === "active").length;
+      result.management.capacity = { limit, activeCount, availableSlots: Math.max(limit - activeCount, 0) };
+    }
+
+    result.management.availableMentees = ((availableResult.data ?? []) as AvailableMenteeRow[]).map((person) => {
+      const relationship = relationships.find((item) => item.id === person.current_relationship_id);
+      return {
+        id: person.user_id,
+        name: person.display_name,
+        initials: initials(person.display_name),
+        focus: person.stack?.length ? person.stack.slice(0, 3).join(" · ") : "Interesses ainda não informados",
+        availability: person.availability_notes || "Disponibilidade a combinar",
+        bio: person.bio || "Perfil disponível para iniciar uma mentoria.",
+        relationshipId: person.current_relationship_id,
+        relationshipStatus: person.current_relationship_status,
+        relationshipDirection: relationship
+          ? relationship.created_by_user_id === context.user?.id ? "outgoing" : "incoming"
+          : null
+      };
+    });
 
     result.management.pendingInvitations = ((invitationsResult.data ?? []) as InvitationRow[]).map((invitation) => ({
       id: invitation.id,

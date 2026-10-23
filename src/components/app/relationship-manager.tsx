@@ -17,6 +17,7 @@ import {
   createMenteeInvitation,
   endMentorship,
   requestMentee,
+  requestMentor,
   respondToMentorshipRequest,
   type MenteeInvitationState,
   type RelationshipMutationState
@@ -35,8 +36,8 @@ type RelationshipManagerProps = {
   data: RelationshipPageData;
 };
 
-function statusLabel(status: string | null) {
-  if (status === "requested") return "Solicitação enviada";
+function statusLabel(status: string | null, direction?: "incoming" | "outgoing" | null) {
+  if (status === "requested") return direction === "incoming" ? "Solicitação recebida" : "Solicitação enviada";
   if (status === "invited") return "Convite pendente";
   if (status === "paused") return "Mentoria pausada";
   if (status === "active") return "Mentoria ativa";
@@ -49,6 +50,7 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
     message: ""
   } satisfies MenteeInvitationState);
   const [requestState, requestAction, requestPending] = useActionState(requestMentee, initialMutationState);
+  const [mentorRequestState, mentorRequestAction, mentorRequestPending] = useActionState(requestMentor, initialMutationState);
   const [responseState, responseAction, responsePending] = useActionState(respondToMentorshipRequest, initialMutationState);
   const [endState, endAction, endPending] = useActionState(endMentorship, initialMutationState);
   const [cancelState, cancelAction, cancelPending] = useActionState(cancelMenteeInvitation, initialMutationState);
@@ -62,7 +64,14 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
     );
   }, [data.management.availableMentees, query]);
 
-  const mutationFeedback = [requestState, responseState, endState, cancelState]
+  const filteredMentors = useMemo(() => {
+    const normalized = query.trim().toLocaleLowerCase("pt-BR");
+    return data.mentee.availableMentors.filter((person) =>
+      !normalized || `${person.name} ${person.focus} ${person.bio}`.toLocaleLowerCase("pt-BR").includes(normalized)
+    );
+  }, [data.mentee.availableMentors, query]);
+
+  const mutationFeedback = [requestState, mentorRequestState, responseState, endState, cancelState]
     .find((state) => state.status !== "idle");
 
   if (role === "mentee") {
@@ -172,19 +181,97 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
                 ))}
               </ul>
             ) : <div className={styles.emptyState}>Nenhuma solicitação aguardando sua resposta.</div>}
+            {data.mentee.outgoingRequests.length ? (
+              <>
+                <div className={styles.panelHeader}>
+                  <div><span className={styles.eyebrow}>Enviadas</span><h3>Aguardando mentores</h3></div>
+                  <PillChip tone="muted">{data.mentee.outgoingRequests.length} enviada(s)</PillChip>
+                </div>
+                <ul className={styles.list}>
+                  {data.mentee.outgoingRequests.map((request) => (
+                    <li className={styles.pendingRow} key={request.relationshipId}>
+                      <span className={styles.avatar}><Clock3 size={17} /></span>
+                      <span className={styles.personCopy}>
+                        <strong>{request.mentorName}</strong>
+                        <small>Solicitada em {request.requestedAt}</small>
+                      </span>
+                      <PillChip tone="warning">Aguardando resposta</PillChip>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
           </GlassPanel>
         </div>
+
+        <GlassPanel className={styles.panel}>
+          <div className={styles.panelHeader}>
+            <div><span className={styles.eyebrow}>Encontrar mentoria</span><h2>Mentores com vagas disponíveis</h2></div>
+            <PillChip tone="muted">{data.mentee.availableMentors.length} mentor(es)</PillChip>
+          </div>
+          <p>Conheça os perfis, confira as especialidades e solicite uma mentoria diretamente ao mentor.</p>
+          <div className={styles.toolbar}>
+            <label className={styles.searchWrap}>
+              <Search size={17} />
+              <input
+                type="search"
+                placeholder="Buscar por nome ou especialidade"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+              />
+            </label>
+          </div>
+          {filteredMentors.length ? (
+            <div className={styles.cardGrid}>
+              {filteredMentors.map((mentor) => {
+                const relationshipLabel = statusLabel(mentor.relationshipStatus, mentor.relationshipDirection);
+                const hasOpenRelationship = mentor.relationshipStatus === "requested" || mentor.relationshipStatus === "invited";
+                return (
+                  <article className={styles.selectCard} key={mentor.id}>
+                    <div className={styles.selectCardTop}>
+                      <span className={styles.avatar}>{mentor.initials}</span>
+                      <span><strong>{mentor.name}</strong><small>{mentor.focus}</small></span>
+                    </div>
+                    <p>{mentor.bio}</p>
+                    <small className={styles.muted}>{mentor.availability}</small>
+                    <PillChip tone="default">
+                      {mentor.availableSlots} {mentor.availableSlots === 1 ? "vaga disponível" : "vagas disponíveis"}
+                    </PillChip>
+                    <form action={mentorRequestAction}>
+                      <input name="mentorUserId" type="hidden" value={mentor.id} />
+                      <button className={styles.textButton} disabled={mentorRequestPending || hasOpenRelationship}>
+                        {hasOpenRelationship
+                          ? <><Check size={14} /> {relationshipLabel}</>
+                          : <><UserPlus size={14} /> Solicitar mentoria</>}
+                      </button>
+                    </form>
+                  </article>
+                );
+              })}
+            </div>
+          ) : (
+            <div className={styles.emptyState}>
+              {data.mentee.mentorship
+                ? "Você já possui uma mentoria em andamento."
+                : "Nenhum mentor com vagas corresponde à busca."}
+            </div>
+          )}
+        </GlassPanel>
       </section>
     );
   }
 
-  const { mentees, availableMentees, openRequestCount, pendingInvitations } = data.management;
+  const { mentees, availableMentees, incomingRequests, capacity, openRequestCount, pendingInvitations } = data.management;
 
   return (
     <section className={styles.workspace} aria-label="Gestão de mentorados">
       <div className={styles.summaryGrid}>
         <GlassPanel className={styles.summaryCard}>
-          <div><small>Seus mentorados</small><strong>{mentees.length}</strong><span className={styles.muted}>relações ativas ou pausadas</span></div>
+          <div>
+            <small>Seus mentorados</small>
+            <strong>{capacity ? `${capacity.activeCount}/${capacity.limit}` : mentees.length}</strong>
+            <span className={styles.muted}>{capacity ? `${capacity.availableSlots} vaga(s) disponível(is)` : "relações ativas ou pausadas"}</span>
+          </div>
           <span className={styles.iconBox}><UsersRound size={19} /></span>
         </GlassPanel>
         <GlassPanel className={styles.summaryCard}>
@@ -249,25 +336,58 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
           ) : <div className={styles.emptyState}>Nenhuma mentoria ativa ou pausada.</div>}
         </GlassPanel>
 
-        <GlassPanel className={styles.panel}>
-          <div className={styles.panelHeader}>
-            <div><span className={styles.eyebrow}>Convite direto</span><h3>Convidar por e-mail</h3></div>
-            <span className={styles.iconBox}><MailPlus size={18} /></span>
-          </div>
-          <form action={invitationAction} className={styles.compactForm}>
-            <label>E-mail<input name="email" type="email" placeholder="mentorado@exemplo.com" required /></label>
-            <label>Mensagem opcional<textarea name="message" rows={4} placeholder="Conte como vocês vão começar." /></label>
-            <GlassButton type="submit" icon={<MailPlus size={16} />} disabled={invitationPending}>
-              {invitationPending ? "Criando..." : "Criar convite"}
-            </GlassButton>
-            {invitationState.status !== "idle" ? (
-              <div className={styles.notice} role="status">
-                <strong>{invitationState.message}</strong>
-                {invitationState.inviteUrl ? <a href={invitationState.inviteUrl} target="_blank" rel="noreferrer">{invitationState.inviteUrl}</a> : null}
+        <div className={styles.stack}>
+          {capacity ? (
+            <GlassPanel className={styles.panel}>
+              <div className={styles.panelHeader}>
+                <div><span className={styles.eyebrow}>Recebidas</span><h3>Solicitações de mentorados</h3></div>
+                <PillChip tone={incomingRequests.length ? "warning" : "muted"}>{incomingRequests.length} pendente(s)</PillChip>
               </div>
-            ) : null}
-          </form>
-        </GlassPanel>
+              {incomingRequests.length ? (
+                <ul className={styles.list}>
+                  {incomingRequests.map((request) => (
+                    <li className={styles.pendingRow} key={request.relationshipId}>
+                      <span className={styles.avatar}><UserPlus size={17} /></span>
+                      <span className={styles.personCopy}>
+                        <strong>{request.menteeName}</strong>
+                        <small>Solicitada em {request.requestedAt}</small>
+                      </span>
+                      <form action={responseAction} className={styles.rowActions}>
+                        <input name="relationshipId" type="hidden" value={request.relationshipId} />
+                        <button className={styles.textButton} name="decision" value="accept" disabled={responsePending || capacity.availableSlots === 0}>
+                          <Check size={14} /> Aceitar
+                        </button>
+                        <button className={[styles.textButton, styles.textButtonDanger].join(" ")} name="decision" value="decline" disabled={responsePending}>
+                          Recusar
+                        </button>
+                      </form>
+                    </li>
+                  ))}
+                </ul>
+              ) : <div className={styles.emptyState}>Nenhuma solicitação aguardando sua resposta.</div>}
+            </GlassPanel>
+          ) : null}
+
+          <GlassPanel className={styles.panel}>
+            <div className={styles.panelHeader}>
+              <div><span className={styles.eyebrow}>Convite direto</span><h3>Convidar por e-mail</h3></div>
+              <span className={styles.iconBox}><MailPlus size={18} /></span>
+            </div>
+            <form action={invitationAction} className={styles.compactForm}>
+              <label>E-mail<input name="email" type="email" placeholder="mentorado@exemplo.com" required /></label>
+              <label>Mensagem opcional<textarea name="message" rows={4} placeholder="Conte como vocês vão começar." /></label>
+              <GlassButton type="submit" icon={<MailPlus size={16} />} disabled={invitationPending || capacity?.availableSlots === 0}>
+                {invitationPending ? "Criando..." : "Criar convite"}
+              </GlassButton>
+              {invitationState.status !== "idle" ? (
+                <div className={styles.notice} role="status">
+                  <strong>{invitationState.message}</strong>
+                  {invitationState.inviteUrl ? <a href={invitationState.inviteUrl} target="_blank" rel="noreferrer">{invitationState.inviteUrl}</a> : null}
+                </div>
+              ) : null}
+            </form>
+          </GlassPanel>
+        </div>
       </div>
 
       <GlassPanel className={styles.panel}>
@@ -285,7 +405,7 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
         {filteredAvailable.length ? (
           <div className={styles.cardGrid}>
             {filteredAvailable.map((person) => {
-              const relationshipLabel = statusLabel(person.relationshipStatus);
+              const relationshipLabel = statusLabel(person.relationshipStatus, person.relationshipDirection);
               const alreadyRequested = person.relationshipStatus === "requested" || person.relationshipStatus === "invited";
               return (
                 <article className={styles.selectCard} key={person.id}>
@@ -299,7 +419,7 @@ export function RelationshipManager({ role, data }: RelationshipManagerProps) {
                     <form action={requestAction}>
                       <input name="menteeUserId" type="hidden" value={person.id} />
                       <button className={styles.textButton} disabled={requestPending || alreadyRequested}>
-                        {alreadyRequested ? <><Check size={14} /> {relationshipLabel}</> : <><UserPlus size={14} /> Solicitar mentoria</>}
+                        {alreadyRequested ? <><Check size={14} /> {relationshipLabel}</> : <><UserPlus size={14} /> Adicionar mentorado</>}
                       </button>
                     </form>
                   ) : (

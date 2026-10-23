@@ -8,7 +8,7 @@ O MVP é gratuito e foi modelado para múltiplos mentores desde o início. Mento
 
 O frontend está funcional e pode ser executado localmente. Todas as rotas privadas exibem exclusivamente dados reais permitidos pelo Supabase. Quando ainda não existem relações, planos, materiais, sessões, notificações ou notas, a interface apresenta estados vazios equivalentes aos do futuro deploy; não há mais registros fictícios nem editores que simulam persistência local.
 
-A integração com Supabase cobre autenticação, validação de convites, relacionamentos e leitura das áreas operacionais. O schema completo foi aplicado ao projeto Supabase em 21 de outubro de 2026 e validado pelas APIs de Auth, REST/RPC e Storage, sem depender de uma connection string PostgreSQL. As próximas implementações devem adicionar as mutações reais que ainda faltam, sem reintroduzir estado demonstrativo no navegador.
+A integração com Supabase cobre autenticação, validação de convites, relacionamentos e leitura das áreas operacionais. O schema completo foi aplicado ao projeto Supabase e a extensão de capacidade e descoberta de mentores foi aplicada em 22 de outubro de 2026. Os fluxos foram validados pelas APIs de Auth, REST/RPC, Storage e por testes transacionais no PostgreSQL, sem deixar dados de teste persistidos.
 
 ### Implementado
 
@@ -23,6 +23,8 @@ A integração com Supabase cobre autenticação, validação de convites, relac
 - Senhas armazenadas exclusivamente pelo Supabase Auth com bcrypt e salt aleatório por senha; nenhuma senha ou salt é copiado para tabelas públicas.
 - Aceite de convite e callback de autenticação.
 - Catálogo persistido com 15 áreas e 80 conhecimentos para especialidades de mentores e interesses de mentorados.
+- Aba de Perfil para alterar nome, apresentação, links, especialidades/interesses e formação acadêmica de mentor.
+- Disponibilidade semanal estruturada e separada entre períodos para ensinar e para aprender.
 - Workspace privado com contexto de admin, mentor, mentorado e usuário misto.
 - Layout privado compartilhado com navegação e troca de contexto por papel.
 - Dashboard compacto com contagens reais de relações, planos, sessões e notificações via RLS.
@@ -31,7 +33,9 @@ A integração com Supabase cobre autenticação, validação de convites, relac
 - Planos, materiais, templates, calendário, notificações e notas carregados das tabelas e views reais, com estados vazios de produção.
 - Ambiente local com as mesmas exigências de autenticação, configuração e papéis do deploy; não existe troca para papéis não atribuídos.
 - Catálogo seguro de mentorados disponíveis para mentores e administradores, sem expor e-mail ou dados privados do perfil.
-- Solicitação de mentoria e aceite ou recusa pelo mentorado persistidos no banco.
+- Catálogo de mentores com vagas para mentorados, com especialidades, disponibilidade e quantidade de vagas.
+- Limite configurável de zero a 50 mentorados ativos por mentor, validado no banco em todos os caminhos de ativação.
+- Solicitações bilaterais: mentor adiciona um mentorado disponível ou mentorado solicita um mentor com vaga; o destinatário aceita ou recusa.
 - Sincronização automática da disponibilidade do mentorado ao iniciar ou encerrar uma relação.
 - Rotas operacionais separadas para administração, mentorias, planos, materiais e agenda.
 - Regras tipadas de papéis, permissões, convites e relações mentor-mentorado.
@@ -98,6 +102,7 @@ A integração com Supabase cobre autenticação, validação de convites, relac
 | `/app/plans` | Planos, aulas e progresso. |
 | `/app/materials` | Biblioteca de materiais e organização de aulas. |
 | `/app/calendar` | Agenda, sessões, notificações e notas. |
+| `/app/profile` | Edição do perfil, links, conhecimentos, disponibilidade e capacidade de mentorados. |
 
 `/app` sempre exige configuração válida do Supabase e um usuário autenticado, tanto localmente quanto no deploy.
 
@@ -159,11 +164,12 @@ O projeto Supabase configurado já recebeu:
 
 - enums e tabelas de perfis, papéis, convites, relações, planos, aulas, materiais, sessões, notas e notificações;
 - tabelas de formações acadêmicas, áreas, conhecimentos e seleções de especialidade ou interesse;
+- tabela de períodos semanais, separando disponibilidade para ensinar e para aprender;
 - catálogo inicial com 15 áreas e 80 conhecimentos ativos;
 - vínculos explícitos de materiais com planos, aulas e sessões;
 - views para relações detalhadas, progresso, próximas sessões, compartilhamentos e notificações não lidas;
-- RPCs para convites, catálogo seguro de mentorados, solicitação e resposta de mentoria, ativação de plano, cópia de templates, sessões e notificações;
-- triggers de consistência, datas de atualização e notificações internas;
+- RPCs para perfil, disponibilidade, convites, catálogos seguros de mentores e mentorados, capacidade, solicitação e resposta de mentoria, ativação de plano, cópia de templates, sessões e notificações;
+- triggers de consistência, limite de capacidade, datas de atualização e notificações internas;
 - políticas RLS para admin, mentor, mentorado e usuários com papéis combinados;
 - bucket privado `materials`, limitado a 50 MB por arquivo e organizado por proprietário.
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, CalendarDays, Files, LayoutDashboard, LogOut, ShieldCheck, UsersRound } from "lucide-react";
+import { BookOpen, CalendarDays, Files, LayoutDashboard, LogOut, ShieldCheck, UserRound, UsersRound } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
@@ -18,6 +18,7 @@ const navigationByRole: Record<UserRole, Array<{ label: string; href: string; ic
     { label: "Planos", href: "/app/plans", icon: BookOpen },
     { label: "Calendário", href: "/app/calendar", icon: CalendarDays },
     { label: "Materiais", href: "/app/materials", icon: Files },
+    { label: "Perfil", href: "/app/profile", icon: UserRound },
     { label: "Administração", href: "/app/admin", icon: ShieldCheck }
   ],
   mentor: [
@@ -25,14 +26,16 @@ const navigationByRole: Record<UserRole, Array<{ label: string; href: string; ic
     { label: "Mentorados", href: "/app/relationships", icon: UsersRound },
     { label: "Planos", href: "/app/plans", icon: BookOpen },
     { label: "Calendário", href: "/app/calendar", icon: CalendarDays },
-    { label: "Materiais", href: "/app/materials", icon: Files }
+    { label: "Materiais", href: "/app/materials", icon: Files },
+    { label: "Perfil", href: "/app/profile", icon: UserRound }
   ],
   mentee: [
     { label: "Painel", href: "/app", icon: LayoutDashboard },
     { label: "Minha mentoria", href: "/app/relationships", icon: UsersRound },
     { label: "Meu plano", href: "/app/plans", icon: BookOpen },
     { label: "Calendário", href: "/app/calendar", icon: CalendarDays },
-    { label: "Materiais", href: "/app/materials", icon: Files }
+    { label: "Materiais", href: "/app/materials", icon: Files },
+    { label: "Perfil", href: "/app/profile", icon: UserRound }
   ]
 };
 

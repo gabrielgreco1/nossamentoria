@@ -74,7 +74,28 @@ export async function requestMentee(
 
   revalidatePath("/app");
   revalidatePath("/app/relationships");
-  return { status: "success", message: "Solicitação enviada. O mentorado já pode aceitar ou recusar." };
+  return { status: "success", message: "Convite enviado. O mentorado já pode aceitar ou recusar." };
+}
+
+export async function requestMentor(
+  _state: RelationshipMutationState,
+  formData: FormData
+): Promise<RelationshipMutationState> {
+  const context = await getWorkspaceContext();
+  if (!context.user || !context.roles.includes("mentee")) {
+    return mutationError("Somente mentorados podem solicitar uma mentoria.");
+  }
+
+  const mentorUserId = String(formData.get("mentorUserId") ?? "");
+  if (!/^[0-9a-f-]{36}$/i.test(mentorUserId)) return mutationError("Mentor inválido.");
+
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("request_mentor", { p_mentor_user_id: mentorUserId });
+  if (error) return mutationError(error.message);
+
+  revalidatePath("/app");
+  revalidatePath("/app/relationships");
+  return { status: "success", message: "Solicitação enviada. O mentor poderá aceitar ou recusar." };
 }
 
 export async function respondToMentorshipRequest(
@@ -82,8 +103,8 @@ export async function respondToMentorshipRequest(
   formData: FormData
 ): Promise<RelationshipMutationState> {
   const context = await getWorkspaceContext();
-  if (!context.user || !context.roles.includes("mentee")) {
-    return mutationError("Somente o mentorado desta solicitação pode respondê-la.");
+  if (!context.user || (!context.roles.includes("mentee") && !context.roles.includes("mentor"))) {
+    return mutationError("Você não tem permissão para responder a esta solicitação.");
   }
 
   const relationshipId = String(formData.get("relationshipId") ?? "");

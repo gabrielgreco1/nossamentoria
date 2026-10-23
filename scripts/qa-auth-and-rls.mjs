@@ -141,14 +141,24 @@ try {
   }
 
   const cookieHeader = browserCookies.map(({ name, value }) => `${name}=${value}`).join("; ");
-  const [workspace, adminPage] = await Promise.all([
+  const [workspace, adminPage, profilePage] = await Promise.all([
     fetch(`${appUrl}/app`, { headers: { cookie: cookieHeader }, redirect: "manual" }),
-    fetch(`${appUrl}/app/admin`, { headers: { cookie: cookieHeader }, redirect: "manual" })
+    fetch(`${appUrl}/app/admin`, { headers: { cookie: cookieHeader }, redirect: "manual" }),
+    fetch(`${appUrl}/app/profile`, { headers: { cookie: cookieHeader }, redirect: "manual" })
   ]);
   const adminBody = await adminPage.text();
+  const profileBody = await profilePage.text();
 
-  if (workspace.status !== 200 || adminPage.status !== 200 || !adminBody.includes("Criar convite privado")) {
-    throw new Error(`Rotas autenticadas inválidas: /app=${workspace.status}, /app/admin=${adminPage.status}.`);
+  if (
+    workspace.status !== 200
+    || adminPage.status !== 200
+    || profilePage.status !== 200
+    || !adminBody.includes("Criar convite privado")
+    || !profileBody.includes("Informações pessoais")
+  ) {
+    throw new Error(
+      `Rotas autenticadas inválidas: /app=${workspace.status}, /app/admin=${adminPage.status}, /app/profile=${profilePage.status}.`
+    );
   }
 
   const testEmail = `qa-stage06-${Date.now()}@example.com`;
@@ -201,7 +211,7 @@ try {
     throw revokedReadError ?? new Error("O convite técnico não foi revogado.");
   }
 
-  console.log("OK: RLS anônima, sessão admin, rotas protegidas e convite criar/revogar passaram.");
+  console.log("OK: RLS anônima, sessão admin, rotas protegidas, Perfil e convite criar/revogar passaram.");
 } finally {
   if (invitationId) {
     const { data: removed, error: cleanupError } = await serviceClient

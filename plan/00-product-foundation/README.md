@@ -10,6 +10,7 @@ Read this folder before implementing product behavior. The goal is to keep the M
 - `user-personas.md`: primary users and their needs.
 - `success-metrics.md`: early signals of useful adoption.
 - `glossary.md`: shared vocabulary for all specs.
+- `profile-management.md`: editable identity, matching information, weekly availability and mentor capacity.
 
 ## Implementation Guidance
 
